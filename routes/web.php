@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+// Route::get('/', function () {
+//     return view('login.login');
+// });
+Route::get('/log-in', function(){
     return view('login.login');
 });
-Route::get('/dash', function () {
-    return view('emisor.mensaje-create');
-});
+Route::post('/log-in', 'AutenticarController@logIn');
 
+Route::get('/sign-up',function(){
+    return view('sign-up.sing-up');
+});
+Route::post('/sign-up', 'AutenticarController@signUp');
