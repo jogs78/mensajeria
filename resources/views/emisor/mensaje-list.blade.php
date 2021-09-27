@@ -1,6 +1,7 @@
 @extends('dashboard')
-@section('emisor.mensaje-show')
-<section class="news">
+@section('emisor.mensaje-list')
+
+{{-- <section class="news">
     <div class="news_container">
         <div class="news_item">
             <div class="news_body">
@@ -45,6 +46,46 @@
             </div>
         </div>
 
+    </div>
+</section> --}}
+
+<section class="new-messages">
+    <a href="">Redactar mensaje</a>
+    <div class="new-messages__container">
+        <div class="new-messages__information">
+            <label for="" class="new-messages__title">Aqui el titulo de la publicación</label>
+            <label for="" class="new-messages__status-menssage">Aceptado/Rechazado</label>
+            <label for="" class="new-messages__fecha-publicacion">Fecha de publicación</label>
+        </div>
+        <div class="new-messages_actions">
+            <div class="new-messages_edit"></div>
+            <div class="new-messages_show"></div>
+            <div class="new-messages_delete"></div>
+        </div>
+    </div>
+    <div class="new-messages__container">
+        <div class="new-messages__information">
+            <label for="" class="new-messages__title">Aqui el titulo de la publicación</label>
+            <label for="" class="new-messages__status-menssage">Aceptado/Rechazado</label>
+            <label for="" class="new-messages__fecha-publicacion">Fecha de publicación</label>
+        </div>
+        <div class="new-messages_actions">
+            <div class="new-messages_edit"></div>
+            <div class="new-messages_show"></div>
+            <div class="new-messages_delete"></div>
+        </div>
+    </div>
+    <div class="new-messages__container">
+        <div class="new-messages__information">
+            <label for="" class="new-messages__title">Aqui el titulo de la publicación</label>
+            <label for="" class="new-messages__status-menssage">Aceptado/Rechazado</label>
+            <label for="" class="new-messages__fecha-publicacion">Fecha de publicación</label>
+        </div>
+        <div class="new-messages_actions">
+            <div class="new-messages_edit"></div>
+            <div class="new-messages_show"></div>
+            <div class="new-messages_delete"></div>
+        </div>
     </div>
 </section>
 @endsection

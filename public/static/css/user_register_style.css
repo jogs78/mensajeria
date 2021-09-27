@@ -1,0 +1,128 @@
+:root {
+    --main-bg-color: #0d47a1;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.user-select {
+    padding: 10px;
+    font-size: 20px;
+    flex-direction: column;
+    align-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+#alumno,
+#empleado {
+    width: min-content;
+    border: none;
+    padding: 4px;
+    border-radius: 4px;
+    background: white;
+}
+
+.btn__selected {
+    border: 2px solid var(--main-bg-color);
+    box-shadow: 1px 1px 4px;
+}
+
+.notification {
+    position: relative;
+    opacity: 0;
+    z-index: 100;
+    margin: 9px 0 0 9px;
+    align-self: start;
+    width: 200px;
+    min-width: 150;
+    height: auto;
+    min-height: 50px;
+    background: var(--main-bg-color);
+    border-radius: 5px;
+    text-align: center;
+    padding: 7px;
+    filter: drop-shadow(-1px 4px 1px #0000003d);
+    color: rgb(255, 255, 255);
+}
+
+.ocultar {
+    display: none;
+    opacity: 0;
+    transition: all 1000ms ease-in 100ms;
+}
+
+@keyframes notification_move {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+    5% {
+        opacity: .5;
+    }
+    10% {
+        left: 0;
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.user-register__form {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 1px 1px 4px rgb(155, 154, 154);
+    padding: 20px;
+}
+
+.user-register__form input {
+    height: 30px;
+    padding: 3px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0);
+    position: relative;
+    border-radius: 3px;
+}
+
+.user-register__form label {
+    padding: 2px;
+    font-size: 15px;
+    border-radius: 5px;
+    width: max-content;
+    position: relative;
+    top: -27px;
+    background: rgb(255, 255, 255);
+    color: #0d47a1b0;
+    left: 5px;
+    z-index: -1;
+    transition-property: top, color;
+    transition-duration: 250ms;
+    transition-delay: 100ms;
+}
+
+.input:focus+.lbl {
+    top: -45px;
+    z-index: 100;
+    color: rgb(0, 0, 0);
+}
+
+.fijar {
+    top: -45px !important;
+    z-index: 100 !important;
+    color: rgb(0, 0, 0) !important;
+}
+
+.btn {
+    width: 40%;
+    margin: auto;
+    margin-bottom: 10px;
+}

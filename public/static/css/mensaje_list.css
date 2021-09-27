@@ -1,0 +1,71 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.new-messages__container {
+    /* background: rgb(17, 0, 255); */
+    display: flex;
+    padding: 2px;
+    margin: 0 10px;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.new-messages__information {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 5px 2px 2px;
+    border-radius: 10px;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.new-messages__information label {
+    padding: 3px;
+}
+
+.new-messages__title {
+    font-size: 15px;
+}
+
+.new-messages_actions {
+    display: flex;
+    border: 1px solid black;
+    margin-top: 2px;
+    padding: 2px;
+    justify-content: center;
+    align-content: center;
+    border-radius: 5px;
+}
+
+.new-messages_edit,
+.new-messages_show,
+.new-messages_delete {
+    width: 40px;
+    height: 40px;
+    background: rgb(255, 255, 255);
+    margin: 2px;
+    border-radius: 50%;
+    box-shadow: -1px 2px 4px #4a4a4a8c;
+    align-self: center;
+}
+
+@media screen and (min-width:650px) {
+    .new-messages__container {
+        flex-direction: row;
+    }
+    .new-messages__information {
+        flex-grow: 1;
+    }
+    .new-messages_actions {
+        margin: 5px 5px 2px 2px;
+        width: 250px;
+    }
+    .new-messages_edit,
+    .new-messages_show,
+    .new-messages_delete {
+        width: 50px;
+        height: 50px;
+    }
+}
