@@ -13,48 +13,72 @@
                 {{session('message')}}
                 </div> --}}
                
-            <div class="user-select">
-                Registrar a:
-                <button id="alumno">Alumno</button>
-                <button id="empleado">Empleado</button>
-                
-            </div>
+                <div class="user-select">
+                    <button id="alumno" >Alumno</button>
+                    <button id="empleado">Empleado</button>
+                    
+                </div>    
         <form action="" class="user-register__form" id="form">
             
-            <input class="input"  type="text" name="numero_control">
-            <label class="lbl" for="">Número de control</label>
+            <div class="div-item_container">
+                <input class="input"  type="text" name="numero_control">
+                <label class="lbl" for="">Número de control</label>
+            </div>
 
-            <input class="input" type="text" name="name">
+            <div class="div-item_container">
+                <input class="input" type="text" name="name">
             <label class="lbl" for="">Nombre</label>
+            </div>
 
-            <input class="input" type="text" name="a_paterno">
+            <div class="div-item_container">
+                <input class="input" type="text" name="a_paterno">
             <label class="lbl" for="">Apellido paterno</label>
+            </div>
 
-            <input class="input" type="text" name="a_materno">
+            <div class="div-item_container">
+                <input class="input" type="text" name="a_materno">
             <label class="lbl" for="">Apellido materno</label>
+            </div>
 
-            <input class="input" type="text" name="carrera">
+            <div class="div-item_container">
+                <input class="input" type="text" name="carrera">
             <label class="lbl" for="">Carrera</label>
+            </div>
 
-            <input class="input" type="text" name="semestre">
+            <div class="div-item_container">
+                <input class="input" type="text" name="semestre">
             <label class="lbl" for="">Semestre</label>
+            </div>
 
-            <input class="input" type="text" name="email">
+            <div class="div-item_container">
+                <input class="input" type="text" name="email">
             <label class="lbl" for="">Correo</label>
+            </div>
 
-            <input class="input" type="text" name="password">
+            <div class="div-item_container">
+                <input class="input" type="text" name="password">
             <label class="lbl" for="">Contraseña</label>
-            <input class="input" type="text" name="password_confirm">
-            <label class="lbl" for="">Contraseña</label>
+            </div>
 
-            <input class="input" type="text" name="rol">
+            <div class="div-item_container">
+                <input class="input" type="text" name="password_confirm">
+            <label class="lbl" for="">Contraseña</label>
+            </div>
+
+            <div class="div-item_container">
+                <input class="input" type="text" name="rol">
             <label class="lbl" for="">Rol</label>
+            </div>
 
-            <input class="input" type="text" name="puestp">
+            <div class="div-item_container">
+                <input class="input" type="text" name="puestp">
             <label class="lbl" for="">Puesto</label>
+            </div>
 
-            <input class="input" type="text" name="quien_revisa">
+            <div class="div-item_container">
+                <input class="input" type="text" name="quien_revisa">
             <label class="lbl" for="">¿Quien revisa?</label>
+            </div>
 
             <input class="btn" type="submit" value="Enviar">
 
@@ -68,6 +92,7 @@
     let alumnos = document.getElementById("alumno");
     let empleados = document.getElementById("empleado");
     let form = document.getElementById("form");
+    let bandera =0;
         for (let i = 0; i < input.length; i++) {
 
             input[i].addEventListener("keyup", function () {
@@ -92,18 +117,33 @@
 
             input[11].classList.toggle('ocultar');
             label[11].classList.toggle('ocultar');
-            form.setAttribute("action", "/h")
+            // form.setAttribute("action", "/h")
             //classList.toggle('navigation_alternate_color')
+            if(bandera==0){
+                empleados.disabled= true
+                bandera =1
+            }else{
+                empleados.disabled= false
+                bandera = 0
+            }
         });
         empleados.addEventListener('click', function(){
             empleados.classList.toggle('btn__selected');
+            alumnos.disabled= true
             input[0].classList.toggle('ocultar');
             label[0].classList.toggle('ocultar');
             input[4].classList.toggle('ocultar');
             label[4].classList.toggle('ocultar');
             input[5].classList.toggle('ocultar');
             label[5].classList.toggle('ocultar');
-            form.setAttribute("action", "/h1")
+            if(bandera==0){
+                alumnos.disabled= true
+                bandera =1
+            }else{
+                alumnos.disabled= false
+                bandera = 0
+            }
+            // form.setAttribute("action", "/h1")
             //
 
 

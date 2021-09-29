@@ -8,27 +8,72 @@
     box-sizing: border-box;
 }
 
+.user-register__container {
+    width: 80vw;
+    min-width: 300px;
+    height: 60vh;
+    margin: 40px auto;
+    box-shadow: 1px 1px 4px rgb(155, 154, 154);
+    border-radius: 5px;
+    /* overflow-x: hidden; */
+    justify-content: space-around;
+}
+
+.div-item_container {
+    height: 30px;
+    position: relative;
+    z-index: 1;
+    width: min-content;
+    /* flex-grow: 1; */
+}
+
 .user-select {
-    padding: 10px;
+    display: flex;
     font-size: 20px;
-    flex-direction: column;
-    align-content: center;
-    align-content: center;
-    text-align: center;
+    height: 40px;
 }
 
 #alumno,
 #empleado {
-    width: min-content;
+    width: 50%;
     border: none;
     padding: 4px;
-    border-radius: 4px;
-    background: white;
+    background: transparent;
 }
 
 .btn__selected {
-    border: 2px solid var(--main-bg-color);
-    box-shadow: 1px 1px 4px;
+    background: #dad9d9 !important;
+    position: relative;
+}
+
+.btn__selected::before {
+    content: "";
+    display: block;
+    height: 3px;
+    position: absolute;
+    bottom: 0;
+    animation: c 500ms ease-in 0ms 1;
+    width: 100%;
+    left: 0;
+    background: linear-gradient(90deg, rgb(198, 198, 198), rgb(13, 71, 161));
+}
+
+.desabled {
+    cursor: not-allowed;
+    background-color: rgb(229, 229, 229) !important;
+    pointer-events: none;
+}
+
+@keyframes c {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    100% {
+        width: 100%;
+        left: 0;
+        background: linear-gradient(90deg, rgb(198, 198, 198), rgb(13, 71, 161));
+    }
 }
 
 .notification {
@@ -73,24 +118,28 @@
 }
 
 .user-register__form {
+    height: 80%;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column;
     width: 350px;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
     position: relative;
-    box-shadow: 1px 1px 4px rgb(155, 154, 154);
-    padding: 20px;
+    padding: 20px; */
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 0;
+    overflow-y: scroll;
 }
 
 .user-register__form input {
     height: 30px;
     padding: 3px;
     font-size: 15px;
-    background: rgba(255, 255, 255, 0);
-    position: relative;
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.616);
+    border: 0;
+    border-bottom: 1px solid;
 }
 
 .user-register__form label {
@@ -101,12 +150,12 @@
     position: relative;
     top: -27px;
     background: rgb(255, 255, 255);
-    color: #0d47a1b0;
+    color: #000000b0;
     left: 5px;
-    z-index: -1;
     transition-property: top, color;
     transition-duration: 250ms;
     transition-delay: 100ms;
+    z-index: -1;
 }
 
 .input:focus+.lbl {
@@ -122,7 +171,22 @@
 }
 
 .btn {
-    width: 40%;
-    margin: auto;
-    margin-bottom: 10px;
+    width: 80%;
+    margin: 10px auto;
+    border: 1px solid !important;
+}
+
+@media screen and (min-width:650px) {
+    .user-register__container {
+        width: 650px;
+        height: 450px;
+        /* overflow-x: hidden; */
+        justify-content: space-around;
+    }
+    .user-register__form {
+        height: 90%;
+    }
+    .div-item_container {
+        margin-right: 10px;
+    }
 }
