@@ -17,21 +17,22 @@
 <body>
     <header class="header">
         <div class="header_container">
-            <nav class="navigation">
-                <div class="navigation_icon" id="navigation_btn">
-                    <i class="fas fa-ellipsis-v"></i>
-                </div>
-                <div class="navigation_container" id="menu">
-                    <ul>
-                        <li><a href="">opc1</a></li>
-                        <li><a href="">opc1</a></li>
-                        <li><a href="">opc1</a></li>
-                        <li><a href="">opc1</a></li>
-                        <li><a href="">opc1</a></li>
-                    </ul>
+            <nav class="nav">
+                <i class="fas fa-bars" id="navigation_btn"></i>
+                <div class="menu-container" id="menu">
+                    <div class="menu-content">
+                        <ul class="menu-list">
+                            <li class="fas fa-user menu-list__item"><span class="text">Inicio</span></li>
+                            <li class="fas fa-home menu-list__item"><span class="text">Inicio</span></li>
+                            <li class="fas fa-home menu-list__item"><span class="text">Inicio</span></li>
+                            <li class="fas fa-home menu-list__item"><span class="text">Inicio</span></li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </div>
+    </header>
+    
 
     </header>
     @yield('emisor.mensaje-list')
