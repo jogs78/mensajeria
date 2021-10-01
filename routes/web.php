@@ -32,12 +32,8 @@ Route::get('/show', function () {
 
 
 
-Route::get('/users-list', function(){
-    return view('informatico.user-list');
-});
-Route::get('/users-register', function(){
-    return view('informatico.user-register');
-});
+Route::resource('user', 'InformaticoController');
+Route::resource('alumno', 'AlumnoController');
 
 
 

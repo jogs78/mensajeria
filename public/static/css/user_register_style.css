@@ -77,23 +77,39 @@
 }
 
 .notification {
-    position: relative;
+    position: absolute;
     opacity: 0;
     z-index: 100;
     margin: 9px 0 0 9px;
     align-self: start;
-    width: 200px;
-    min-width: 150;
+    min-width: 200px;
     height: auto;
     min-height: 50px;
-    background: var(--main-bg-color);
+    background: #c8c6c63d;
     border-radius: 5px;
     text-align: center;
     padding: 7px;
     filter: drop-shadow(-1px 4px 1px #0000003d);
     color: rgb(255, 255, 255);
+    animation: notification_move 6000ms ease 100ms 1 normal;
 }
 
+@keyframes notification_move {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+    5% {
+        opacity: .5;
+    }
+    10% {
+        left: 0;
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 .ocultar {
     display: none;
     opacity: 0;

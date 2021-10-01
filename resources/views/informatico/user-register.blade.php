@@ -3,12 +3,21 @@
 
 <section class="user-list">
     <div class="user-register__container">
-        @if(session('message'))
-            <div class="notification">
-                {{session('message')}}
-                </div>
+        @if($errors->any())
 
-            @endif
+            <div class="notification">
+                @foreach ($errors->all() as $error)
+                    {{$error}}
+                @endforeach
+            </div>
+
+        @endif
+        @if(session('message'))
+        <div class="notification">
+            {{session('message')}}
+            </div>
+                
+        @endif
             {{-- <div class="notification">
                 {{session('message')}}
                 </div> --}}
@@ -18,8 +27,8 @@
                     <button id="empleado">Empleado</button>
                     
                 </div>    
-        <form action="" class="user-register__form" id="form">
-            
+        <form action="" method="POST" class="user-register__form" id="form">
+            @csrf
             <div class="div-item_container">
                 <input class="input"  type="text" name="numero_control">
                 <label class="lbl" for="">Número de control</label>
@@ -71,7 +80,7 @@
             </div>
 
             <div class="div-item_container">
-                <input class="input" type="text" name="puestp">
+                <input class="input" type="text" name="puesto">
             <label class="lbl" for="">Puesto</label>
             </div>
 
@@ -117,7 +126,7 @@
 
             input[11].classList.toggle('ocultar');
             label[11].classList.toggle('ocultar');
-            // form.setAttribute("action", "/h")
+            form.setAttribute("action", "/alumno")
             //classList.toggle('navigation_alternate_color')
             if(bandera==0){
                 empleados.disabled= true
@@ -143,6 +152,7 @@
                 alumnos.disabled= false
                 bandera = 0
             }
+            form.setAttribute("action", "/user")
             // form.setAttribute("action", "/h1")
             //
 

@@ -17,7 +17,7 @@ class AutenticarController extends Controller
         ]);
         $personalInformation = $request -> all();
         $alumno = Alumno::find($personalInformation['num_control'], ['numero_control', 'contraseña']);
-
+        
         if(is_null($alumno)){
             //return redirect() -> back() -> with('message', '¡Error! Usuario no registrado');
             return back()->withErrors('¡Error! Usuario no registrado')->withInput();
