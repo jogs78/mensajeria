@@ -23,8 +23,8 @@
                 </div> --}}
                
                 <div class="user-select">
-                    <button id="alumno" name="alumno" >Alumno</button>
-                    <button id="empleado">Empleado</button>
+                    <button id="alumno" name="alumno" value="0">Alumno</button>
+                    <button id="empleado" name="empleado" value="0">Empleado</button>
                     
                 </div>    
         <form action="" method="POST" class="user-register__form" id="form">
@@ -114,9 +114,8 @@
     let empleados = document.getElementById("empleado");
     let form = document.getElementById("form");
     let bandera =0;
+    let alum=0;
     let enviar_btn= document.getElementById("btn_enviar");
-
-    
 
     window.addEventListener('load', function(){
         //alumnos.classList.add("btn__selected");
@@ -128,31 +127,23 @@
                 console.log(input[i].value);
             }
         }
-
-        
         /// if para mantener la opcion elegida de crear alumno por si hay una exepcion.
         if(sessionStorage.getItem("val") == "1"){
             ocualtar_label_alumnos();
             empleados.disabled=true;
             enviar_btn.disabled=false;
             alumnos.classList.toggle('btn__selected');
-            if(bandera==0){
-                empleados.disabled= true
-                
-                //enviar_btn.disabled=true
-                alert(bandera);
-            }else{
-                empleados.disabled= true
-                //
-                
-                //alert(bandera + "else");
-            }
-            alumnos.setAttribute("value","0");
-            if(sessionStorage.getItem("val") == "0"){
-                enviar_btn.disabled=true
-            }
+            bandera=1; 
+
         }
-        
+
+        if(sessionStorage.getItem("emple") == "1"){
+            ocualtar_label_empleados();
+            alumnos.disabled=true;
+            enviar_btn.disabled=false;
+            empleados.classList.toggle('btn__selected');
+            bandera=1; 
+        }
 
     })
         for (let i = 0; i < input.length; i++) {
@@ -165,45 +156,45 @@
                 }
             });
         }
-
-        alert(bandera);
-        ////alumnsssssss
+        //Accion boton alumnos.
         alumnos.addEventListener('click', function(){
             ocualtar_label_alumnos();
-            alumnos.classList.toggle('btn__selected');
-            //classList.toggle('navigation_alternate_color')
+            alumnos.classList.toggle('btn__selected');  
             if(bandera==0){
+                bandera=1;//siginifica alumno seleccionado
                 empleados.disabled= true
-                bandera =1
-                //enviar_btn.disabled=true
-                alert(bandera);
+                enviar_btn.disabled=false;
+                alumnos.setAttribute("value","1");
+                sessionStorage.setItem("val", alumnos.value);
+                
             }else{
                 empleados.disabled= false
                 bandera = 0
                 enviar_btn.disabled=true
-                alert(bandera + "else");
+                alumnos.setAttribute("value","0");
+                sessionStorage.setItem("val", alumnos.value);
+                
             }
-            alumnos.setAttribute("value","1");
-            sessionStorage.setItem("val", alumnos.value);
-            enviar_btn.disabled=false;
+               
         });
 
-        /////////////////////////////////////
+        //Accion boton empleado
         empleados.addEventListener('click', function(){
             empleados.classList.toggle('btn__selected');
             alumnos.disabled= true
-            input[0].classList.toggle('ocultar');
-            label[0].classList.toggle('ocultar');
-            input[4].classList.toggle('ocultar');
-            label[4].classList.toggle('ocultar');
-            input[5].classList.toggle('ocultar');
-            label[5].classList.toggle('ocultar');
+            ocualtar_label_empleados();
             if(bandera==0){
-                alumnos.disabled= true
                 bandera =1
+                alumnos.disabled= true
+                enviar_btn.disabled=false
+                empleados.setAttribute("value","1");
+                sessionStorage.setItem("emple", empleados.value);
             }else{
                 alumnos.disabled= false
                 bandera = 0
+                enviar_btn.disabled=true
+                empleados.setAttribute("value","0");
+                sessionStorage.setItem("emple", empleados.value);
             }
             form.setAttribute("action", "/user")
             // form.setAttribute("action", "/h1")
@@ -227,7 +218,16 @@
                 input[11].classList.toggle('ocultar');
                 label[11].classList.toggle('ocultar');
                 form.setAttribute("action", "/alumno")
-            }
+        }
+
+        function ocualtar_label_empleados(){
+            input[0].classList.toggle('ocultar');
+            label[0].classList.toggle('ocultar');
+            input[4].classList.toggle('ocultar');
+            label[4].classList.toggle('ocultar');
+            input[5].classList.toggle('ocultar');
+            label[5].classList.toggle('ocultar');
+        }
 </script>
 
 
