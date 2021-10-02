@@ -125,7 +125,6 @@
         for(let i=0; i<input.length;i++){
             if(input[i].value != ""){
                 input[i].nextElementSibling.classList.add("fijar");
-                console.log(input[i].value);
             }
         }
 
@@ -136,23 +135,19 @@
             empleados.disabled=true;
             enviar_btn.disabled=false;
             alumnos.classList.toggle('btn__selected');
-            if(bandera==0){
-                empleados.disabled= true
-                
-                //enviar_btn.disabled=true
-                alert(bandera);
-            }else{
-                empleados.disabled= true
-                //
-                
-                //alert(bandera + "else");
-            }
-            alumnos.setAttribute("value","0");
-            if(sessionStorage.getItem("val") == "0"){
-                enviar_btn.disabled=true
-            }
+            bandera=1
+        }else if(sessionStorage.getItem("val2") == "2"){
+            ocualtar_label_empleados();
+            alumnos.disabled=true;
+            enviar_btn.disabled=false;
+            empleados.classList.toggle('btn__selected');
+            bandera=1;
+            form.setAttribute("action", "/user")
+        }else{
+            alumnos.disabled=false;
+            empleados.disabled=false;
+            bandera=0
         }
-        
 
     })
         for (let i = 0; i < input.length; i++) {
@@ -166,54 +161,48 @@
             });
         }
 
-        alert(bandera);
         ////alumnsssssss
         alumnos.addEventListener('click', function(){
             ocualtar_label_alumnos();
             alumnos.classList.toggle('btn__selected');
             //classList.toggle('navigation_alternate_color')
             if(bandera==0){
-                empleados.disabled= true
+                empleados.disabled= true;
+                enviar_btn.disabled=false;
                 bandera =1
-                //enviar_btn.disabled=true
-                alert(bandera);
+                empleados.setAttribute("value","0");
+                sessionStorage.setItem("val2", empleados.value);
             }else{
+                enviar_btn.disabled=true;
                 empleados.disabled= false
                 bandera = 0
-                enviar_btn.disabled=true
-                alert(bandera + "else");
+                
+ 
             }
             alumnos.setAttribute("value","1");
             sessionStorage.setItem("val", alumnos.value);
-            enviar_btn.disabled=false;
         });
 
         /////////////////////////////////////
         empleados.addEventListener('click', function(){
             empleados.classList.toggle('btn__selected');
             alumnos.disabled= true
-            input[0].classList.toggle('ocultar');
-            label[0].classList.toggle('ocultar');
-            input[4].classList.toggle('ocultar');
-            label[4].classList.toggle('ocultar');
-            input[5].classList.toggle('ocultar');
-            label[5].classList.toggle('ocultar');
+            ocualtar_label_empleados();
             if(bandera==0){
                 alumnos.disabled= true
+                enviar_btn.disabled=false;
                 bandera =1
+                alumnos.setAttribute("value","0");
+                sessionStorage.setItem("val", alumnos.value);
             }else{
                 alumnos.disabled= false
+                enviar_btn.disabled=true;
                 bandera = 0
+                
             }
             form.setAttribute("action", "/user")
-            // form.setAttribute("action", "/h1")
-            //
-
-
-            // form.removeChild(input[0])
-            // form.removeChild( input[4])
-            // form.removeChild( input[5])
-
+            empleados.setAttribute("value","2");
+            sessionStorage.setItem("val2", empleados.value);
         });
 
 
@@ -227,6 +216,14 @@
                 input[11].classList.toggle('ocultar');
                 label[11].classList.toggle('ocultar');
                 form.setAttribute("action", "/alumno")
+            }
+        function ocualtar_label_empleados(){
+            input[0].classList.toggle('ocultar');
+            label[0].classList.toggle('ocultar');
+            input[4].classList.toggle('ocultar');
+            label[4].classList.toggle('ocultar');
+            input[5].classList.toggle('ocultar');
+            label[5].classList.toggle('ocultar');
             }
 </script>
 
