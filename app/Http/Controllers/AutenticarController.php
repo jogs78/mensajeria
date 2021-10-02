@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AutenticarController extends Controller
 {
+    //
     public function logIn(Request $request){
         $validator=$request->validate([
             'num_control' => 'required',

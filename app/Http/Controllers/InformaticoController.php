@@ -38,7 +38,7 @@ class InformaticoController extends Controller
     public function store(Request $request)
     {
         $informacion = $request ->all();
-
+//
         request()->validate([
             'name' => 'required',
             'a_paterno' => 'required',

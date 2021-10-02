@@ -37,7 +37,7 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         $informacion = $request ->all();
-
+        //
         request()->validate([
             'numero_control' => 'required',
             'name' => 'required',

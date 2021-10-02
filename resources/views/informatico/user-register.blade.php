@@ -143,7 +143,7 @@
                 alert(bandera);
             }else{
                 empleados.disabled= true
-                
+                //
                 
                 //alert(bandera + "else");
             }
