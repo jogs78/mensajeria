@@ -39,7 +39,19 @@ class InformaticoController extends Controller
     {
         $informacion = $request ->all();
 
-        $validator=$request->validate([
+        request()->validate([
+            'name' => 'required',
+            'a_paterno' => 'required',
+            'a_materno' => 'required',
+            'email' => 'required | email',
+            'password' => 'required',
+            'password_confirm' => 'required',
+            'rol' => 'required',
+            'puesto' => 'required',
+            'quien_revisa' => 'required'
+        ]);
+
+        /*$validator=$request->validate([
             'name' => 'required',
             'a_paterno' => 'required',
             'a_materno' => 'required',
@@ -60,7 +72,7 @@ class InformaticoController extends Controller
             'rol.required' => 'El campo rol es requerido',
             'puesto.required' => 'El campo puesto es requerido',
             'quien_revisa.required' => 'El campo quien revisa es requerido',
-        ]);
+        ]);*/
 
         if($informacion['password'] != $informacion['password_confirm']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();

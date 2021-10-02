@@ -38,7 +38,19 @@ class AlumnoController extends Controller
     {
         $informacion = $request ->all();
 
-        $validator=$request->validate([
+        request()->validate([
+            'numero_control' => 'required',
+            'name' => 'required',
+            'a_paterno' => 'required',
+            'a_materno' => 'required',
+            'carrera'=> 'required',
+            'semestre' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'password_confirm' => 'required',
+        ]);
+
+        /*$request->validate([
             'numero_control' => 'required',
             'name' => 'required',
             'a_paterno' => 'required',
@@ -55,7 +67,7 @@ class AlumnoController extends Controller
             'email.required' => 'El campo email es requerido',
             'password.required' => 'El campo contraseña es requerido',
             'password_confirm.required' => 'El campo confirmar contraseña es requerido'
-        ]);
+        ]);*/
 
         if($informacion['password'] != $informacion['password_confirm']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
