@@ -136,7 +136,7 @@
             bandera=1; 
 
         }
-
+        /// if para mantener la opcion elegida de crear empleado por si hay una exepcion.
         if(sessionStorage.getItem("emple") == "1"){
             ocualtar_label_empleados();
             alumnos.disabled=true;
@@ -144,6 +144,7 @@
             empleados.classList.toggle('btn__selected');
             bandera=1; 
         }
+
 
     })
         for (let i = 0; i < input.length; i++) {
@@ -206,7 +207,7 @@
             // form.removeChild( input[5])
 
         });
-
+        
 
         function ocualtar_label_alumnos(){
                 input[9].classList.toggle('ocultar');
