@@ -13,3 +13,4 @@ class Empleado extends Model
     protected $fillable = ['nombre', 'apellido_paterno', 'apellido_materno', 'correo', 'pass', 'rol', 'puesto', 'quien_revisa', 'mensaje_id']; 
     use HasFactory;
 }
+//
