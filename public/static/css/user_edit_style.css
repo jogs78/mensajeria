@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.form-edit {
+    box-shadow: 0px 1px 3px rgb(153, 152, 152);
+    width: 50vw;
+    margin: 50px auto;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 20px;
+}
+
+.form-edit__item {
+    width: max-content;
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+.form-edit__item input {
+    font-size: 18px;
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid;
+    background: transparent;
+}
+
+.form-edit__item:last-child {
+    position: relative;
+    width: 100%;
+}
+
+.enviar {
+    position: relative;
+    z-index: 1;
+    border: 0 !important;
+    width: 100%;
+}
