@@ -18,7 +18,15 @@
     flex-direction: column;
     margin: 5px 5px 2px 2px;
     border-radius: 10px;
-    border: 1px solid rgb(0, 0, 0);
+    border: 0;
+    padding: 5px;
+    background: #36D1DC;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #5B86E5, #36D1DC);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #5B86E5, #36D1DC);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .new-messages__information label {
@@ -31,24 +39,41 @@
 
 .new-messages_actions {
     display: flex;
-    border: 1px solid black;
     margin-top: 2px;
     padding: 2px;
     justify-content: center;
     align-content: center;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
 }
 
 .new-messages_edit,
 .new-messages_show,
 .new-messages_delete {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background: rgb(255, 255, 255);
-    margin: 2px;
+    margin: 4px;
     border-radius: 50%;
     box-shadow: -1px 2px 4px #4a4a4a8c;
     align-self: center;
+    text-align: center;
+    padding: 7px;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 2px 0px rgb(0, 0, 0);
+}
+
+.new-messages_edit {
+    background: #4caf50;
+}
+
+.new-messages_show {
+    background: #3f51b5;
+}
+
+.new-messages_delete {
+    background: #ff0000;
 }
 
 @media screen and (min-width:650px) {
@@ -65,7 +90,8 @@
     .new-messages_edit,
     .new-messages_show,
     .new-messages_delete {
-        width: 50px;
-        height: 50px;
+        width: 43px;
+        height: 43px;
+        font-size: 26px;
     }
 }

@@ -34,6 +34,7 @@ Route::get('/show', function () {
 
 Route::resource('user', 'InformaticoController');
 Route::resource('alumno', 'AlumnoController');
+Route::resource('mensajes-emisor', 'EmisorController');
 
 
 
