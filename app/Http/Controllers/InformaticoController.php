@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class InformaticoController extends Controller
 {
@@ -15,7 +17,13 @@ class InformaticoController extends Controller
      */
     public function index()
     {
-        //
+        $alumnos = DB::table('alumnos')
+                ->select('numero_control','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'carrera', 'semestre', 'correo')
+                ->get();
+        $empleados = DB::table('empleados')
+                ->select('id','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'correo', 'rol', 'puesto')
+                ->get();
+        return view('informatico.user-list', compact('alumnos', 'empleados'));
     }
 
     /**
@@ -115,7 +123,17 @@ class InformaticoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $alumno = "";
+        $empleado = "";
+        if(Alumno::find($id)){
+            $alumno = Alumno::find($id);
+            return view('informatico.user-edit', compact('alumno','empleado'));
+        }elseif(Empleado::find($id)){
+            $empleado = Empleado::find($id);
+            return view('informatico.user-edit', compact('alumno','empleado'));
+        }
+        
+        //return view('informatico.user-edit', compact('alumno','empleado'));
     }
 
     /**
@@ -127,7 +145,52 @@ class InformaticoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $alumno = Alumno::find($id);
+        $empleado = Empleado::find($id);
+        if($alumno){
+            if($request->contraseña != $request->contraseña_confirm){
+                return back()->with('message','Las contraseñas no coinciden');
+            }elseif($request->contraseña=="" || $request->contraseña_confirm== ""){
+                unset($request->contraseña);
+                unset($request->contraseña_confirm);
+                $alumno ->numero_control = $request->numero_control;
+                $alumno -> nombre = $request -> name;
+                $alumno -> apellido_paterno = $request -> a_paterno;
+                $alumno -> apellido_materno = $request -> a_materno;
+                $alumno -> carrera = $request -> carrera;
+                $alumno -> semestre = $request -> semestre;
+                $alumno -> correo = $request -> correo;
+                $alumno -> contraseña = $alumno -> contraseña;
+                $alumno -> save();
+                return redirect('user')-> with('message','registro');
+            }elseif($request->contraseña =! ""){
+                $alumno -> contraseña = Hash::make($request -> contraseña);
+                $alumno -> save();
+                return redirect('user')-> with('message','registro');
+            }
+        }elseif($empleado){
+            if($request->contraseña != $request->contraseña_confirm){
+                return back()->with('message','Las contraseñas no coinciden');
+            }elseif($request->contraseña=="" || $request->contraseña_confirm== ""){
+                unset($request->contraseña);
+                unset($request->contraseña_confirm);
+                
+                $empleado -> nombre = $request -> name;
+                $empleado -> apellido_paterno = $request -> a_paterno;
+                $empleado -> apellido_materno = $request -> a_materno;
+                $empleado -> correo = $request -> correo;
+                $empleado -> pass = $empleado -> pass;
+                $empleado ->rol = $request->rol;
+                $empleado ->puesto = $request->puesto;
+                $empleado ->quien_revisa = $request->quien_revisa;
+                $empleado -> save();
+                return redirect('user')-> with('message','registro');
+            }elseif($request->contraseña =! ""){
+                $empleado -> contraseña = Hash::make($request -> contraseña);
+                $empleado -> save();
+                return redirect('user')-> with('message','registro');
+            }
+        }
     }
 
     /**
@@ -138,6 +201,10 @@ class InformaticoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //solo elimina alumnos
+        if(Alumno::destroy($id) || Empleado::destroy($id)){
+            return redirect()->back()->with('message','ok');
+        }
+        
     }
 }

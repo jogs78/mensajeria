@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="{{ asset('static/css/mensaje_create.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/user_register_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/user_list_style.css') }}">
-    <script src="https://kit.fontawesome.com/d0d3bb1623.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('static/css/user_edit_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/css/css/all.css')}}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Bienvenido</title>
 </head>
 
@@ -39,6 +41,7 @@
     @yield('emisor.mensaje-create')
     @yield('informatico.user-register')
     @yield('user-list')
+    @yield('user-edit')
     <script>
         let btnMenu = document.getElementById("navigation_btn");
         let menu = document.getElementById("menu");
