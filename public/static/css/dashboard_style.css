@@ -12,10 +12,10 @@
 }
 
 .menu-container {
-    height: 100vh;
     display: flex;
     align-items: flex-end;
-    position: fixed;
+    position: relative;
+    top: 100vh;
 }
 
 .menu-content {
@@ -57,6 +57,8 @@
     width: 100%;
     font-size: 20px;
     transition: bottom 400ms ease-in;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
 }
 
 .menu-list__item:hover {

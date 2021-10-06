@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('static/css/user_list_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/user_edit_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css')}}">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{asset('static/css/sweetalert/sweetalert2.all.min.js')}}"></script>
     <title>Bienvenido</title>
 </head>
 
@@ -24,10 +24,10 @@
                 <div class="menu-container" id="menu">
                     <div class="menu-content">
                         <ul class="menu-list">
-                            <li class="fas fa-user menu-list__item"><span class="text">Inicio</span></li>
-                            <li class="fas fa-home menu-list__item"><span class="text">Inicio</span></li>
-                            <li class="fas fa-home menu-list__item"><span class="text">Inicio</span></li>
-                            <li class="fas fa-home menu-list__item"><span class="text">Inicio</span></li>
+                            <li class="fas fa-home menu-list__item"><a class="text" href="">Inicio</a></li>
+                            <li class="fas fa-user menu-list__item"><a class="text" href="/user">Usuarios</a></li>
+                            <li class="fas fa-envelope menu-list__item"><a class="text" href="/mensajes-emisor">Mensajes</a></li>
+                            <li class="fas fa-home menu-list__item"><a class="text">Inicio</a></li>
                         </ul>
                     </div>
                 </div>
