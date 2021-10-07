@@ -40,6 +40,7 @@
     @yield('emisor.mensaje-list')
     @yield('emisor.mensaje-create')
     @yield('emisor.mensaje-edit')
+    @yield('emisor.mensaje-show')
     @yield('informatico.user-register')
     @yield('user-list')
     @yield('user-edit')

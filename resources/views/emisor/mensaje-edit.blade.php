@@ -1,18 +1,20 @@
 @extends('dashboard')
 @section('emisor.mensaje-edit')
-    <form action="/mensaje-emisor/{{$mensaje->id}}">
+    <form action="/mensajes-emisor/{{$mensaje->id}}" method="POST">
+        @csrf
+        @method('PUT')
         <div>
             <label for="">Título</label>
-        <input type="text" value="{{$mensaje->titulo}}">
+        <input type="text" value="{{$mensaje->titulo}}" name="titulo">
         </div>
         
         <div>
             <label for="">Descripción</label>
-            <input type="text" value="{{$mensaje->descripcion}}">
+            <input type="text" value="{{$mensaje->descripcion}}" name="descripcion">
         </div>
-        <div>
-            <label for="">Imagen</label>
-            <input type="text">
+        <div >
+            <label for="" >Imagen</label>
+            <input name="imagen" type="text">
         </div>
         <div>
             <select class="mensaje-create__form_select_carrera" name="carrera" id="">
@@ -42,9 +44,26 @@
             <option value="8" {{ old('semestre') == 8 ? 'selected' : '' }}>8</option>
             <option value="9" {{ old('semestre') == 9 ? 'selected' : '' }}>9</option>
         </select>
-        <span><input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social" value="0"> Servicio social</span>
-        <span><input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1"> Residencia</span>
-        <span><input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3"> General</span>
+        @if ($mensaje->otros==0)
+            <span><input checked class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social" value="0"> Servicio social</span>
+            <span><input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1"> Residencia</span>
+            <span><input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3"> General</span>
+        @elseif($mensaje->otros==1)
+            <span><input  class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social" value="0"> Servicio social</span>
+            <span><input checked class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1"> Residencia</span>
+            <span><input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3"> General</span>
+        @elseif($mensaje->otros==2)
+            <span><input checked class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1"> Residencia</span>
+            <span><input checked class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social" value="0"> Servicio social</span>
+            <span><input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3"> General</span>
+        @else
+            <span><input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social" value="0"> Servicio social</span>
+            <span><input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1"> Residencia</span>
+            <span><input checked class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3"> General</span>
+        @endif
+        
+        
+        
         </div>
         </div>
         <button type="submit">Guardar</button>

@@ -54,6 +54,8 @@ class EmisorController extends Controller
             $mensaje -> otros = 1;
         }elseif(isset($_POST["general"])){
             $mensaje -> otros = 3;
+            $mensaje -> carrera = "GENERAL";
+            $mensaje -> semestre = "TODOS";
         }
         
         $mensaje -> save();
@@ -69,7 +71,9 @@ class EmisorController extends Controller
      */
     public function show($id)
     {
-        //
+        $mensaje = Mensaje::find($id);
+        
+        return view('emisor.mensaje-show', compact('mensaje'));
     }
 
     /**
@@ -93,7 +97,24 @@ class EmisorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mensaje = Mensaje::find($id);
+        
+        $mensaje -> titulo = $request->titulo;
+        $mensaje -> descripcion = $request->descripcion;
+        $mensaje -> carrera = $request->carrera;
+        $mensaje -> semestre = $request->semestre;
+        if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+            $mensaje -> otros = 2;
+        }elseif(isset($_POST["servicio"])){
+            $mensaje -> otros = 0;
+        }elseif(isset($_POST["residencia"])){
+            $mensaje -> otros = 1;
+        }elseif(isset($_POST["general"])){
+            $mensaje -> otros = 3;
+        }
+        $mensaje -> save();
+        return redirect('/mensajes-emisor');
+
     }
 
     /**
