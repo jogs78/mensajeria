@@ -82,22 +82,6 @@
         </span>
     </div>
 @endforeach
-    {{-- <div class="user-list__table_row">
-        <span class="user-list__table_item">1</span>
-        <span class="user-list__table_item">Rolando Gomez lopez</span>
-        <span class="user-list__table_item " >rolando@gmail.com
-            <button class="user-list__viewmore" >+</button>
-            <div class="more_information">
-                hola 
-                hola <br>
-                fin
-            </div>
-        </span>
-        <span class="user-list__table_item">Ing.sistema</span>
-        <span class="user-list__table_item">9</span>
-        <span class="user-list__table_item">Estudiante</span>
-        <span class="user-list__table_item">Sin puesto</span>
-    </div>    --}}
 
 </div>
 @if (session('message') == "ok")
@@ -146,9 +130,7 @@
                 this.submit();
             }
             });
-
-
-            
+    
         });
     }
 </script>   

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Emisor;
+use App\Models\mensaje;
 use Illuminate\Http\Request;
 
 class EmisorController extends Controller
@@ -13,7 +15,9 @@ class EmisorController extends Controller
      */
     public function index()
     {
-        return view('emisor.mensaje-list');
+        $mensajes=Mensaje::all();
+        
+        return view('emisor.mensaje-list', compact('mensajes'));
     }
 
     /**
@@ -34,7 +38,27 @@ class EmisorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos = $request->all();
+        
+        $mensaje = new mensaje();
+        $mensaje -> titulo = $datos['titulo'];
+        $mensaje -> descripcion = $datos['descripcion'];
+        $mensaje -> carrera = $datos['carrera'];
+        $mensaje -> semestre = $datos['semestre'];
+        $mensaje -> estado = 0;
+        if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+            $mensaje -> otros = 2;
+        }elseif(isset($_POST["servicio"])){
+            $mensaje -> otros = 0;
+        }elseif(isset($_POST["residencia"])){
+            $mensaje -> otros = 1;
+        }elseif(isset($_POST["general"])){
+            $mensaje -> otros = 3;
+        }
+        
+        $mensaje -> save();
+        // Servicio social (0), Residencia (1), ambos seleccionados (2), General (3)
+        return redirect('/mensajes-emisor');
     }
 
     /**
@@ -79,6 +103,8 @@ class EmisorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(Mensaje::destroy($id)){
+            return redirect()->back()->with('message','ok');
+        }
     }
 }

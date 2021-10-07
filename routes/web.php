@@ -25,9 +25,9 @@ Route::post('/sign-up', 'AutenticarController@signUp');
 Route::get('/', function () {
     return view('emisor.mensaje-create');
 });
-Route::get('/show', function () {
-    return view('emisor.mensaje-list');
-});
+//Route::get('/show', function () {
+  //  return view('emisor.mensaje-list');
+//});
 
 
 
