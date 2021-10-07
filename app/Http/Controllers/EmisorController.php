@@ -80,7 +80,8 @@ class EmisorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mensaje = Mensaje::find($id);
+        return view('emisor.mensaje-edit', compact('mensaje'));
     }
 
     /**

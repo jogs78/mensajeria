@@ -39,6 +39,7 @@
     </header>
     @yield('emisor.mensaje-list')
     @yield('emisor.mensaje-create')
+    @yield('emisor.mensaje-edit')
     @yield('informatico.user-register')
     @yield('user-list')
     @yield('user-edit')

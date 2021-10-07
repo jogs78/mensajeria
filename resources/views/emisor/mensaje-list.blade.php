@@ -23,12 +23,12 @@
             </div>
             <div class="new-messages_actions">
                 <div class="new-messages_edit">
-                    <a href="/mensajes-emisor/{{$mensaje->id}}">
+                    <a href="/mensajes-emisor/{{$mensaje->id}}/edit" style="color: rgb(255, 255, 255)">
                         <span class="fas fa-edit update" title="Editar"></span>
                     </a>
                 </div>
                 <div class="new-messages_show">
-                    <a href="/mensajes-emisor/{{$mensaje->id}}">
+                    <a href="/mensajes-emisor/{{$mensaje->id}}" style="color: rgb(255, 255, 255)">
                         <span class="fab fa-readme" title="Leer"></span>
                     </a>
                 </div>
