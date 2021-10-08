@@ -13,6 +13,8 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     box-shadow: 1px 1px 4px rgb(155, 154, 154);
     height: 88vh;
+    overflow-y: auto;
+    align-content: flex-start;
 }
 
 .container {
@@ -85,6 +87,15 @@
     border-top: 1px solid;
     border-bottom: 1px solid;
     height: min-content;
+    transition-property: transform, background;
+    transition-duration: 100ms;
+    transition-timing-function: ease-in;
+}
+
+.save:active {
+    transform: scale(0.9);
+    background: #0d47a1;
+    color: rgb(255, 255, 255);
 }
 
 @media screen and (min-width:650px) {
@@ -92,6 +103,7 @@
         position: static;
         margin-top: 30px;
         height: auto;
+        overflow: visible;
     }
     .container_image label {
         width: max-content;

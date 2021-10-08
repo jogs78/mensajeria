@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class MensajeController extends Controller
 {
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +29,22 @@ class MensajeController extends Controller
      */
     public function create()
     {
-        return view('mensaje.mensaje-create');
+        $carreras = [
+            'Ingen. Mécanica',
+            'Ingen. Sistemas Computacionales',
+            'Ingen. Industrial',
+            'Ingen. Electrónica',
+            'Ingen. Eléctrica',
+            'Ingen. Bioquímica',
+            'Ingen. Química',
+            'Ingen. Gestión Empresarial',
+            'Maestria en Ciencias en Ingeniería Bioquímica',
+            'Maestría en Ciencias en Ingeniería Mecatrónica',
+            'Doctorado en Ciencias de los Alimentos y Biotecs de los Alimentos y Biotecnología',
+            'Doctorado en Ciencias de la Ingeniería'
+        ];
+        $semestres = [1,2,3,4,5,6,7,8,9];
+        return view('mensaje.mensaje-create', compact('carreras', 'semestres'));
     }
 
     /**
@@ -84,8 +101,23 @@ class MensajeController extends Controller
      */
     public function edit($id)
     {
+        $carreras = [
+            'Ingen. Mécanica',
+            'Ingen. Sistemas Computacionales',
+            'Ingen. Industrial',
+            'Ingen. Electrónica',
+            'Ingen. Eléctrica',
+            'Ingen. Bioquímica',
+            'Ingen. Química',
+            'Ingen. Gestión Empresarial',
+            'Maestria en Ciencias en Ingeniería Bioquímica',
+            'Maestría en Ciencias en Ingeniería Mecatrónica',
+            'Doctorado en Ciencias de los Alimentos y Biotecs de los Alimentos y Biotecnología',
+            'Doctorado en Ciencias de la Ingeniería'
+        ];
+        $semestres = [1,2,3,4,5,6,7,8,9];
         $mensaje = Mensaje::find($id);
-        return view('mensaje.mensaje-edit', compact('mensaje'));
+        return view('mensaje.mensaje-edit', compact('mensaje', 'carreras', 'semestres'));
     }
 
     /**

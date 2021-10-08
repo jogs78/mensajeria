@@ -2,65 +2,6 @@
     --main-bg-color: #0d47a1;
 }
 
-
-/* 
-.mensaje__container {
-    height: 80vh;
-    margin: 20px;
-}
-
-.mensaje__form {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-.container__1,
-.container__2 {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.container__2 {
-    padding: 5px;
-}
-
-.container__1 input {
-    margin: 20px 10px 0 10px;
-    height: 35px;
-    border-radius: 5px;
-}
-
-.container__1 textarea {
-    height: 200px;
-    margin: 20px 10px 20px 10px;
-    border-radius: 5px;
-    resize: none;
-}
-
-.container__2 select {
-    width: 200px;
-    text-align: center;
-    border-radius: 5px;
-    margin-top: 10px;
-    margin-left: 20px;
-}
-
-.container__2 input {
-    margin-top: 10px;
-    margin-left: 20px;
-}
-
-.mensaje__btn_enviar {
-    width: 30%;
-    height: 20px;
-    margin: auto !important;
-    background: var(--main-bg-color);
-    color: rgb(255, 255, 255);
-    border-radius: 0 !important;
-} */
-
 .c1,
 .c2 {
     display: flex;
@@ -143,4 +84,67 @@
     padding: 5px;
     background: transparent;
     height: min-content;
+}
+
+.multiselect {
+    width: 300px;
+    position: relative;
+}
+
+.select2 {
+    width: max-content;
+    position: relative;
+}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    width: 100%;
+    font-weight: bold;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.checkboxes {
+    width: 100%;
+    display: none;
+    border: 1px solid;
+    padding: 3px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 5px;
+    position: relative;
+    background: rgb(255, 255, 255);
+    height: max-content;
+    z-index: 100;
+}
+
+.checkboxes label {
+    border: 0 !important;
+    display: block;
+    padding: 3px !important;
+    width: 100% !important;
+}
+
+.checkboxes label:hover {
+    background: #b3cef5;
+}
+
+@media screen and (min-width:650px) {
+    .mensaje-create__form {
+        height: auto;
+        margin-bottom: 20px;
+    }
+    .checkboxes {
+        position: absolute;
+        bottom: 0;
+        top: 100%;
+    }
 }
