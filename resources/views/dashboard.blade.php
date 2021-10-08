@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('static/css/dashboard_style.css') }}">
-    <link rel="stylesheet" href="{{ asset('static/css/mensaje_list.css') }}">
-    <link rel="stylesheet" href="{{ asset('static/css/mensaje_create.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/css/mensaje_list_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/css/mensaje_create_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/css/mensaje_show_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/css/mensaje_edit_style.css') }}">
+    
     <link rel="stylesheet" href="{{ asset('static/css/user_register_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/user_list_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/user_edit_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css')}}">
+    
     <script src="{{asset('static/css/sweetalert/sweetalert2.all.min.js')}}"></script>
     <title>Bienvenido</title>
 </head>
@@ -24,10 +28,10 @@
                 <div class="menu-container" id="menu">
                     <div class="menu-content">
                         <ul class="menu-list">
-                            <li class="fas fa-home menu-list__item"><a class="text" href="">Inicio</a></li>
-                            <li class="fas fa-user menu-list__item"><a class="text" href="/user">Usuarios</a></li>
-                            <li class="fas fa-envelope menu-list__item"><a class="text" href="/mensajes-emisor">Mensajes</a></li>
-                            <li class="fas fa-home menu-list__item"><a class="text">Inicio</a></li>
+                            <a class="menu-list__item fas fa-home home_selected" href=""><li class="text">Inicio</li></a>
+                            <a class="menu-list__item fas fa-user user_selected" href="/user"><li class="text">Usuarios</li></a>
+                            <a class="menu-list__item fas fa-envelope message_selected" href="/mensajes"><li class="text">Mensajes</li></a>
+                            <a class="menu-list__item fas fa-home"><li class="text">Inicio</li></a>
                         </ul>
                     </div>
                 </div>
@@ -37,10 +41,10 @@
     
 
     </header>
-    @yield('emisor.mensaje-list')
-    @yield('emisor.mensaje-create')
-    @yield('emisor.mensaje-edit')
-    @yield('emisor.mensaje-show')
+    @yield('mensaje.mensaje-list')
+    @yield('mensaje.mensaje-create')
+    @yield('mensaje.mensaje-edit')
+    @yield('mensaje.mensaje-show')
     @yield('informatico.user-register')
     @yield('user-list')
     @yield('user-edit')

@@ -1,6 +1,17 @@
 @extends('dashboard')
 @section('informatico.user-register')
+<style>
+    .user_selected {
+    border-radius: 5px 5px 0 0;
+    box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
+    top: -10px;
+    color: rgb(251, 255, 35);
+}
 
+.user_selected>.text {
+    bottom: 10%;
+}
+</style>
 <section class="user-list">
     <div class="user-register__container">
         {{--@if($errors->any())
@@ -31,25 +42,25 @@
             @csrf
             <div class="div-item_container">
                 <input class="input"  type="text" name="numero_control" value="{{old ('numero_control')}}">
-                <label class="lbl" for="">Número de control</label><br>
+                <label class="lbls" for="">Número de control</label><br>
                 {!! $errors->first('numero_control','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="text" name="name" value="{{old ('name')}}">
-                <label class="lbl" for="">Nombre</label><br>
+                <label class="lbls" for="">Nombre</label><br>
                 {!! $errors->first('name','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="text" name="a_paterno" value="{{old ('a_paterno')}}">
-                <label class="lbl" for="">Apellido paterno</label><br>
+                <label class="lbls" for="">Apellido paterno</label><br>
                 {!! $errors->first('a_paterno','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="text" name="a_materno" value="{{old ('a_materno')}}">
-                <label class="lbl" for="">Apellido materno</label><br>
+                <label class="lbls" for="">Apellido materno</label><br>
                 {!! $errors->first('a_materno','<small>:message</small><br>') !!}
             </div>
 
@@ -90,37 +101,37 @@
 
             <div class="div-item_container">
                 <input class="input" type="text" name="email" value="{{old ('email')}}">
-                <label class="lbl" for="">Correo</label><br>
+                <label class="lbls" for="">Correo</label><br>
                 {!! $errors->first('email','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="password" name="password" value="{{old ('password')}}">
-                <label class="lbl" for="">Contraseña</label><br>
+                <label class="lbls" for="">Contraseña</label><br>
                 {!! $errors->first('password','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="password" name="password_confirm" value="{{old ('password_confirm')}}">
-                <label class="lbl" for="">Contraseña</label><br>
+                <label class="lbls" for="">Contraseña</label><br>
                 {!! $errors->first('password_confirm','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="text" name="rol" value="{{old ('rol')}}">
-                <label class="lbl" for="">Rol</label><br>
+                <label class="lbls" for="">Rol</label><br>
                 {!! $errors->first('rol','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="text" name="puesto" value="{{old ('puesto')}}">
-                <label class="lbl" for="">Puesto</label><br>
+                <label class="lbls" for="">Puesto</label><br>
                 {!! $errors->first('puesto','<small>:message</small><br>') !!}
             </div>
 
             <div class="div-item_container">
                 <input class="input" type="text" name="quien_revisa" value="{{old ('quien_revisa')}}">
-                <label class="lbl" for="">¿Quien revisa?</label><br>
+                <label class="lbls" for="">¿Quien revisa?</label><br>
                 {!! $errors->first('quien_revisa','<small>:message</small><br>') !!}
             </div>
 
@@ -137,7 +148,7 @@
 
 </section>
 <script>
-    let label = document.getElementsByClassName("lbl");
+    let label = document.getElementsByClassName("lbls");
     let input = document.getElementsByClassName("input");
     let alumnos = document.getElementById("alumno");
     let empleados = document.getElementById("empleado");

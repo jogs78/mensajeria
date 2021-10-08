@@ -1,10 +1,21 @@
 @extends('dashboard')
-@section('emisor.mensaje-list')
+@section('mensaje.mensaje-list')
+{{-- <style>
+    .message_selected {
+    border-radius: 5px 5px 0 0;
+    box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
+    top: -10px;
+    color: rgb(251, 255, 35);
+}
 
+.user_selected>.text {
+    bottom: 10%;
+}
+</style> --}}
 
 
 <section class="new-messages">
-    <a href="/mensajes-emisor/create">Redactar mensaje</a>
+    <a class="new-messages__link" href="/mensajes/create">Redactar mensaje</a>
     @foreach ($mensajes as $mensaje)
         <div class="new-messages__container">
             <div class="new-messages__information">
@@ -23,17 +34,17 @@
             </div>
             <div class="new-messages_actions">
                 <div class="new-messages_edit">
-                    <a href="/mensajes-emisor/{{$mensaje->id}}/edit" style="color: rgb(255, 255, 255)">
+                    <a href="/mensajes/{{$mensaje->id}}/edit" style="color: rgb(255, 255, 255)">
                         <span class="fas fa-edit update" title="Editar"></span>
                     </a>
                 </div>
                 <div class="new-messages_show">
-                    <a href="/mensajes-emisor/{{$mensaje->id}}" style="color: rgb(255, 255, 255)">
-                        <span class="fab fa-readme" title="Leer"></span>
+                    <a href="/mensajes/{{$mensaje->id}}" style="color: rgb(255, 255, 255)">
+                        <span class="far fa-file-alt" title="Leer"></span>
                     </a>
                 </div>
                 <div class="new-messages_delete">
-                    <form action="/mensajes-emisor/{{$mensaje->id}}" method="POST" class="form_eliminar">
+                    <form action="/mensajes/{{$mensaje->id}}" method="POST" class="form_eliminar">
                         @csrf
                         @method('DELETE')
                         <button type="submit">

@@ -1,7 +1,19 @@
 @extends('dashboard')
-@section('emisor.mensaje-create')
+@section('mensaje.mensaje-create')
+{{-- <style>
+    .message_selected {
+    border-radius: 5px 5px 0 0;
+    box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
+    top: -10px;
+    color: rgb(251, 255, 35);
+}
+
+.user_selected>.text {
+    bottom: 10%;
+}
+</style> --}}
     <section class="mensaje-create">
-        <form action="/mensajes-emisor" method="POST" class="mensaje-create__form" id="form">
+        <form action="/mensajes" method="POST" class="mensaje-create__form" id="form">
             @csrf
             <div class="c1">
                 <input placeholder="Título" class="mensaje-create__form_title" type="text" name="titulo">
@@ -44,44 +56,13 @@
             <span><input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1"> Residencia</span>
             <span><input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3"> General</span>
             </div>
-            <input id="btn_enviar" class="btn" type="submit" value="Enviar">
+            <input id="btn_enviar" class="btn_en" type="submit" value="Enviar">
         </form>
 
 
-        <form>
-            <div class="multiselect">
-              <div class="selectBox" onclick="showCheckboxes()">
-                <select>
-                  <option>Select an option</option>
-                </select>
-                <div class="overSelect"></div>
-              </div>
-              <div id="checkboxes">
-                <label for="one">
-                  <input type="checkbox" id="one" />First checkbox</label>
-                <label for="two">
-                  <input type="checkbox" id="two" />Second checkbox</label>
-                <label for="three">
-                  <input type="checkbox" id="three" />Third checkbox</label>
-              </div>
-            </div>
-          </form>
+       
 
-    </section>
-
-    <script>
-        var expanded = false;
-        function showCheckboxes() {
-            var checkboxes = document.getElementById("checkboxes");
-            if (!expanded) {
-                checkboxes.style.display = "block";
-                expanded = true;
-            }else {
-                checkboxes.style.display = "none";
-                expanded = false;
-            }
-         }
-    </script>    
+       
 @endsection
 
 

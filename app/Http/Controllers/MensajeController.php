@@ -6,7 +6,7 @@ use App\Models\Emisor;
 use App\Models\mensaje;
 use Illuminate\Http\Request;
 
-class EmisorController extends Controller
+class MensajeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class EmisorController extends Controller
     {
         $mensajes=Mensaje::all();
         
-        return view('emisor.mensaje-list', compact('mensajes'));
+        return view('mensaje.mensaje-list', compact('mensajes'));
     }
 
     /**
@@ -27,7 +27,7 @@ class EmisorController extends Controller
      */
     public function create()
     {
-        return view('emisor.mensaje-create');
+        return view('mensaje.mensaje-create');
     }
 
     /**
@@ -60,7 +60,7 @@ class EmisorController extends Controller
         
         $mensaje -> save();
         // Servicio social (0), Residencia (1), ambos seleccionados (2), General (3)
-        return redirect('/mensajes-emisor');
+        return redirect('/mensajes');
     }
 
     /**
@@ -73,7 +73,7 @@ class EmisorController extends Controller
     {
         $mensaje = Mensaje::find($id);
         
-        return view('emisor.mensaje-show', compact('mensaje'));
+        return view('mensaje.mensaje-show', compact('mensaje'));
     }
 
     /**
@@ -85,7 +85,7 @@ class EmisorController extends Controller
     public function edit($id)
     {
         $mensaje = Mensaje::find($id);
-        return view('emisor.mensaje-edit', compact('mensaje'));
+        return view('mensaje.mensaje-edit', compact('mensaje'));
     }
 
     /**
@@ -113,7 +113,7 @@ class EmisorController extends Controller
             $mensaje -> otros = 3;
         }
         $mensaje -> save();
-        return redirect('/mensajes-emisor');
+        return redirect('/mensajes');
 
     }
 

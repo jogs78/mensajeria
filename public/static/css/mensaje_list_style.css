@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+.new-messages {
+    height: 90vh;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
 .new-messages__container {
     /* background: rgb(17, 0, 255); */
     display: flex;
@@ -13,6 +19,16 @@
     margin-top: 10px;
 }
 
+.new-messages__link {
+    text-align: center;
+    display: block;
+    background: #adadad63;
+    padding: 5px;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    font-weight: 800;
+}
+
 .new-messages__information {
     display: flex;
     flex-direction: column;
@@ -20,13 +36,10 @@
     border-radius: 10px;
     border: 0;
     padding: 5px;
-    background: #36D1DC;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #5B86E5, #36D1DC);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #5B86E5, #36D1DC);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background-color: #e5e5f7;
+    opacity: 0.8;
+    background-size: 20px 20px;
+    background-image: repeating-linear-gradient(0deg, #c6c9fc, #c6c9fc 1px, #e5e5f7 1px, #e5e5f7);
 }
 
 .new-messages__information label {

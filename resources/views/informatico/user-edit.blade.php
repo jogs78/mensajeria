@@ -1,10 +1,23 @@
 @extends('dashboard')
 @section('user-edit')
+<style>
+    .user_selected {
+    border-radius: 5px 5px 0 0;
+    box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
+    top: -10px;
+    color: rgb(251, 255, 35);
+}
+
+.user_selected>.text {
+    bottom: 10%;
+}
+</style>
 @if (session('message'))
 {{session('message')}}
 
     
 @endif
+
     @if ($alumno != "")
         <form action="/user/{{$alumno->numero_control}}" class="form-edit" method="POST">
             @csrf

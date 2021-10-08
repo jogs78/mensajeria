@@ -5,6 +5,11 @@
     text-decoration: none;
 }
 
+.user-list {
+    height: 90vh;
+    overflow-y: scroll;
+}
+
 .user-list__table_container {
     width: 100vw;
     margin: 15px 0;
@@ -117,6 +122,18 @@
     height: 21px;
     cursor: pointer;
 }
+
+
+/* .user_selected {
+    border-radius: 5px 5px 0 0;
+    box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
+    top: -10px;
+    color: rgb(251, 255, 35);
+}
+
+.user_selected>.text {
+    bottom: 10%;
+} */
 
 @media screen and (min-width:650px) {
     .user-list__table_header {

@@ -70,7 +70,8 @@
 }
 
 .mensaje-create__form {
-    width: 90vw;
+    width: 67vw;
+    height: 88vh;
     min-width: 300px;
     margin: auto;
     display: grid;
@@ -80,7 +81,6 @@
     grid-gap: 5px;
     justify-content: center;
     margin-top: 20px;
-    margin-bottom: 80px;
     padding: 5px;
     border-radius: 5px;
     box-shadow: 1px 1px 4px rgb(155, 154, 154);
@@ -136,37 +136,11 @@
     margin-top: 15px;
 }
 
-
-.multiselect {
-    width: 200px;
-  }
-  
-  .selectBox {
-    position: relative;
-  }
-  
-  .selectBox select {
-    width: 100%;
-    font-weight: bold;
-  }
-  
-  .overSelect {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-  }
-  
-  #checkboxes {
-    display: none;
-    border: 1px #dadada solid;
-  }
-  
-  #checkboxes label {
-    display: block;
-  }
-  
-  #checkboxes label:hover {
-    background-color: #1e90ff;
-  }
+.btn_en {
+    width: 30%;
+    margin: 10px auto;
+    border: 1px solid !important;
+    padding: 5px;
+    background: transparent;
+    height: min-content;
+}
