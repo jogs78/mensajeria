@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emisor;
+use App\Models\Men;
 use App\Models\mensaje;
 use Illuminate\Http\Request;
 
@@ -56,26 +57,40 @@ class MensajeController extends Controller
     public function store(Request $request)
     {
         $datos = $request->all();
-        
         $mensaje = new mensaje();
         $mensaje -> titulo = $datos['titulo'];
         $mensaje -> descripcion = $datos['descripcion'];
-        $mensaje -> carrera = $datos['carrera'];
-        $mensaje -> semestre = $datos['semestre'];
+        $mensaje -> carrera = "null";
+        $mensaje -> semestre = 1;
         $mensaje -> estado = 0;
         if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
             $mensaje -> otros = 2;
         }elseif(isset($_POST["servicio"])){
             $mensaje -> otros = 0;
+            $general=0;
         }elseif(isset($_POST["residencia"])){
             $mensaje -> otros = 1;
+            $general=0;
         }elseif(isset($_POST["general"])){
             $mensaje -> otros = 3;
             $mensaje -> carrera = "GENERAL";
             $mensaje -> semestre = "TODOS";
+            $general=1;
         }
-        
         $mensaje -> save();
+
+        $datos2 = $request->all();
+       
+        for($i=0;$i<12;$i++){
+            $men = new men();
+            $men -> estado = 0;
+            $men -> semestre = 1;
+            $men -> carrera = "d";
+            $men -> general = $general;
+            $men -> save(); 
+        }
+
+        
         // Servicio social (0), Residencia (1), ambos seleccionados (2), General (3)
         return redirect('/mensajes');
     }

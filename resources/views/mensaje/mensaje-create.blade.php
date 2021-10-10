@@ -28,19 +28,19 @@
                 <div class="multiselect">
                     <div class="selectBox" >
                         <select class="mensaje-create__form_select_carrera" name="carrera" id="">
-                            <option >Seleccione una carrera</option>
+                            <option value="">Seleccione una carrera</option>
                         </select>
                         <div class="overSelect"></div>
                     </div>
                     <div class="checkboxes">
                         @for ($i = 0; $i < sizeof($carreras); $i++ )
-                            <label><input type="checkbox" value="{{$carreras[$i]}}" {{ old('carrera') == $carreras[$i] ? 'selected' : '' }}>{{$carreras[$i]}}</label>
+                            <label><input type="checkbox" name="car[]" value="{{$carreras[$i]}}" {{ old('carrera') == $carreras[$i] ? 'selected' : '' }}>{{$carreras[$i]}}</label>
                         @endfor
                     </div>
                 </div>
                 <div class="multiselect select2">
                     <div class="selectBox" >
-                        <select class="mensaje-create__form_select_semestre" name="semestre" id="" >
+                        <select class="mensaje-create__form_select_semestre" name="semestre[]" id="" >
                             <option value="">Semestre</option>
                             
                         </select>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="checkboxes">
                         @for ($i = 0; $i < sizeof($semestres); $i++ )
-                            <label><input type="checkbox" value="{{$semestres[$i]}}" {{ old('semestres') == $semestres[$i] ? 'selected' : '' }}>{{$semestres[$i]}}</label>
+                            <label><input type="checkbox" name="sem[]" value="{{$semestres[$i]}}" {{ old('semestres') == $semestres[$i] ? 'selected' : '' }}>{{$semestres[$i]}}</label>
                         @endfor
                     </div>
             </div>
