@@ -24,7 +24,7 @@ class CreateAlumnosTable extends Migration
             $table->string('correo',50);
             $table->string('contraseña',500);
             $table->string('foto_perfil',1000)->nullable();
-            $table->timestamps();//created_up updated_up
+            $table->timestamps();//created_up updated_up////
         });
     }
 

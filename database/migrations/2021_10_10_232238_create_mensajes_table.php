@@ -22,7 +22,7 @@ class CreateMensajesTable extends Migration
             $table->string('imagen',600);
             $table->string('carrera',100);
             $table->integer('semestre');
-            $table->string('otros');
+            $table->string('otros');///
         });
     }
 

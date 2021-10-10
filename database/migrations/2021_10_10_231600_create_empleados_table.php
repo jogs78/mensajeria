@@ -24,7 +24,7 @@ class CreateEmpleadosTable extends Migration
             $table->enum('rol', ["Alumno", "Emisor", "Revisor", "Difusor", "Informatico"]);
             $table->enum('puesto', ["puesto1","puesto2","puesto3"]);
             $table->string('quien_revisa',100);
-            $table->integer('mensaje_id')->nullable();
+            $table->integer('mensaje_id')->nullable();///
         });
     }
 
