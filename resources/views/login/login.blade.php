@@ -36,9 +36,13 @@
                     <li>Ciencia y Tecnologia con sentido humano</li>
                 </ul> --}}
 
-                <img src="{{ asset('static/imagenes/mascota_ittg.png') }}" alt="">
+                <img src="{{ asset('static/imagenes/mascota_ittg.png') }}" alt="" id="img1">
+                <div id="img2">
+                    <img src="{{ asset('static/imagenes/ittg_escudo.svg') }}" alt="" id="">
+                </div>
             </div>
             <div class="login__form">
+                
                 <form action="/log-in" method="POST">
                     @csrf
                     <div class="login__form_name">

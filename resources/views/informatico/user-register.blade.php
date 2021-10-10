@@ -1,7 +1,7 @@
 @extends('dashboard')
 @section('informatico.user-register')
 <style>
-    .user_selected {
+    /* .user_selected {
     border-radius: 5px 5px 0 0;
     box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
     top: -10px;
@@ -10,7 +10,7 @@
 
 .user_selected>.text {
     bottom: 10%;
-}
+} */
 </style>
 <section class="user-list">
     <div class="user-register__container">

@@ -1,7 +1,7 @@
 @extends('dashboard')
 @section('user-list')
 <style>
-    .user_selected {
+    /* .user_selected {
     border-radius: 5px 5px 0 0;
     box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
     top: -10px;
@@ -10,7 +10,7 @@
 
 .user_selected>.text {
     bottom: 10%;
-}
+} */
 </style>
 <section class="user-list">
     <div class="user-list__table_container">
@@ -36,7 +36,7 @@
                             <span>Semestres: {{$alumno->semestre}}</span>
                             <span>Rol: Estudiante</span>
                                 <ul>
-                                    <a href="" style="color: black"><li class="fas fa-edit update" title="editar"> Editar</li></a>
+                                    <a href="/user/{{$alumno->numero_control}}/edit" style="color: black"><li class="fas fa-edit update" title="editar">Editar</li></a>
                                     <form action="/user/{{$alumno->numero_control}}" style="display: inline" class="form-eliminar" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -71,7 +71,7 @@
                         <span>Rol: {{$empleado->rol}}</span>
                         <span>Puesto: {{$empleado->puesto}}</span>
                             <ul>
-                                <a href="" style="color: black"><li class="fas fa-edit update" title="editar"> Editar</li></a>
+                                <a href="/user/{{$empleado->id}}/edit" style="color: black"><li class="fas fa-edit update" title="editar"> Editar</li></a>
                                 <form action="/user/{{$empleado->id}}" style="display: inline" class="form-eliminar" method="POST">
                                     @csrf
                                     @method('DELETE')

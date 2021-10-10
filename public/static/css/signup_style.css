@@ -60,12 +60,7 @@
 }
 
 .login__img {
-    width: 100%;
-    max-width: 450px;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
+    display: none;
 }
 
 .login__img img {
@@ -83,17 +78,15 @@
     width: 100%;
     height: 100%;
     background-color: #ffffff13;
-    display: flex;
-    flex-direction: column;
-    /* margin: auto; */
-    justify-content: center;
-    align-items: center;
+    background: white;
+    border: 4px solid #0d47a1;
 }
 
 .login__form form {
     display: block;
     padding: 5px 10px;
-    width: 70%;
+    width: 90%;
+    margin: 25% auto;
 }
 
 .login__form input {
@@ -101,7 +94,7 @@
     height: 35px;
     border-radius: 5px;
     font-size: 18px;
-    background: rgba(250, 250, 250, 0);
+    background: transparent;
 }
 
 .login__personal_information {
@@ -156,12 +149,17 @@
 }
 
 .login__form_btn {
-    width: 40%;
+    width: 50%;
     height: 20px;
     margin: auto;
     background: var(--main-bg-color) !important;
     color: rgb(255, 255, 255);
-    border-radius: 0 !important;
+    border-radius: 18px !important;
+    transition: transform 300ms;
+}
+
+.login__form_btn:active {
+    transform: scale(0.9);
 }
 
 .login__links {
@@ -205,6 +203,11 @@
         flex-direction: row-reverse;
     }
     .login__img {
+        width: 100%;
+        max-width: 450px;
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
         width: 40%;
         height: 100%;
         align-self: flex-end;
@@ -226,28 +229,26 @@
     .title li {
         color: rgb(255, 255, 255);
         animation-name: slideOutDown;
-        animation-duration: 3500ms;
-        animation-fill-mode: backwards;
+        animation-duration: 5000ms;
+        animation-fill-mode: forwards;
         animation-iteration-count: infinite;
     }
     .title li:nth-child(1) {
-        animation-delay: 1000ms;
-        margin-bottom: 10px;
+        animation-delay: 0ms;
+        margin-top: 10px;
     }
     .title li:nth-child(2) {
-        animation-delay: 1500ms;
-        margin: 10px;
+        animation-delay: 2000ms;
     }
     @keyframes slideOutDown {
         0% {
-            transform: translateY(0px);
+            transform: translateY(0);
         }
         50% {
-            transform: translateY(-70px);
+            transform: translateY(-150px);
         }
         100% {
-            transform: translateY(-150px);
-            opacity: .777;
+            transform: translateY(-400px);
         }
     }
     .login__form {
