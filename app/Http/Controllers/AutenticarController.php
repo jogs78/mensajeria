@@ -3,31 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 class AutenticarController extends Controller
 {
     //
     public function logIn(Request $request){
         $validator=$request->validate([
-            'num_control' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ], [
-            'num_control.required' => 'El campo numero de control es requerido',
+            'email.required' => 'El campo numero de control es requerido',
         ]);
-        $personalInformation = $request -> all();
-        $alumno = Alumno::find($personalInformation['num_control'], ['numero_control', 'contraseña']);
-        
+       $email = $request->input('email');
+       $password = $request->input('password');
+        $alumno = Alumno::where('correo', $email)->first();
+        $empleado = Empleado::where('correo', $email)->first();
         if(is_null($alumno)){
             //return redirect() -> back() -> with('message', '¡Error! Usuario no registrado');
-            return back()->withErrors('¡Error! Usuario no registrado')->withInput();
+            return back()->withErrors('¡Error! Datos incorrectos')->withInput();
         }else{
-            if($personalInformation['num_control'] != $alumno -> numero_control || $personalInformation['password'] !=  Hash::check($personalInformation['password'], $alumno -> contraseña)){
-                return back()->withErrors('¡Error! Datos ingresados erroneos')->withInput();
-            }
-            if($personalInformation['num_control'] == $alumno -> numero_control && $personalInformation['password'] ==  Hash::check($personalInformation['password'], $alumno -> contraseña)){
+            if($email == $alumno -> correo && $password ==  Hash::check($password, $alumno -> contraseña)){
+                //Auth::login($alumno);
                 return view('alumno.example');
+            }
+        }
+        if(is_null($empleado)){
+            //return redirect() -> back() -> with('message', '¡Error! Usuario no registrado');
+            return back()->withErrors('¡Error! Datos incorrectos')->withInput();
+        }else{
+            if($email == $empleado -> correo && $password ==  Hash::check($password, $empleado -> pass)){
+                
+                return "user em logged";
             }
         }
     }
@@ -48,14 +57,14 @@ class AutenticarController extends Controller
             
             // $alumno -> fill($personalInformation);
             // $pregunta->producto_id=$enviar['id_producto'];
-            $alumno -> numero_control = $personalInformation['num_control'];
+            $alumno -> id = $personalInformation['num_control'];
             $alumno -> nombre = $personalInformation['name'];
             $alumno -> apellido_paterno = $personalInformation['a_paterno'];
             $alumno -> apellido_materno = $personalInformation['a_materno'];
-            $alumno -> carrera = $personalInformation['carrera'];
-            $alumno -> semestre = $personalInformation['semestre'];
             $alumno -> correo = $personalInformation['correo'];
             $alumno -> contraseña = Hash::make($personalInformation['password']);
+            $alumno -> carrera_id = $personalInformation['carrera'];
+            $alumno -> semestre_id = $personalInformation['semestre'];
             $alumno -> save();
             return redirect() -> back() -> with('message', 'Registro exitoso');
             return $personalInformation;

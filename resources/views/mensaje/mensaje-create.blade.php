@@ -33,9 +33,9 @@
                         <div class="overSelect"></div>
                     </div>
                     <div class="checkboxes">
-                        @for ($i = 0; $i < sizeof($carreras); $i++ )
-                            <label><input type="checkbox" name="car[]" value="{{$carreras[$i]}}" {{ old('carrera') == $carreras[$i] ? 'selected' : '' }}>{{$carreras[$i]}}</label>
-                        @endfor
+                        @foreach ($carreras as $carrera)
+                            <label><input type="checkbox" name="car[]" value="{{$carrera->id}}" {{ old('carrera') == $carrera->id ? 'selected' : '' }}>{{$carrera->name}}</label>
+                        @endforeach
                     </div>
                 </div>
                 <div class="multiselect select2">
@@ -47,9 +47,9 @@
                         <div class="overSelect"></div>
                     </div>
                     <div class="checkboxes">
-                        @for ($i = 0; $i < sizeof($semestres); $i++ )
-                            <label><input type="checkbox" name="sem[]" value="{{$semestres[$i]}}" {{ old('semestres') == $semestres[$i] ? 'selected' : '' }}>{{$semestres[$i]}}</label>
-                        @endfor
+                        @foreach ($semestres as $semestre)
+                            <label><input type="checkbox" name="sem[]" value="{{$semestre->id}}" {{ old('semestres') == $semestre->id ? 'selected' : '' }}>{{$semestre->semestre}}</label>
+                        @endforeach
                     </div>
             </div>
             

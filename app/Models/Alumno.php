@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alumno extends Model
 {
-    public $timestamps = false;
-    public $incrementing = false;
-    protected $primaryKey = 'numero_control';
-    protected $fillable = ['numero_control', 'nombre', 'apellido_paterno', 'apellido_materno', 'carrera', 'semestre', 'correo', 'contraseña', 'foto_perfil']; 
+  
+    protected $fillable = ['id', 'nombre', 'apellido_paterno', 'apellido_materno','correo', 'contraseña', 'foto_perfil', 'carrera_id', 'semestre_id']; 
     use HasFactory;
+//relacion 1:N inverso
+    public function semestre(){
+        return $this -> belongsTo('App\Models\Semestre');
+    }
+    public function carrera(){
+        return $this -> belongsTo('App\Models\Carrera');
+    }
 }

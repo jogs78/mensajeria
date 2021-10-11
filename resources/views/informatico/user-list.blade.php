@@ -27,17 +27,17 @@
         
             @foreach ($alumnos as $alumno)
                 <div class="user-list__table_row">
-                    <span class="user-list__table_item">{{$alumno->numero_control}}</span>
+                    <span class="user-list__table_item">{{$alumno->id}}</span>
                     <span class="user-list__table_item">{{$alumno->nombre.$alumno->a_paterno.$alumno->a_materno}}</span>
                     <span class="user-list__table_item " >{{$alumno->correo}}
                         <i class="user-list__viewmore fas fa-sort-down show"></i>
                         <div class="more_information">
-                            <span>Carrera: {{$alumno->carrera}} </span>
-                            <span>Semestres: {{$alumno->semestre}}</span>
+                            <span>Carrera: {{$alumno->carrera_id}} </span>
+                            <span>Semestres: {{$alumno->semestre_id}}</span>
                             <span>Rol: Estudiante</span>
                                 <ul>
-                                    <a href="/user/{{$alumno->numero_control}}/edit" style="color: black"><li class="fas fa-edit update" title="editar">Editar</li></a>
-                                    <form action="/user/{{$alumno->numero_control}}" style="display: inline" class="form-eliminar" method="POST">
+                                    <a href="/user/{{$alumno->id}}/edit" style="color: black"><li class="fas fa-edit update" title="editar">Editar</li></a>
+                                    <form action="/user/{{$alumno->id}}" style="display: inline" class="form-eliminar" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="fas fa-trash-alt eliminar" title="eliminar">Eliminar</button>
@@ -46,13 +46,13 @@
                             </span>
                         </div>
                     </span>
-                    <span class="user-list__table_item">{{$alumno->carrera}}</span>
-                    <span class="user-list__table_item">{{$alumno->semestre}}</span>
+                    <span class="user-list__table_item">{{$alumno->carrera->name}}</span>
+                    <span class="user-list__table_item">{{$alumno->semestre->semestre}}</span>
                     <span class="user-list__table_item">Estudiante</span>
                     <span class="user-list__table_item">----------</span>
                     <span class="user-list__table_item">
-                        <a href="/user/{{$alumno->numero_control}}/edit" style="color: black"><i class="fas fa-edit" title="editar"></i></a>
-                        <form action="/user/{{$alumno->numero_control}}" style="display: inline" class="form-eliminar" method="POST">
+                        <a href="/user/{{$alumno->id}}/edit" style="color: black"><i class="fas fa-edit" title="editar"></i></a>
+                        <form action="/user/{{$alumno->id}}" style="display: inline" class="form-eliminar" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="fas fa-trash-alt eliminar" title="eliminar"></button>

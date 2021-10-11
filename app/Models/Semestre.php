@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Carrera extends Model
+class Semestre extends Model
 {
-    public $timestamps = false;
-    protected $fillable = ['name']; 
     use HasFactory;
-
-    
-
-    //relacion muchos a muchos
+    //relacion 1:N 
+    public function alumnos(){
+        return $this -> hasMany('App\Models\Alumno');
+    }
     public function mensajes(){
         return $this->belongsToMany('App\Models\Mensaje');
-    }
-    public function alumnos(){
-        return $this->belongsToMany('App\Models\Alumno');
     }
 }

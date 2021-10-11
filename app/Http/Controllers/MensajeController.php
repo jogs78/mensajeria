@@ -6,6 +6,7 @@ use App\Models\Emisor;
 use App\Models\Men;
 use App\Models\mensaje;
 use App\Models\carrera;
+use App\Models\Semestre;
 use Illuminate\Http\Request;
 
 class MensajeController extends Controller
@@ -31,22 +32,8 @@ class MensajeController extends Controller
      */
     public function create(Request $request)
     {
-        $carreras = Carrera::find();
-        /*$carreras = [
-            'Ingen. Mécanica',
-            'Ingen. Sistemas Computacionales',
-            'Ingen. Industrial',
-            'Ingen. Electrónica',
-            'Ingen. Eléctrica',
-            'Ingen. Bioquímica',
-            'Ingen. Química',
-            'Ingen. Gestión Empresarial',
-            'Maestria en Ciencias en Ingeniería Bioquímica',
-            'Maestría en Ciencias en Ingeniería Mecatrónica',
-            'Doctorado en Ciencias de los Alimentos y Biotecs de los Alimentos y Biotecnología',
-            'Doctorado en Ciencias de la Ingeniería'
-        ];*/
-        $semestres = [1,2,3,4,5,6,7,8,9];
+        $carreras = Carrera::all();
+        $semestres = Semestre::all();
         return view('mensaje.mensaje-create', compact('carreras', 'semestres'));
     }
 

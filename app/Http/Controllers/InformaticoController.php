@@ -7,7 +7,8 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Semestre;
+use App\Models\Carrera;
 class InformaticoController extends Controller
 {
     /**
@@ -17,9 +18,10 @@ class InformaticoController extends Controller
      */
     public function index()
     {
-        $alumnos = DB::table('alumnos')
-                ->select('numero_control','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'carrera', 'semestre', 'correo')
-                ->get();
+        // $alumnos = DB::table('alumnos')
+        //         ->select('id','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'carrera_id', 'semestre_id', 'correo')
+        //         ->get();
+        $alumnos = Alumno::with('carrera','semestre')->get();
         $empleados = DB::table('empleados')
                 ->select('id','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'correo', 'rol', 'puesto')
                 ->get();
@@ -33,8 +35,9 @@ class InformaticoController extends Controller
      */
     public function create()
     {
-
-        return view('informatico.user-register');
+        $semestres = Semestre::all();
+        $carreras = Carrera::all();
+        return view('informatico.user-register', compact('semestres', 'carreras'));
     }
 
     /**
@@ -46,7 +49,7 @@ class InformaticoController extends Controller
     public function store(Request $request)
     {
         $informacion = $request ->all();
-//
+
         request()->validate([
             'name' => 'required',
             'a_paterno' => 'required',
@@ -153,7 +156,7 @@ class InformaticoController extends Controller
             }elseif($request->contraseña=="" || $request->contraseña_confirm== ""){
                 unset($request->contraseña);
                 unset($request->contraseña_confirm);
-                $alumno ->numero_control = $request->numero_control;
+                $alumno ->id = $request->numero_control;
                 $alumno -> nombre = $request -> name;
                 $alumno -> apellido_paterno = $request -> a_paterno;
                 $alumno -> apellido_materno = $request -> a_materno;

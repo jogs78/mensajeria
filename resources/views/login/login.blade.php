@@ -46,11 +46,11 @@
                 <form action="/log-in" method="POST">
                     @csrf
                     <div class="login__form_name">
-                        <input class="name" type="text" name="num_control" id="num_control" value="{{old('num_control')}}">
-                        <label for="" class="lbl_name">Número de control</label>
+                        <input class="name" type="text" name="email" id="num_control" value="{{old('email')}}">
+                        <label for="" class="lbl_name">Correo electrónico</label>
                     </div>
                     <div class="login__form_password">
-                        <input class="password" type="text" name="password" id="password" value="{{old('password')}}">
+                        <input class="password" type="password" name="password" id="password" value="{{old('password')}}">
                         <label for="" class="lbl_contraseña">Contraseña</label>
                     </div>
                     <input class="login__form_btn" type="submit" value="Iniciar">

@@ -41,11 +41,11 @@
             </div>
             <div class="form-edit__item">
                 <label for="">Carrera</label>
-                <input type="text" name="carrera" id="" value="{{$alumno->carrera}}">
+                <input type="text" name="carrera" id="" value="{{$alumno->carrera_id}}">
             </div>
             <div class="form-edit__item">
                 <label for="">Semestre</label>
-                <input type="text" name="semestre" id="" value="{{$alumno->semestre}}">
+                <input type="text" name="semestre" id="" value="{{$alumno->semestre_id}}">
             </div>
             <div class="form-edit__item">
                 <label for="">Correo</label>

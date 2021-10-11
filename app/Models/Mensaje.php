@@ -16,4 +16,11 @@ class mensaje extends Model
     public function carreras(){
         return $this->belongsToMany('App\Models\Carrera');
     }
+    public function semestres(){
+        return $this->belongsToMany('App\Models\Semestre');
+    }
+    //relacion 1:N indirecta
+    public function empleado(){
+        return $this -> belongsTo('App\Models\Empleado');
+    }
 }

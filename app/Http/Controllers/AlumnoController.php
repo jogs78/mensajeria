@@ -73,21 +73,21 @@ class AlumnoController extends Controller
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
         }
         
-        $empleado = new Alumno();
+        $alumno = new Alumno();
         unset($informacion['rol']);
         unset($informacion['puesto']);
         unset($informacion['quien_envia']);
         unset($informacion['password_confirm']);
 
-        $empleado -> numero_control = $informacion['numero_control'];
-        $empleado -> nombre = $informacion['name'];
-        $empleado -> apellido_paterno = $informacion['a_paterno'];
-        $empleado -> apellido_materno = $informacion['a_materno'];
-        $empleado -> carrera = $informacion['carrera'];
-        $empleado -> semestre = $informacion['semestre'];
-        $empleado -> correo = $informacion['email'];
-        $empleado -> contraseña = Hash::make($informacion['password']);
-        $empleado -> save();
+        $alumno -> id = $informacion['numero_control'];
+        $alumno -> nombre = $informacion['name'];
+        $alumno -> apellido_paterno = $informacion['a_paterno'];
+        $alumno -> apellido_materno = $informacion['a_materno'];
+        $alumno -> carrera_id = $informacion['carrera'];
+        $alumno -> semestre_id = $informacion['semestre'];
+        $alumno -> correo = $informacion['email'];
+        $alumno -> contraseña = Hash::make($informacion['password']);
+        $alumno -> save();
         return redirect() -> back() -> with('message', 'Registro exitoso');
     }
 
