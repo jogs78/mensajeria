@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Empleado extends Model
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
+class Empleado extends Model implements AuthenticatableContract
 {
+    use Authenticatable;
     public $timestamps = false;
     protected $fillable = ['nombre', 'apellido_paterno', 'apellido_materno', 'correo', 'pass', 'rol', 'puesto', 'quien_revisa', 'mensaje_id']; 
     use HasFactory;

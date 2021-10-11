@@ -17,28 +17,28 @@ class AutenticarController extends Controller
         ], [
             'email.required' => 'El campo numero de control es requerido',
         ]);
-       $email = $request->input('email');
-       $password = $request->input('password');
+        $email = $request->input('email');
+        $password = $request->input('password');
         $alumno = Alumno::where('correo', $email)->first();
         $empleado = Empleado::where('correo', $email)->first();
         if(is_null($alumno)){
-            //return redirect() -> back() -> with('message', '¡Error! Usuario no registrado');
+            if(is_null($empleado)){
+            return back()->withErrors('¡Error! Datos incorrectoss')->withInput();
+            }else{
+            if($email == $empleado -> correo && $password ==  Hash::check($password, $empleado -> pass)){
+                Auth::login($empleado);
+                return "user em logged";
+                }
+            }
             return back()->withErrors('¡Error! Datos incorrectos')->withInput();
         }else{
-            if($email == $alumno -> correo && $password ==  Hash::check($password, $alumno -> contraseña)){
-                //Auth::login($alumno);
+            if(Hash::check($password, $alumno -> contraseña)){
+                $usr = $alumno;
+                Auth::login($usr);
                 return view('alumno.example');
             }
         }
-        if(is_null($empleado)){
-            //return redirect() -> back() -> with('message', '¡Error! Usuario no registrado');
-            return back()->withErrors('¡Error! Datos incorrectos')->withInput();
-        }else{
-            if($email == $empleado -> correo && $password ==  Hash::check($password, $empleado -> pass)){
-                
-                return "user em logged";
-            }
-        }
+        
     }
     public function logOut(){
 
