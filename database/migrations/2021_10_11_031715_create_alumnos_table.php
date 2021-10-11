@@ -14,16 +14,24 @@ class CreateAlumnosTable extends Migration
     public function up()
     {
         Schema::create('alumnos', function (Blueprint $table) {
-            $table->id();
-            $table->integer('numero_control');
+            $table->integer('id')->primary();
             $table->string('nombre', 100);
             $table->string('apellido_paterno',50);
             $table->string('apellido_materno',50);
-            $table->string('carrera',50);
-            $table->integer('semestre');
             $table->string('correo',50);
             $table->string('contraseña',500);
             $table->string('foto_perfil',1000)->nullable();
+
+            //llaves foraneas
+            $table->unsignedBigInteger('carrera_id');
+            $table->unsignedBigInteger('semestre_id');
+
+            $table->foreign('carrera_id')
+                    ->references('id')->on('carreras');
+
+            $table->foreign('semestre_id')
+                    ->references('id')->on('semestres');
+
             $table->timestamps();//created_up updated_up
         });
     }

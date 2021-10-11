@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Emisor;
 use App\Models\Men;
 use App\Models\mensaje;
+use App\Models\carrera;
 use Illuminate\Http\Request;
 
 class MensajeController extends Controller
@@ -28,9 +29,10 @@ class MensajeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $carreras = [
+        $carreras = Carrera::find();
+        /*$carreras = [
             'Ingen. Mécanica',
             'Ingen. Sistemas Computacionales',
             'Ingen. Industrial',
@@ -43,7 +45,7 @@ class MensajeController extends Controller
             'Maestría en Ciencias en Ingeniería Mecatrónica',
             'Doctorado en Ciencias de los Alimentos y Biotecs de los Alimentos y Biotecnología',
             'Doctorado en Ciencias de la Ingeniería'
-        ];
+        ];*/
         $semestres = [1,2,3,4,5,6,7,8,9];
         return view('mensaje.mensaje-create', compact('carreras', 'semestres'));
     }
@@ -60,10 +62,11 @@ class MensajeController extends Controller
         $mensaje = new mensaje();
         $mensaje -> titulo = $datos['titulo'];
         $mensaje -> descripcion = $datos['descripcion'];
-        $mensaje -> carrera = "null";
-        $mensaje -> semestre = 1;
         $mensaje -> estado = 0;
-        if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+        $mensaje -> imagen="jhasdkhkd";
+        $mensaje -> empleado_id=1;
+
+        /*if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
             $mensaje -> otros = 2;
         }elseif(isset($_POST["servicio"])){
             $mensaje -> otros = 0;
@@ -76,19 +79,12 @@ class MensajeController extends Controller
             $mensaje -> carrera = "GENERAL";
             $mensaje -> semestre = "TODOS";
             $general=1;
-        }
+        }*/
         $mensaje -> save();
+        $mensaje ->carreras()->attach([1]);
+        $mensaje ->carreras()->attach([2]);
 
-        $datos2 = $request->all();
-       
-        for($i=0;$i<12;$i++){
-            $men = new men();
-            $men -> estado = 0;
-            $men -> semestre = 1;
-            $men -> carrera = "d";
-            $men -> general = $general;
-            $men -> save(); 
-        }
+        
 
         
         // Servicio social (0), Residencia (1), ambos seleccionados (2), General (3)

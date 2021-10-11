@@ -15,7 +15,6 @@ class CreateEmpleadosTable extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();//created_up updated_up
             $table->string('nombre',50);
             $table->string('apellido_paterno',50);
             $table->string('apellido_materno',50);
@@ -24,7 +23,7 @@ class CreateEmpleadosTable extends Migration
             $table->enum('rol', ["Alumno", "Emisor", "Revisor", "Difusor", "Informatico"]);
             $table->enum('puesto', ["puesto1","puesto2","puesto3"]);
             $table->string('quien_revisa',100);
-            $table->integer('mensaje_id')->nullable();
+            $table->timestamps();//created_up updated_up
         });
     }
 
