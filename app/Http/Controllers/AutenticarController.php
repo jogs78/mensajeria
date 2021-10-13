@@ -25,9 +25,13 @@ class AutenticarController extends Controller
             if(is_null($empleado)){
             return back()->withErrors('¡Error! Datos incorrectoss')->withInput();
             }else{
-            if($email == $empleado -> correo && $password ==  Hash::check($password, $empleado -> pass)){
-                Auth::login($empleado);
-                return "user em logged";
+            if(is_null($empleado)){
+                if($email == $empleado -> correo && $password ==  Hash::check($password, $empleado -> pass)){
+                    Auth::login($empleado);
+                    return redirect('/mensajes');
+                    }
+                }else{
+                    return back()->withErrors('¡Error! Datos incorrectoss')->withInput();
                 }
             }
             return back()->withErrors('¡Error! Datos incorrectos')->withInput();
@@ -35,7 +39,7 @@ class AutenticarController extends Controller
             if(Hash::check($password, $alumno -> contraseña)){
                 $usr = $alumno;
                 Auth::login($usr);
-                return view('alumno.alumno-mensajes');
+                return redirect('/alumno');
             }
         }
         

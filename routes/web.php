@@ -17,6 +17,7 @@ use App\Models\Carrera;
 Route::get('/log-in', function(){
     return view('login.login');
 });
+
 Route::post('/log-in', 'AutenticarController@logIn')->name('login');
 
 Route::get('/sign-up',function(){
@@ -35,9 +36,9 @@ Route::get('/', function () {
 
 
 
-Route::resource('user', 'InformaticoController');
+Route::resource('user', 'InformaticoController')-> middleware('auth');
 Route::resource('alumno', 'AlumnoController');
-Route::resource('mensajes', 'MensajeController');
+Route::resource('mensajes', 'MensajeController')-> middleware('auth');
 
 
 
