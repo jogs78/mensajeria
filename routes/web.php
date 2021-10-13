@@ -26,9 +26,9 @@ Route::get('/sign-up',function(){
     return view('sign-up.sing-up', compact('semestres', 'carreras'));
 });
 Route::post('/sign-up', 'AutenticarController@signUp');
-Route::get('/', function () {
-    return view('emisor.mensaje-create');
-});
+// Route::get('/', function () {
+//     return view('emisor.mensaje-create');
+// });
 //Route::get('/show', function () {
   //  return view('emisor.mensaje-list');
 //});
@@ -36,9 +36,9 @@ Route::get('/', function () {
 
 
 
-Route::resource('user', 'InformaticoController')-> middleware('auth');
+Route::resource('user', 'InformaticoController');
 Route::resource('alumno', 'AlumnoController');
-Route::resource('mensajes', 'MensajeController')-> middleware('auth');
+Route::resource('mensajes', 'MensajeController');
 
 
 

@@ -21,6 +21,7 @@
 </head>
 
 <body>
+    
     <header class="header">
         <div class="header_container">
             <nav class="nav">
@@ -28,17 +29,20 @@
                 <div class="menu-container" id="menu">
                     <div class="menu-content">
                         <ul class="menu-list">
-                            <a class="menu-list__item fas fa-home home_selected" href="">
+                            <a id="home" class="menu-list__item fas fa-home home_selected" href="">
                                 <li class="text">Inicio</li>
                             </a>
-                            <a class="menu-list__item fas fa-user user_selected" href="/user">
+                            <a id="users" class="menu-list__item fas fa-user user_selected" href="/user">
                                 <li class="text">Usuarios</li>
                             </a>
-                            <a class="menu-list__item fas fa-envelope message_selected" href="/mensajes">
+                            <a id="mensajes" class="menu-list__item fas fa-envelope message_selected" href="/mensajes">
                                 <li class="text">Mensajes</li>
                             </a>
-                            <a class="menu-list__item fas fa-home">
-                                <li class="text">Inicio</li>
+                            <a id="alumnos" class="menu-list__item fas fa-globe" href="/alumno">
+                                <li class="text">Para mi</li>
+                            </a>
+                            <a id="alumnos_general" class="menu-list__item fas fa-globe" href="/alumno">
+                                <li class="text">General</li>
                             </a>
                         </ul>
                     </div>

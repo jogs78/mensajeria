@@ -326,7 +326,6 @@
         margin: auto;
         background: var(--main-bg-color);
         color: rgb(255, 255, 255);
-        border-radius: 0 !important;
     }
     .fijar {
         top: -70px;

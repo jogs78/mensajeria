@@ -7,6 +7,10 @@
     margin: 0;
 }
 
+:target {
+    background: red;
+}
+
 body {
     display: flex;
     flex-direction: column-reverse;
@@ -187,7 +191,7 @@ body {
         position: absolute;
         font-size: 20px;
         transition: bottom 400ms ease-in;
-        width: min-content;
+        width: max-content;
         top: 0;
         left: 53%;
     }

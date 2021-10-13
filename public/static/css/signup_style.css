@@ -80,6 +80,7 @@
     background-color: #ffffff13;
     background: white;
     border: 4px solid #0d47a1;
+    overflow: auto;
 }
 
 .login__form form {
@@ -195,7 +196,7 @@
         background: var(--main-bg-color);
     }
     .login__container {
-        width: 700px;
+        width: 800px;
         height: 550px;
         margin: auto;
         border-radius: 15px;
@@ -203,64 +204,81 @@
         flex-direction: row-reverse;
     }
     .login__img {
-        width: 100%;
         max-width: 450px;
         display: flex;
         justify-content: flex-end;
         flex-direction: column;
-        width: 40%;
+        width: 50%;
         height: 100%;
         align-self: flex-end;
     }
     .login__img img {
-        width: 100%;
+        width: 85%;
         height: 80%;
         filter: blur(0);
     }
-    .title {
-        list-style: none;
-        font-size: 22px;
-        text-align: center;
-        padding: 5px;
-        height: 60px;
+    .title_container {
+        display: flex;
+        width: max-content;
+        height: 30px;
+        position: relative;
+        line-height: 40px;
         overflow: hidden;
-        opacity: 1;
+        color: white;
+        margin: auto;
+        font-family: 'Abril Fatface', cursive;
+        padding-left: 5px;
     }
-    .title li {
-        color: rgb(255, 255, 255);
-        animation-name: slideOutDown;
-        animation-duration: 5000ms;
-        animation-fill-mode: forwards;
-        animation-iteration-count: infinite;
+    ul {
+        list-style: none;
+        padding-left: 10px;
+        animation: text 13.5s cubic-bezier(.57, .21, .69, 1.25) infinite;
     }
-    .title li:nth-child(1) {
-        animation-delay: 0ms;
-        margin-top: 10px;
+    ul,
+    p {
+        margin: 0;
     }
-    .title li:nth-child(2) {
-        animation-delay: 2000ms;
-    }
-    @keyframes slideOutDown {
+    @keyframes text {
         0% {
-            transform: translateY(0);
+            margin-top: 0;
+        }
+        20% {
+            margin-top: 0;
+        }
+        25% {
+            margin-top: -40px;
         }
         50% {
-            transform: translateY(-150px);
+            margin-top: -40px;
         }
+        55% {
+            margin-top: -80px;
+        }
+        60% {
+            margin-top: -80px;
+        }
+        75% {
+            margin-top: -120px;
+        }
+        85% {
+            margin-top: -160px;
+        }
+        /*________________*/
         100% {
-            transform: translateY(-400px);
+            margin-top: 0;
         }
     }
     .login__form {
         position: relative;
-        width: 60%;
+        width: 50%;
         height: 100%;
-        background: rgb(255, 255, 255);
         border-radius: 15px 0px 0px 15px;
         margin: 1px;
         display: flex;
+        border: 0;
         flex-direction: column;
         justify-content: center;
+        overflow: hidden;
     }
     .login__form form {
         display: flex;
