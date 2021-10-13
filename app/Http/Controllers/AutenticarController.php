@@ -35,7 +35,7 @@ class AutenticarController extends Controller
             if(Hash::check($password, $alumno -> contraseña)){
                 $usr = $alumno;
                 Auth::login($usr);
-                return view('alumno.example');
+                return view('alumno.alumno-mensajes');
             }
         }
         

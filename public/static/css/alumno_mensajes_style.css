@@ -1,0 +1,85 @@
+.alumno-messages__container {
+    padding: 10px;
+    display: grid;
+    row-gap: 25px;
+    column-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(max-content, 400px));
+    grid-template-rows: repeat(3, auto);
+    grid-auto-rows: auto;
+    width: 100vw;
+    height: 90vh;
+    overflow-y: auto;
+    justify-content: space-around;
+}
+
+.alumno-messages__content {
+    display: flex;
+    /* background: royalblue; */
+    flex-direction: column;
+    width: 400px;
+    border-radius: 0 0 10px 10px;
+    height: 240px;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.alumno-messages__body_container {
+    padding: 0 10px;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: height 400ms ease-in;
+}
+
+.alumno-messages__body_container label {
+    width: 100%;
+    padding: 4px 0;
+    font-size: 20px;
+}
+
+.alumno-messages__body_container p {
+    padding: 5px 0;
+    text-align: justify;
+}
+
+.image_container {
+    position: relative;
+    height: 80%;
+}
+
+.image_container img {
+    width: 100%;
+}
+
+.message_btn_down {
+    width: min-content;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    padding: 2px;
+    position: absolute;
+    bottom: -7%;
+    right: 0;
+    transition-property: transform, color;
+    transition-duration: 350ms;
+    transition-timing-function: cubic-bezier(.6, -0.28, .74, .05);
+}
+
+.message_btn_down_rotate {
+    transform: rotate(180deg);
+    z-index: 101;
+    color: #fffb00;
+    border-radius: 50%;
+    border: 1px solid;
+}
+
+.alumno-messages__body_container_show {
+    overflow: visible;
+    height: 400px;
+    background: #36D1DC;
+    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+    background: linear-gradient(to bottom, #5B86E5, #36D1DC);
+    border-radius: 0 0 10px 10px;
+    max-height: 800px;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    z-index: 100;
+}
