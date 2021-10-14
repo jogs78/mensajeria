@@ -16,7 +16,9 @@ return [
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
-    ],
+        
+        
+    ], 
 
     /*
     |--------------------------------------------------------------------------
@@ -36,9 +38,16 @@ return [
     */
 
     'guards' => [
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ]
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],'admin' => [
+            'driver' => 'session',
+            'provider' => 'empleados',
         ],
     ],
 
@@ -60,10 +69,18 @@ return [
     */
 
     'providers' => [
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
+        // ],
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Alumno::class,
         ],
+        'empleados' => [
+             'driver' => 'eloquent',
+             'model' => App\Models\Empleado::class,
+         ],
 
         // 'users' => [
         //     'driver' => 'database',

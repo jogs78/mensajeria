@@ -21,54 +21,55 @@
 </head>
 
 <body>
-    
-    <header class="header">
-        <div class="header_container">
-            <nav class="nav">
-                <i class="fas fa-bars" id="navigation_btn"></i>
-                <div class="menu-container" id="menu">
-                    <div class="menu-content">
-                        <ul class="menu-list">
-                            <a id="home" class="menu-list__item fas fa-home home_selected" href="">
-                                <li class="text">Inicio</li>
-                            </a>
-                            <a id="users" class="menu-list__item fas fa-user user_selected" href="/user">
-                                <li class="text">Usuarios</li>
-                            </a>
-                            <a id="mensajes" class="menu-list__item fas fa-envelope message_selected" href="/mensajes">
-                                <li class="text">Mensajes</li>
-                            </a>
-                            <a id="alumnos" class="menu-list__item fas fa-globe" href="/alumno">
-                                <li class="text">Para mi</li>
-                            </a>
-                            <a id="alumnos_general" class="menu-list__item fas fa-globe" href="/alumno">
-                                <li class="text">General</li>
-                            </a>
-                        </ul>
+    {{Auth::user()->nombre}}
+        <header class="header">
+            <div class="header_container">
+                <nav class="nav">
+                    <i class="fas fa-bars" id="navigation_btn"></i>
+                    <div class="menu-container" id="menu">
+                        <div class="menu-content">
+                            <ul class="menu-list">
+                                <a id="home" class="menu-list__item fas fa-home home_selected" href="">
+                                    <li class="text">Inicio</li>
+                                </a>
+                                <a id="users" class="menu-list__item fas fa-user user_selected" href="/user">
+                                    <li class="text">Usuarios</li>
+                                </a>
+                                <a id="mensajes" class="menu-list__item fas fa-envelope message_selected" href="/mensajes">
+                                    <li class="text">Mensajes</li>
+                                </a>
+                                <a id="alumnos" class="menu-list__item fas fa-globe" href="/alumno">
+                                    <li class="text">Para mi</li>
+                                </a>
+                                <a id="alumnos_general" class="menu-list__item fas fa-globe" href="/alumno">
+                                    <li class="text">General</li>
+                                </a>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+                </nav>
+            </div>
+        </header>
 
 
-    </header>
-    @yield('mensaje.mensaje-list')
-    @yield('mensaje.mensaje-create')
-    @yield('mensaje.mensaje-edit')
-    @yield('mensaje.mensaje-show')
-    @yield('user-register')
-    @yield('user-list')
-    @yield('user-edit')
-    @yield('alumno-mensajes')
-    <script>
-        let btnMenu = document.getElementById("navigation_btn");
-        let menu = document.getElementById("menu");
-        btnMenu.addEventListener('click', function() {
-            menu.classList.toggle('navigation_show');
-            btnMenu.classList.toggle('navigation_alternate_color')
-        });
-    </script>
+        </header>
+        @yield('mensaje.mensaje-list')
+        @yield('mensaje.mensaje-create')
+        @yield('mensaje.mensaje-edit')
+        @yield('mensaje.mensaje-show')
+        @yield('informatico.user-register')
+        @yield('user-list')
+        @yield('informatico.user-edit')
+        @yield('alumno-mensajes')
+        <script>
+            let btnMenu = document.getElementById("navigation_btn");
+            let menu = document.getElementById("menu");
+            btnMenu.addEventListener('click', function() {
+                menu.classList.toggle('navigation_show');
+                btnMenu.classList.toggle('navigation_alternate_color')
+            });
+        </script>
+
 </body>
 
 </html>

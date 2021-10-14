@@ -20,32 +20,28 @@ class AutenticarController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $alumno = Alumno::where('correo', $email)->first();
-        $empleado = Empleado::where('correo', $email)->first();
+        $empleado = Empleado::where('email', $email)->first();
         if(is_null($alumno)){
-            if(is_null($empleado)){
-            return back()->withErrors('¡Error! Datos incorrectoss')->withInput();
-            }else{
-            if(is_null($empleado)){
-                if($email == $empleado -> correo && $password ==  Hash::check($password, $empleado -> pass)){
-                    Auth::login($empleado);
-                    return redirect('/mensajes');
-                    }
-                }else{
-                    return back()->withErrors('¡Error! Datos incorrectoss')->withInput();
+            
+                $credentials = $request->only('email', 'password');
+                
+                if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password])) {
+                    return redirect('mensajes');
                 }
-            }
-            return back()->withErrors('¡Error! Datos incorrectos')->withInput();
+            return back()->withErrors('¡Error! El usuario no existe')->withInput();
         }else{
             if(Hash::check($password, $alumno -> contraseña)){
-                $usr = $alumno;
-                Auth::login($usr);
+                Auth::login($alumno);
                 return redirect('/alumno');
+            }else{
+                return back()->withErrors('¡Error! Datos incorrectos')->withInput();
             }
         }
         
     }
     public function logOut(){
-
+        Auth::logout();
+        return redirect('/log-in');
     }
     public function signUp(Request $request){
         //  return $request;

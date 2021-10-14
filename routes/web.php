@@ -13,25 +13,25 @@ use App\Models\Carrera;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*rutas login */
 Route::get('/log-in', function(){
     return view('login.login');
-});
+})->name('login');
+Route::post('/log-in', 'AutenticarController@logIn');
 
-Route::post('/log-in', 'AutenticarController@logIn')->name('login');
 
+/*rutas registro */
 Route::get('/sign-up',function(){
-    $semestres = Semestre::all();
-    $carreras = Carrera::all();
+    $semestres = Semestre::all();$carreras = Carrera::all();
     return view('sign-up.sing-up', compact('semestres', 'carreras'));
 });
 Route::post('/sign-up', 'AutenticarController@signUp');
-// Route::get('/', function () {
-//     return view('emisor.mensaje-create');
-// });
-//Route::get('/show', function () {
-  //  return view('emisor.mensaje-list');
-//});
+
+
+/*ruta salir */
+Route::get('/log-out','AutenticarController@logOut');
+
+
 
 
 
