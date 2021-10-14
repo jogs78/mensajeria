@@ -19,7 +19,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('apellido_paterno',50);
             $table->string('apellido_materno',50);
             $table->string('correo',50);
-            $table->string('pass',1000);
+            $table->string('password',1000);
             $table->enum('rol', ["Alumno", "Emisor", "Revisor", "Difusor", "Informatico"]);
             $table->enum('puesto', ["puesto1","puesto2","puesto3"]);
             $table->string('quien_revisa',100);

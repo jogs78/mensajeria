@@ -13,12 +13,9 @@ class AlumnoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
-        $this->middleware('auth');
-    }
+    
     public function index()
     {
-        
         return view('alumno.alumno-mensajes');
     }
 
@@ -53,26 +50,6 @@ class AlumnoController extends Controller
             'password' => 'required',
             'password_confirm' => 'required',
         ]);
-
-        /*$request->validate([
-            'numero_control' => 'required',
-            'name' => 'required',
-            'a_paterno' => 'required',
-            'a_materno' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'password_confirm' => 'required',
-
-        ], [
-            'numero_control.required' => 'El campo numero de control es requerido',
-            'name.required' => 'El campo nombre es requerido',
-            'a_paterno.required' => 'El campo apellido paterno es requerido',
-            'a_materno.required' => 'El campo apellido materno es requerido',
-            'email.required' => 'El campo email es requerido',
-            'password.required' => 'El campo contraseña es requerido',
-            'password_confirm.required' => 'El campo confirmar contraseña es requerido'
-        ]);*/
-
         if($informacion['password'] != $informacion['password_confirm']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
         }

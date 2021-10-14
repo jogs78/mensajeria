@@ -35,10 +35,10 @@ Route::get('/log-out','AutenticarController@logOut');
 
 
 
-
-Route::resource('user', 'InformaticoController');
-Route::resource('alumno', 'AlumnoController');
-Route::resource('mensajes', 'MensajeController');
+Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
+Route::resource('user', 'InformaticoController')->middleware('auth:admin');
+Route::resource('alumno', 'AlumnoController')->middleware('auth:admin');
+Route::resource('mensajes', 'MensajeController')->middleware('auth:admin');
 
 
 

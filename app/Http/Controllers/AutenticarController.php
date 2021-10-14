@@ -20,24 +20,21 @@ class AutenticarController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $alumno = Alumno::where('correo', $email)->first();
-        $empleado = Empleado::where('email', $email)->first();
+        $credentials= ['correo' => $email, 'password' => $password];
         if(is_null($alumno)){
-            
-                $credentials = $request->only('email', 'password');
-                
-                if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password])) {
-                    return redirect('mensajes');
-                }
+            if (Auth::guard('admin')->attempt($credentials)) {
+                $request->session()->regenerate();
+                return redirect()->intended('mensajes');
+            }else
+                return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
             return back()->withErrors('¡Error! El usuario no existe')->withInput();
         }else{
             if(Hash::check($password, $alumno -> contraseña)){
                 Auth::login($alumno);
-                return redirect('/alumno');
-            }else{
-                return back()->withErrors('¡Error! Datos incorrectos')->withInput();
-            }
+                return redirect('/mensajes-alumnos');
+            }else
+                return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
         }
-        
     }
     public function logOut(){
         Auth::logout();

@@ -21,6 +21,9 @@
 </head>
 
 <body>
+    @guest
+    Inicia session para continuar
+    @else
     {{Auth::user()->nombre}}
         <header class="header">
             <div class="header_container">
@@ -38,10 +41,10 @@
                                 <a id="mensajes" class="menu-list__item fas fa-envelope message_selected" href="/mensajes">
                                     <li class="text">Mensajes</li>
                                 </a>
-                                <a id="alumnos" class="menu-list__item fas fa-globe" href="/alumno">
+                                <a id="alumnos" class="menu-list__item fas fa-globe" href="/mensajes-alumnos">
                                     <li class="text">Para mi</li>
                                 </a>
-                                <a id="alumnos_general" class="menu-list__item fas fa-globe" href="/alumno">
+                                <a id="alumnos_general" class="menu-list__item fas fa-globe" href="/mensajes-alumnos">
                                     <li class="text">General</li>
                                 </a>
                             </ul>
@@ -59,7 +62,7 @@
         @yield('mensaje.mensaje-show')
         @yield('informatico.user-register')
         @yield('user-list')
-        @yield('informatico.user-edit')
+        @yield('user-edit')
         @yield('alumno-mensajes')
         <script>
             let btnMenu = document.getElementById("navigation_btn");
@@ -69,6 +72,7 @@
                 btnMenu.classList.toggle('navigation_alternate_color')
             });
         </script>
+    @endguest
 
 </body>
 
