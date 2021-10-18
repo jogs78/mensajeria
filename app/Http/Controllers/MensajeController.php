@@ -8,7 +8,7 @@ use App\Models\mensaje;
 use App\Models\carrera;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class MensajeController extends Controller
 {
 
@@ -21,6 +21,7 @@ class MensajeController extends Controller
     
     public function index()
     {
+        $this -> authorize('viewAny', Auth::user());
         $mensajes=Mensaje::all();
         
         return view('mensaje.mensaje-list', compact('mensajes'));
@@ -100,6 +101,7 @@ class MensajeController extends Controller
      */
     public function edit($id)
     {
+        $this->autorize('update', $id);
         $carreras = [
             'Ingen. Mécanica',
             'Ingen. Sistemas Computacionales',

@@ -7,10 +7,6 @@
     margin: 0;
 }
 
-:target {
-    background: red;
-}
-
 body {
     display: flex;
     flex-direction: column-reverse;
@@ -26,22 +22,6 @@ body {
 .header_container {
     height: 10vh;
 }
-
-
-/* .menu-container {
-    display: flex;
-    align-items: flex-end;
-    position: fixed;
-    bottom: 0;
-    z-index: 1;
-}
-
-.menu-content {
-    width: 100vw;
-    height: min-content;
-    position: relative;
-    z-index: 100;
-} */
 
 .menu-list {
     height: 60px;
@@ -120,10 +100,69 @@ body {
         flex-direction: column;
     }
     .header_container {
-        width: 100%;
-        height: 50px;
-        background: var(--main-bg-color);
         position: relative;
+        height: 66px;
+        background: var(--main-bg-color);
+        padding: 3px;
+    }
+    .account_cotainer {
+        width: max-content;
+        height: 60px;
+        float: right;
+        margin-right: 17px;
+        position: relative;
+    }
+    .image-profile_container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+    .image-profile_container span {
+        padding: 4px;
+        color: rgb(255, 255, 255);
+    }
+    .image-profile_container img {
+        width: 50px;
+        height: 50px;
+        background: red;
+        border-radius: 50%;
+        float: right;
+        align-self: flex-end;
+    }
+    .account_cotainer ul {
+        list-style: none;
+        position: absolute;
+        width: 100%;
+        min-width: max-content;
+        display: none;
+        top: 0;
+        right: -10%;
+        z-index: 100000000;
+    }
+    .account_cotainer ul li {
+        background: royalblue;
+        padding: 5px;
+        margin-bottom: 3px;
+        border-radius: 16px;
+        width: 100%;
+    }
+    .account_cotainer a {
+        text-decoration: none;
+        color: black;
+    }
+    .account_cotainer i {
+        position: absolute;
+        right: -19px;
+        bottom: -9px;
+        font-size: 33px;
+        color: rgb(255, 255, 255);
+    }
+    .showMenu2 {
+        display: block !important;
+        top: 110% !important;
+    }
+    i:hover {
+        cursor: pointer;
     }
     .nav {
         width: min-content;
@@ -158,7 +197,7 @@ body {
         left: 0 !important;
     }
     .menu-content {
-        width: 30%;
+        width: 500px;
         height: 100vh;
         position: relative;
         z-index: 100;

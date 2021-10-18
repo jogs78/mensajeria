@@ -20,13 +20,7 @@ class AutenticarController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $alumno = Alumno::where('correo', $email)->first();
-        $credentials= ['correo' => $email, 'password' => $password];
         if(is_null($alumno)){
-            if (Auth::guard('admin')->attempt($credentials)) {
-                $request->session()->regenerate();
-                return redirect()->intended('mensajes');
-            }else
-                return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
             return back()->withErrors('¡Error! El usuario no existe')->withInput();
         }else{
             if(Hash::check($password, $alumno -> contraseña)){
@@ -35,6 +29,27 @@ class AutenticarController extends Controller
             }else
                 return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
         }
+    }
+    public function logInAdmin(Request $request){
+        $validator=$request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ], [
+            'email.required' => 'El campo numero de control es requerido',
+        ]);
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $credentials= ['correo' => $email, 'password' => $password];
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/');
+        }else
+            return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
+        return back()->withErrors('¡Error! El usuario no existe')->withInput();
+    }
+    public function adminLogOut(){
+        Auth::logout();
+        return redirect('/admins/log-in');
     }
     public function logOut(){
         Auth::logout();

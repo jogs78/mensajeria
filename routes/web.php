@@ -18,7 +18,11 @@ Route::get('/log-in', function(){
     return view('login.login');
 })->name('login');
 Route::post('/log-in', 'AutenticarController@logIn');
-
+/*admin login */
+Route::get('/admins/log-in', function(){
+    return view('login-empleado');
+})->name('login');
+Route::post('/admins/log-in', 'AutenticarController@logInAdmin');
 
 /*rutas registro */
 Route::get('/sign-up',function(){
@@ -30,9 +34,12 @@ Route::post('/sign-up', 'AutenticarController@signUp');
 
 /*ruta salir */
 Route::get('/log-out','AutenticarController@logOut');
+Route::get('/admins/log-out','AutenticarController@adminLogOut');
 
 
-
+Route::get('/', function(){
+    return view('dashboard');
+})->middleware('auth:admin');
 
 
 Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');

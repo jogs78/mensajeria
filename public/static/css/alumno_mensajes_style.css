@@ -6,7 +6,6 @@
     grid-template-columns: repeat(auto-fit, minmax(max-content, 400px));
     grid-template-rows: repeat(3, auto);
     grid-auto-rows: auto;
-    width: 100vw;
     height: 90vh;
     overflow-y: auto;
     justify-content: space-around;

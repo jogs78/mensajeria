@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\Semestre;
 use App\Models\Carrera;
+use Illuminate\Support\Facades\Auth;
 class InformaticoController extends Controller
 {
     /**
@@ -19,16 +20,13 @@ class InformaticoController extends Controller
     
     public function index()
     {
-        // $alumnos = DB::table('alumnos')
-        //         ->select('id','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'carrera_id', 'semestre_id', 'correo')
-        //         ->get();
+       $this->authorize('view', Auth::user());
         $alumnos = Alumno::with('carrera','semestre')->get();
         $empleados = DB::table('empleados')
                 ->select('id','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'correo', 'rol', 'puesto')
                 ->get();
         return view('informatico.user-list', compact('alumnos', 'empleados'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -36,6 +34,7 @@ class InformaticoController extends Controller
      */
     public function create()
     {
+        $this -> authorize('create', Auth::user());
         $semestres = Semestre::all();
         $carreras = Carrera::all();
         return view('informatico.user-register', compact('semestres', 'carreras'));
@@ -49,6 +48,7 @@ class InformaticoController extends Controller
      */
     public function store(Request $request)
     {
+        
         $informacion = $request ->all();
 
         request()->validate([
@@ -63,33 +63,9 @@ class InformaticoController extends Controller
             'quien_revisa' => 'required'
         ]);
 
-        /*$validator=$request->validate([
-            'name' => 'required',
-            'a_paterno' => 'required',
-            'a_materno' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'password_confirm' => 'required',
-            'rol' => 'required',
-            'puesto' => 'required',
-            'quien_revisa' => 'required'
-
-        ], [
-            'name.required' => 'El campo nombre es requerido',
-            'a_paterno.required' => 'El campo apellido paterno es requerido',
-            'a_materno.required' => 'El campo apellido materno es requerido',
-            'email.required' => 'El campo email es requerido',
-            'password.required' => 'El campo contraseña es requerido',
-            'password_confirm.required' => 'El campo confirmar contraseña es requerido',
-            'rol.required' => 'El campo rol es requerido',
-            'puesto.required' => 'El campo puesto es requerido',
-            'quien_revisa.required' => 'El campo quien revisa es requerido',
-        ]);*/
-
         if($informacion['password'] != $informacion['password_confirm']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
         }
-        
         $empleado = new Empleado();
         unset($informacion['numer_control']);
         unset($informacion['carrera']);
@@ -100,7 +76,7 @@ class InformaticoController extends Controller
         $empleado -> apellido_paterno = $informacion['a_paterno'];
         $empleado -> apellido_materno = $informacion['a_materno'];
         $empleado -> correo = $informacion['email'];
-        $empleado -> pass = Hash::make($informacion['password']);
+        $empleado -> password = Hash::make($informacion['password']);
         $empleado -> rol = $informacion['rol'];
         $empleado -> puesto = $informacion['puesto'];
         $empleado -> quien_revisa = $informacion['quien_revisa'];
@@ -127,6 +103,7 @@ class InformaticoController extends Controller
      */
     public function edit($id)
     {
+        $this -> authorize('edit', Auth::user());
         $alumno = "";
         $empleado = "";
         if(Alumno::find($id)){
@@ -136,7 +113,6 @@ class InformaticoController extends Controller
             $empleado = Empleado::find($id);
             return view('informatico.user-edit', compact('alumno','empleado'));
         }
-        
         //return view('informatico.user-edit', compact('alumno','empleado'));
     }
 

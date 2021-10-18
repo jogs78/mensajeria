@@ -1,5 +1,5 @@
 @extends('dashboard')
-@section('user-edit')
+@section('informatico.user-edit')
     <style>
         #users {
             border-radius: 5px 5px 0 0;
