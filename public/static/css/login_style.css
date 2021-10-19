@@ -110,49 +110,9 @@
     }
 }
 
-
-/* #img2::before,
-#img2::after {
-    content: "";
-    z-index: 1;
-    margin: -5px;
-    box-shadow: inset 0 0 0 2px;
-    animation: clipMe 8s linear infinite;
-}
-
-#img2::before {
-    animation-delay: -4s;
-} */
-
-
-/* @keyframes clipMe {
-    0%,
-    100% {
-        clip: rect(0px, 137px, 2px, 0px);
-        color: rgb(255, 255, 255);
-    }
-    25% {
-        clip: rect(0px, 0px, 137px, 0px);
-        color: rgb(229, 255, 0);
-    }
-    50% {
-        clip: rect(135px, 137px, 137px, 0px);
-        color: rgb(0, 247, 255);
-    }
-    75% {
-        clip: rect(0px, 137px, 137px, 135px);
-        color: rgb(255, 255, 255);
-    }
-} */
-
 #img1 {
     display: none;
 }
-
-
-/* .login__img img {
-    height: 100%;
-} */
 
 .login__form {
     width: 100vw;

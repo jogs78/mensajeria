@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 class AutenticarController extends Controller
 {
-    //
+    //alumno
     public function logIn(Request $request){
         $validator=$request->validate([
             'email' => 'required',
@@ -30,6 +30,7 @@ class AutenticarController extends Controller
                 return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
         }
     }
+    //admin
     public function logInAdmin(Request $request){
         $validator=$request->validate([
             'email' => 'required',

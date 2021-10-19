@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Emisor;
-use App\Models\Men;
-use App\Models\mensaje;
-use App\Models\carrera;
+use App\Models\Mensaje;
+use App\Models\Carrera;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +19,8 @@ class MensajeController extends Controller
     
     public function index()
     {
-        $this -> authorize('viewAny', Auth::user());
         $mensajes=Mensaje::all();
-        
+        $this->authorize('viewMensajes', App\Models\Mensaje::class);
         return view('mensaje.mensaje-list', compact('mensajes'));
     }
 
@@ -34,6 +31,8 @@ class MensajeController extends Controller
      */
     public function create(Request $request)
     {
+        $this->authorize('create', App\Models\Mensaje::class);
+
         $carreras = Carrera::all();
         $semestres = Semestre::all();
         return view('mensaje.mensaje-create', compact('carreras', 'semestres'));
@@ -54,21 +53,6 @@ class MensajeController extends Controller
         $mensaje -> estado = 0;
         $mensaje -> imagen="jhasdkhkd";
         $mensaje -> empleado_id=1;
-
-        /*if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
-            $mensaje -> otros = 2;
-        }elseif(isset($_POST["servicio"])){
-            $mensaje -> otros = 0;
-            $general=0;
-        }elseif(isset($_POST["residencia"])){
-            $mensaje -> otros = 1;
-            $general=0;
-        }elseif(isset($_POST["general"])){
-            $mensaje -> otros = 3;
-            $mensaje -> carrera = "GENERAL";
-            $mensaje -> semestre = "TODOS";
-            $general=1;
-        }*/
         $mensaje -> save();
         $mensaje ->carreras()->attach([1]);
         $mensaje ->carreras()->attach([2]);
@@ -88,6 +72,7 @@ class MensajeController extends Controller
      */
     public function show($id)
     {
+
         $mensaje = Mensaje::find($id);
         
         return view('mensaje.mensaje-show', compact('mensaje'));
@@ -101,7 +86,7 @@ class MensajeController extends Controller
      */
     public function edit($id)
     {
-        $this->autorize('update', $id);
+        //$this->autorize('update', $id);
         $carreras = [
             'Ingen. Mécanica',
             'Ingen. Sistemas Computacionales',
@@ -131,7 +116,6 @@ class MensajeController extends Controller
     public function update(Request $request, $id)
     {
         $mensaje = Mensaje::find($id);
-        
         $mensaje -> titulo = $request->titulo;
         $mensaje -> descripcion = $request->descripcion;
         $mensaje -> carrera = $request->carrera;

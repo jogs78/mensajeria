@@ -19,18 +19,21 @@ class InformaticoPolicy
     {
         //
     }
-    public function view(Empleado $empleado){
-        if($empleado -> rol == "Informático"){
+    
+    public function view(?Empleado $empleado){
+        if(is_null($empleado)){
+            return false;
+        }elseif($empleado -> rol == "Informático"){
             return true;
         }
     }
-    public function create(Empleado $empleado){
+    public function create(?Empleado $empleado){
         return $empleado -> rol == "Informático";
     }
-    public function edit(Empleado $empleado){
+    public function edit(?Empleado $empleado){
         return $empleado -> rol == "Informático";
     }
-    public function update(Empleado $empleado, ?Empleado $newEmpleado, ?Alumno $newAlumno){
+    public function update(?Empleado $empleado, ?Empleado $newEmpleado, ?Alumno $newAlumno){
         return $empleado -> rol == "Informático";
     }
 

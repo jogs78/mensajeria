@@ -101,13 +101,12 @@ body {
     }
     .header_container {
         position: relative;
-        height: 66px;
+        height: 60px;
         background: var(--main-bg-color);
         padding: 3px;
     }
     .account_cotainer {
         width: max-content;
-        height: 60px;
         float: right;
         margin-right: 17px;
         position: relative;
@@ -115,7 +114,6 @@ body {
     .image-profile_container {
         display: flex;
         align-items: center;
-        height: 100%;
     }
     .image-profile_container span {
         padding: 4px;
@@ -131,13 +129,8 @@ body {
     }
     .account_cotainer ul {
         list-style: none;
-        position: absolute;
         width: 100%;
         min-width: max-content;
-        display: none;
-        top: 0;
-        right: -10%;
-        z-index: 100000000;
     }
     .account_cotainer ul li {
         background: royalblue;
@@ -157,9 +150,24 @@ body {
         font-size: 33px;
         color: rgb(255, 255, 255);
     }
+    .menu2-container {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: -10%;
+        animation: rotate 350ms cubic-bezier(.17, .67, 1, 1.23) 1 forwards;
+        z-index: -1;
+    }
     .showMenu2 {
         display: block !important;
-        top: 110% !important;
+    }
+    @keyframes rotate {
+        0% {
+            top: 0;
+        }
+        100% {
+            top: 120%;
+        }
     }
     i:hover {
         cursor: pointer;

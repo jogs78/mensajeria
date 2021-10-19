@@ -2,7 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Alumno;
+use App\Models\Empleado;
+use App\Models\Mensaje;
+
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MensajePolicy
@@ -19,10 +21,18 @@ class MensajePolicy
         //
     }
 
-    public function viewMensajes(Empleado $empleado){
-        if($empleado->rol == "Emisor" || $empleado->rol == "Difusor" & $mensaje->empleado_id == $empleado-id){
+    public function viewMensajes(?Empleado $empleado){
+        if($empleado->rol == "Emisor"){
             return true;
-        }elseif($empleado->rol == "Difusor"){
+        }elseif($empleado->rol == "Difusor" || $empleado->rol == "Revisor"){
+            return true;
+        }elseif($empleado->rol == "Informatico"){
+            return false;
+        }
+    }
+    
+    public function create(Empleado $empleado){
+        if($empleado->rol == "Emisor" || $empleado->rol == "Difusor" || $empleado->rol == "Revisor"){
             return true;
         }elseif($empleado->rol == "Informatico"){
             return false;
