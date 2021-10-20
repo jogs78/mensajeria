@@ -18,6 +18,7 @@ Route::get('/log-in', function(){
     return view('login.login');
 })->name('login');
 Route::post('/log-in', 'AutenticarController@logIn');
+
 /*admin login */
 Route::get('/admins/log-in', function(){
     return view('login-empleado');

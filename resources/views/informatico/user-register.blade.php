@@ -1,34 +1,15 @@
 @extends('dashboard')
 @section('informatico.user-register')
-    <style>
-        #users {
-            border-radius: 5px 5px 0 0;
-            box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
-            color: rgb(251, 255, 35);
-        }
-
-    </style>
+    
     <section class="user-list">
         <div class="user-register__container">
-            {{-- @if ($errors->any())
-
-            <div class="notification">
-                @foreach ($errors->all() as $error)
-                    {{$error}}
-                @endforeach
-            </div>
-
-        @endif --}}
+            
             @if (session('message'))
                 <div class="notification">
                     {{ session('message') }}
                 </div>
 
             @endif
-            {{-- <div class="notification">
-                {{session('message')}}
-                </div> --}}
-
             <div class="user-select">
                 <button id="alumno" name="alumno" value="0">Alumno</button>
                 <button id="empleado" name="empleado" value="0">Empleado</button>
@@ -156,6 +137,7 @@
                 enviar_btn.disabled = false;
                 alumnos.classList.toggle('btn__selected');
                 bandera = 1;
+                form.setAttribute("action", "/alumno")
 
             }
             /// if para mantener la opcion elegida de crear empleado por si hay una exepcion.
@@ -165,6 +147,7 @@
                 enviar_btn.disabled = false;
                 empleados.classList.toggle('btn__selected');
                 bandera = 1;
+                form.setAttribute("action", "/user")
             }
 
 

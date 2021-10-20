@@ -41,11 +41,33 @@ class AutenticarController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $credentials= ['correo' => $email, 'password' => $password];
+        $user = Empleado::where('correo', $email)->first();
+        
+       //return var_dump(Hash::check($password, $user->password));
+        // if($user){
+        //     if(Hash::check($password, $user->password) & $user -> rol == "Emisor" || $user -> rol == "Difusor" || $user -> rol == "Revisor") {
+        //         Auth::login($user);
+        //     //    return redirect('/');
+        //     return view('dashboard');
+        //     }if(Hash::check($password, $user->password) & $user -> rol == "infomatico") {
+        //         Auth::login($user);
+        //         return view('dashboard');
+        //         return redirect('/');
+        //     }else
+        //         return back()->withErrors('¡Error! Autenticacion fallidas')->withInput();
+        // }
+
+
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         }else
             return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
+        return back()->withErrors('¡Error! El usuario no existe')->withInput();
+
+
+
+        
         return back()->withErrors('¡Error! El usuario no existe')->withInput();
     }
     public function adminLogOut(){

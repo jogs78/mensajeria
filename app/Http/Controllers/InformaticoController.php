@@ -20,7 +20,7 @@ class InformaticoController extends Controller
     
     public function index()
     {
-       $this->authorize('view', Auth::user());
+      $this->authorize('view', Auth::user());
         $alumnos = Alumno::with('carrera','semestre')->get();
         $empleados = DB::table('empleados')
                 ->select('id','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'correo', 'rol', 'puesto')
@@ -34,7 +34,7 @@ class InformaticoController extends Controller
      */
     public function create()
     {
-        $this -> authorize('create', Auth::user());
+       $this -> authorize('create', Auth::user());
         $semestres = Semestre::all();
         $carreras = Carrera::all();
         return view('informatico.user-register', compact('semestres', 'carreras'));
@@ -159,14 +159,14 @@ class InformaticoController extends Controller
                 $empleado -> apellido_paterno = $request -> a_paterno;
                 $empleado -> apellido_materno = $request -> a_materno;
                 $empleado -> correo = $request -> correo;
-                $empleado -> pass = $empleado -> pass;
+               // $empleado -> password = $empleado -> password;
                 $empleado ->rol = $request->rol;
                 $empleado ->puesto = $request->puesto;
                 $empleado ->quien_revisa = $request->quien_revisa;
                 $empleado -> save();
                 return redirect('user')-> with('message','registro');
             }elseif($request->contraseña =! ""){
-                $empleado -> contraseña = Hash::make($request -> contraseña);
+                $empleado -> password = Hash::make($request -> contraseña);
                 $empleado -> save();
                 return redirect('user')-> with('message','registro');
             }

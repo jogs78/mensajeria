@@ -16,8 +16,5 @@ class Empleado extends Authenticatable
     public function mensajes(){
         return $this -> hasMany('App\Models\Mensaje');
     }
-    public function setPasswordAttribute($password)
-{
-    $this->attributes['password'] = bcrypt($password);
-}
+
 }

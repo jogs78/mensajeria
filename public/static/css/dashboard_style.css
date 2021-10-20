@@ -110,6 +110,7 @@ body {
         float: right;
         margin-right: 17px;
         position: relative;
+        z-index: 1000;
     }
     .image-profile_container {
         display: flex;
