@@ -21,9 +21,7 @@
 </head>
 
 <body>
-    @guest
-        Inicia session para continuar
-    @else
+    
 
         <header class="header">
             <div class="header_container">
@@ -63,12 +61,7 @@
                                     </a>
                                 @endcan
 
-                                <a id="alumnos" class="menu-list__item fas fa-globe" href="/mensajes-alumnos">
-                                    <li class="text">Para mi</li>
-                                </a>
-                                <a id="alumnos_general" class="menu-list__item fas fa-globe" href="/mensajes-alumnos">
-                                    <li class="text">General</li>
-                                </a>
+                                
                             </ul>
                         </div>
                     </div>
@@ -101,8 +94,6 @@
                 menu2.classList.toggle('showMenu2');
             });
         </script>
-    @endguest
-
 </body>
 
 </html>

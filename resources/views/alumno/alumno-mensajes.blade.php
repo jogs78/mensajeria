@@ -24,7 +24,7 @@
                 <div class="header_container">
                 <div class="account_cotainer">
                     <div class="image-profile_container">
-                        <img src="" alt="">
+                        <img src="{{ Auth::user()->foto_perfil }}" alt="">
                         <span>{{ Auth::user()->nombre }}</span>
                     </div>
                     <i class="fas fa-caret-down" id="menu2"></i>

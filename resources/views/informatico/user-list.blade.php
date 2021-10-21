@@ -24,7 +24,7 @@
             @foreach ($alumnos as $alumno)
                 <div class="user-list__table_row">
                     <span class="user-list__table_item">{{ $alumno->id }}</span>
-                    <span class="user-list__table_item">{{ $alumno->nombre . $alumno->a_paterno . $alumno->a_materno }}</span>
+                    <span class="user-list__table_item">{{ $alumno->nombre." ".$alumno->apellido_paterno ." ". $alumno->apellido_materno }}</span>
                     <span class="user-list__table_item ">{{ $alumno->correo }}
                         <i class="user-list__viewmore fas fa-sort-down show"></i>
                         <div class="more_information">
@@ -66,7 +66,8 @@
             <div class="user-list__table_row">
                 <span class="user-list__table_item">{{ $empleado->id }}</span>
                 <span
-                    class="user-list__table_item">{{ $empleado->nombre . $empleado->a_paterno . $empleado->a_materno }}</span>
+                    class="user-list__table_item">{{ $empleado->nombre ." ". $empleado->apellido_paterno ." ". $empleado->apellido_materno }}
+                </span>
                 <span class="user-list__table_item ">{{ $empleado->correo }}
                     <i class="user-list__viewmore fas fa-sort-down show"></i>
                     <div class="more_information">

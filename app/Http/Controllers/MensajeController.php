@@ -7,6 +7,8 @@ use App\Models\Carrera;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 class MensajeController extends Controller
 {
 
@@ -47,19 +49,21 @@ class MensajeController extends Controller
     public function store(Request $request)
     {
         $datos = $request->all();
+        $img = $datos['file-1']->store('public/imagenes_mensajes');
+        $url = Storage::url($img);
         $mensaje = new mensaje();
         $mensaje -> titulo = $datos['titulo'];
         $mensaje -> descripcion = $datos['descripcion'];
         $mensaje -> estado = 0;
-        $mensaje -> imagen="jhasdkhkd";
-        $mensaje -> empleado_id=1;
-        $mensaje -> save();
-        $mensaje ->carreras()->attach([1]);
-        $mensaje ->carreras()->attach([2]);
-
-        
-
-        
+        $mensaje -> empleado_id= Auth::user()->id;
+        $mensaje -> imagen = $url;
+        $mensaje -> save();        
+        for ($i=0; $i<sizeof($datos['car']); $i++){
+            $mensaje ->carreras()->attach(($datos['car'])[$i]);
+        }
+        for ($i=0; $i<sizeof($datos['sem']); $i++){
+            $mensaje ->semestres()->attach(($datos['sem'])[$i]);
+        }
         // Servicio social (0), Residencia (1), ambos seleccionados (2), General (3)
         return redirect('/mensajes');
     }

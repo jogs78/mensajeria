@@ -7,6 +7,7 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 class AutenticarController extends Controller
 {
     //alumno
@@ -36,38 +37,18 @@ class AutenticarController extends Controller
             'email' => 'required',
             'password' => 'required'
         ], [
-            'email.required' => 'El campo numero de control es requerido',
+            'email.required' => 'El campo correo es requerido',
         ]);
+
         $email = $request->input('email');
         $password = $request->input('password');
         $credentials= ['correo' => $email, 'password' => $password];
-        $user = Empleado::where('correo', $email)->first();
         
-       //return var_dump(Hash::check($password, $user->password));
-        // if($user){
-        //     if(Hash::check($password, $user->password) & $user -> rol == "Emisor" || $user -> rol == "Difusor" || $user -> rol == "Revisor") {
-        //         Auth::login($user);
-        //     //    return redirect('/');
-        //     return view('dashboard');
-        //     }if(Hash::check($password, $user->password) & $user -> rol == "infomatico") {
-        //         Auth::login($user);
-        //         return view('dashboard');
-        //         return redirect('/');
-        //     }else
-        //         return back()->withErrors('¡Error! Autenticacion fallidas')->withInput();
-        // }
-
-
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect('/');
         }else
             return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
-        return back()->withErrors('¡Error! El usuario no existe')->withInput();
-
-
-
-        
         return back()->withErrors('¡Error! El usuario no existe')->withInput();
     }
     public function adminLogOut(){
@@ -83,15 +64,12 @@ class AutenticarController extends Controller
         $personalInformation = $request -> all();
         if($personalInformation['password'] != $personalInformation['confirmar_password']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
-        }elseif ($personalInformation['num_control'] == "" || $personalInformation['name'] == "" || $personalInformation['a_paterno'] == "" || $personalInformation['a_materno'] == "" || $personalInformation['correo'] == "" || $personalInformation['password'] == "" || $personalInformation['confirmar_password'] == "" || $personalInformation['carrera'] == "" || $personalInformation['semestre'] == "") {
+        }elseif($personalInformation['num_control'] == "" || $personalInformation['name'] == "" || $personalInformation['a_paterno'] == "" || $personalInformation['a_materno'] == "" || $personalInformation['correo'] == "" || $personalInformation['password'] == "" || $personalInformation['confirmar_password'] == "" || $personalInformation['carrera'] == "" || $personalInformation['semestre'] == "") {
             return back() -> with('message', '¡Faltan campos por llenar!')->withInput();
         }elseif ($personalInformation['password'] == $personalInformation['confirmar_password']) {
             unset($personalInformation['confirmar_password']);
             $alumno = new Alumno();
             $personalInformation['num_control']= intval($personalInformation['num_control']);
-            
-            // $alumno -> fill($personalInformation);
-            // $pregunta->producto_id=$enviar['id_producto'];
             $alumno -> id = $personalInformation['num_control'];
             $alumno -> nombre = $personalInformation['name'];
             $alumno -> apellido_paterno = $personalInformation['a_paterno'];
@@ -100,12 +78,12 @@ class AutenticarController extends Controller
             $alumno -> contraseña = Hash::make($personalInformation['password']);
             $alumno -> carrera_id = $personalInformation['carrera'];
             $alumno -> semestre_id = $personalInformation['semestre'];
+            $alumno -> foto_perfil =Storage::url('user-profile-icon.jpg');
+            
             $alumno -> save();
             return redirect() -> back() -> with('message', 'Registro exitoso');
             return $personalInformation;
-            
         return redirect('/Usuarios');
-            
         }else{
             return redirect() -> back() -> with('message', "¡Error de registro!");
         }   

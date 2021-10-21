@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AlumnoController extends Controller
 {
@@ -38,7 +39,6 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         $informacion = $request ->all();
-        //
         request()->validate([
             'numero_control' => 'required',
             'name' => 'required',
@@ -59,7 +59,7 @@ class AlumnoController extends Controller
         unset($informacion['puesto']);
         unset($informacion['quien_envia']);
         unset($informacion['password_confirm']);
-
+        //$contents = Storage::get('file.jpg');
         $alumno -> id = $informacion['numero_control'];
         $alumno -> nombre = $informacion['name'];
         $alumno -> apellido_paterno = $informacion['a_paterno'];
@@ -68,6 +68,7 @@ class AlumnoController extends Controller
         $alumno -> semestre_id = $informacion['semestre'];
         $alumno -> correo = $informacion['email'];
         $alumno -> contraseña = Hash::make($informacion['password']);
+        
         $alumno -> save();
         return redirect() -> back() -> with('message', 'Registro exitoso');
     }

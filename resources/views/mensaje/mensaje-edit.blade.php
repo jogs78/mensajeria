@@ -9,7 +9,7 @@
 
     </style>
     <section class="messages-edit">
-        <form class="messages-edit__form" action="/mensajes/{{ $mensaje->id }}" method="POST">
+        <form class="messages-edit__form" action="/mensajes/{{ $mensaje->id }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="container">
@@ -23,8 +23,15 @@
             </div>
             <div class="container_image">
                 <label for="">Imagen</label>
-                <input name="imagen" type="file">
-                <label for="">aqui la vista previa del archivo</label>
+                <div class="container-input">
+                    <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1"/>
+                    <label for="file-1">
+                        <span class="iborrainputfile fas fa-upload"> Seleccionar archivo</span>
+                    </label>
+                </div>
+                
+            </div>
+                <img class="" id="previewImage" src="{{$mensaje->imagen}}">
             </div>
             <div class="container_segmento">
                 <label for="">Carrera</label>
@@ -98,6 +105,8 @@
         let expanded = false;
         let checkboxes = document.getElementsByClassName("checkboxes");
         let selectBox = document.getElementsByClassName("selectBox");
+        let previewImage = document.getElementById('previewImage');
+            let inputFile = document.getElementById('file-1');
         for (let i = 0; i < 2; i++) {
             selectBox[i].addEventListener("click", function() {
                 if (!expanded) {
@@ -109,5 +118,15 @@
                 }
             });
         }
+
+
+        inputFile.addEventListener('change', function(e) {
+                let image = e.target.files[0];
+                let file = new FileReader();
+                file.onload = (e) => {
+                    previewImage.setAttribute('src', e.target.result)
+                }
+                file.readAsDataURL(image);
+            });
     </script>
 @endsection

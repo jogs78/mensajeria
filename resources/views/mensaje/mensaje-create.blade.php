@@ -1,15 +1,8 @@
 @extends('dashboard')
 @section('mensaje.mensaje-create')
-    <style>
-        #mensajes {
-            border-radius: 5px 5px 0 0;
-            box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
-            color: rgb(251, 255, 35);
-        }
 
-    </style>
     <section class="mensaje-create">
-        <form action="/mensajes" method="POST" class="mensaje-create__form" id="form">
+        <form action="/mensajes" method="POST" class="mensaje-create__form" id="form" enctype="multipart/form-data">
             @csrf
             <div class="c1">
                 <input placeholder="Título" class="mensaje-create__form_title" type="text" name="titulo">
@@ -17,8 +10,15 @@
                     rows="10"></textarea>
                 <label class="mensaje-create__form_lbl_adjuntar" for="">Adjuntar archivo</label>
 
-                <input class="mensaje-create__form_file" type="file" name="imagen" id="">
-                <label class="mensaje-create__form-preview">aqui la vista prevcia de la imagen</label>
+               
+
+                <div class="container-input">
+                    <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1"/>
+                    <label for="file-1">
+                        <span class="iborrainputfile fas fa-upload"> Seleccionar archivo</span>
+                    </label>
+                </div>
+                <img class="mensaje-create__form-preview" id="previewImage">
             </div>
             <div class="c2">
                 <label class="mensaje-create__form_lbl">Dirigido a:</label>
@@ -65,6 +65,8 @@
             let expanded = false;
             let checkboxes = document.getElementsByClassName("checkboxes");
             let selectBox = document.getElementsByClassName("selectBox");
+            let previewImage = document.getElementById('previewImage');
+            let inputFile = document.getElementById('file-1');
             for (let i = 0; i < 2; i++) {
                 selectBox[i].addEventListener("click", function() {
                     if (!expanded) {
@@ -76,6 +78,14 @@
                     }
                 });
             }
+            inputFile.addEventListener('change', function(e) {
+                let image = e.target.files[0];
+                let file = new FileReader();
+                file.onload = (e) => {
+                    previewImage.setAttribute('src', e.target.result)
+                }
+                file.readAsDataURL(image);
+            });
         </script>
 
 

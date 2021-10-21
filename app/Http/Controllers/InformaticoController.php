@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Semestre;
 use App\Models\Carrera;
 use Illuminate\Support\Facades\Auth;
+
 class InformaticoController extends Controller
 {
     /**
@@ -17,14 +18,12 @@ class InformaticoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index()
     {
-      $this->authorize('view', Auth::user());
-        $alumnos = Alumno::with('carrera','semestre')->get();
-        $empleados = DB::table('empleados')
-                ->select('id','nombre', 'apellido_paterno as a_paterno', 'apellido_materno as a_materno', 'correo', 'rol', 'puesto')
-                ->get();
+        $this->authorize('view', Auth::user());
+        $alumnos = Alumno::with('carrera', 'semestre')->get();
+        $empleados = Empleado::where('id', '!=', Auth::user()->id)->get();
         return view('informatico.user-list', compact('alumnos', 'empleados'));
     }
     /**
@@ -34,7 +33,7 @@ class InformaticoController extends Controller
      */
     public function create()
     {
-       $this -> authorize('create', Auth::user());
+        $this->authorize('create', Auth::user());
         $semestres = Semestre::all();
         $carreras = Carrera::all();
         return view('informatico.user-register', compact('semestres', 'carreras'));
@@ -48,9 +47,7 @@ class InformaticoController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $informacion = $request ->all();
-
+        $informacion = $request->all();
         request()->validate([
             'name' => 'required',
             'a_paterno' => 'required',
@@ -62,26 +59,24 @@ class InformaticoController extends Controller
             'puesto' => 'required',
             'quien_revisa' => 'required'
         ]);
-
-        if($informacion['password'] != $informacion['password_confirm']){
-            return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
+        if ($informacion['password'] != $informacion['password_confirm']) {
+            return back()->with('message', 'Las contraseñas no coinciden')->withInput();
         }
         $empleado = new Empleado();
         unset($informacion['numer_control']);
         unset($informacion['carrera']);
         unset($informacion['semestre']);
         unset($informacion['password_confirm']);
-
-        $empleado -> nombre = $informacion['name'];
-        $empleado -> apellido_paterno = $informacion['a_paterno'];
-        $empleado -> apellido_materno = $informacion['a_materno'];
-        $empleado -> correo = $informacion['email'];
-        $empleado -> password = Hash::make($informacion['password']);
-        $empleado -> rol = $informacion['rol'];
-        $empleado -> puesto = $informacion['puesto'];
-        $empleado -> quien_revisa = $informacion['quien_revisa'];
-        $empleado -> save();
-        return redirect() -> back() -> with('message', 'Registro exitoso');
+        $empleado->nombre = $informacion['name'];
+        $empleado->apellido_paterno = $informacion['a_paterno'];
+        $empleado->apellido_materno = $informacion['a_materno'];
+        $empleado->correo = $informacion['email'];
+        $empleado->password = Hash::make($informacion['password']);
+        $empleado->rol = $informacion['rol'];
+        $empleado->puesto = $informacion['puesto'];
+        $empleado->quien_revisa = $informacion['quien_revisa'];
+        $empleado->save();
+        return redirect()->back()->with('message', 'Registro exitoso');
     }
 
     /**
@@ -103,15 +98,15 @@ class InformaticoController extends Controller
      */
     public function edit($id)
     {
-        $this -> authorize('edit', Auth::user());
+        $this->authorize('edit', Auth::user());
         $alumno = "";
         $empleado = "";
-        if(Alumno::find($id)){
+        if (Alumno::find($id)) {
             $alumno = Alumno::find($id);
-            return view('informatico.user-edit', compact('alumno','empleado'));
-        }elseif(Empleado::find($id)){
+            return view('informatico.user-edit', compact('alumno', 'empleado'));
+        } elseif (Empleado::find($id)) {
             $empleado = Empleado::find($id);
-            return view('informatico.user-edit', compact('alumno','empleado'));
+            return view('informatico.user-edit', compact('alumno', 'empleado'));
         }
         //return view('informatico.user-edit', compact('alumno','empleado'));
     }
@@ -127,48 +122,46 @@ class InformaticoController extends Controller
     {
         $alumno = Alumno::find($id);
         $empleado = Empleado::find($id);
-        if($alumno){
-            if($request->contraseña != $request->contraseña_confirm){
-                return back()->with('message','Las contraseñas no coinciden');
-            }elseif($request->contraseña=="" || $request->contraseña_confirm== ""){
-                unset($request->contraseña);
-                unset($request->contraseña_confirm);
-                $alumno ->id = $request->numero_control;
-                $alumno -> nombre = $request -> name;
-                $alumno -> apellido_paterno = $request -> a_paterno;
-                $alumno -> apellido_materno = $request -> a_materno;
-                $alumno -> carrera = $request -> carrera;
-                $alumno -> semestre = $request -> semestre;
-                $alumno -> correo = $request -> correo;
-                $alumno -> contraseña = $alumno -> contraseña;
-                $alumno -> save();
-                return redirect('user')-> with('message','registro');
-            }elseif($request->contraseña =! ""){
-                $alumno -> contraseña = Hash::make($request -> contraseña);
-                $alumno -> save();
-                return redirect('user')-> with('message','registro');
-            }
-        }elseif($empleado){
-            if($request->contraseña != $request->contraseña_confirm){
-                return back()->with('message','Las contraseñas no coinciden');
-            }elseif($request->contraseña=="" || $request->contraseña_confirm== ""){
-                unset($request->contraseña);
-                unset($request->contraseña_confirm);
+        
+        if ($alumno) {
+            
+            if ($request->contraseña != $request->contraseña_confirm) {
+                return back()->with('message', 'Las contraseñas no coinciden');
+            } elseif ($request->contraseña == "" || $request->contraseña_confirm == "") {
+                $alumno->id = $request->numero_control;
+                $alumno->nombre = $request->name;
+                $alumno->apellido_paterno = $request->a_paterno;
+                $alumno->apellido_materno = $request->a_materno;
+                $alumno->carrera = $request->carrera;
+                $alumno->semestre = $request->semestre;
+                $alumno->correo = $request->correo;
                 
-                $empleado -> nombre = $request -> name;
-                $empleado -> apellido_paterno = $request -> a_paterno;
-                $empleado -> apellido_materno = $request -> a_materno;
-                $empleado -> correo = $request -> correo;
-               // $empleado -> password = $empleado -> password;
-                $empleado ->rol = $request->rol;
-                $empleado ->puesto = $request->puesto;
-                $empleado ->quien_revisa = $request->quien_revisa;
-                $empleado -> save();
-                return redirect('user')-> with('message','registro');
-            }elseif($request->contraseña =! ""){
-                $empleado -> password = Hash::make($request -> contraseña);
-                $empleado -> save();
-                return redirect('user')-> with('message','registro');
+                $alumno->save();
+                return redirect('user')->with('message', 'registro');
+            } elseif ($request->contraseña = !"") {
+                
+                $alumno->contraseña = Hash::make($request->contraseña);
+                $alumno->save();
+                return redirect('user')->with('message', 'registro');
+            }
+        } elseif ($empleado) {
+            $datosEmpleado =  $request->all();
+            if ($request->contraseña != $request->contraseña_confirm) {
+                return back()->with('message', 'Las contraseñas no coinciden');
+            } elseif ($request->contraseña == "" && $request->contraseña_confirm == "") {
+                $empleado->nombre = $request->name;
+                $empleado->apellido_paterno = $request->a_paterno;
+                $empleado->apellido_materno = $request->a_materno;
+                $empleado->correo = $request->correo;
+                $empleado->rol = $request->rol;
+                $empleado->puesto = $request->puesto;
+                $empleado->quien_revisa = $request->quien_revisa;
+                $empleado->save();
+                return redirect('user')->with('message', 'registro');
+            } elseif ($request->contraseña = !"") {
+                    $empleado -> password = Hash::make($datosEmpleado['contraseña']);
+                    $empleado->save();
+                return redirect('user')->with('message', 'registro');
             }
         }
     }
@@ -182,9 +175,8 @@ class InformaticoController extends Controller
     public function destroy($id)
     {
         //solo elimina alumnos
-        if(Alumno::destroy($id) || Empleado::destroy($id)){
-            return redirect()->back()->with('message','ok');
+        if (Alumno::destroy($id) || Empleado::destroy($id)) {
+            return redirect()->back()->with('message', 'ok');
         }
-        
     }
 }

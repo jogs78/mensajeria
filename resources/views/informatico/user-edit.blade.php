@@ -15,13 +15,13 @@
     @endif
 
     @if ($alumno != '')
-        <form action="/user/{{ $alumno->numero_control }}" class="form-edit" method="POST">
+        <form action="/user/{{ $alumno->id }}" class="form-edit" method="POST">
             @csrf
             @method('PUT')
 
             <div class="form-edit__item">
                 <label for="">Numero de control</label>
-                <input type="text" name="numero_control" id="" value="{{ $alumno->numero_control }}">
+                <input type="text" name="numero_control" id="" value="{{ $alumno->id}}">
             </div>
             <div class="form-edit__item">
                 <label for="">Nombre</label>
@@ -49,13 +49,14 @@
             </div>
             <div class="form-edit__item">
                 <label for="">Contraseña</label>
-                <input type="text" name="contraseña" id="">
+                <input type="password" name="contraseña" id=""">
             </div>
             <div class="form-edit__item">
                 <label for="">Confirmar contraseña</label>
-                <input type="text" name="contraseña_confirm" id="">
+                <input type="password" name="contraseña_confirm" id="">
             </div>
             <div class="form-edit__item">
+                
                 <input type="submit" name="enviar" id="" value="Guardar" class="enviar">
             </div>
         </form>

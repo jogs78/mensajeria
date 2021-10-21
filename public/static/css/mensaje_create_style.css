@@ -25,6 +25,7 @@
     padding: 5px;
     border-radius: 5px;
     box-shadow: 1px 1px 4px rgb(155, 154, 154);
+    overflow: auto;
 }
 
 .mensaje-create__form_body {
@@ -53,8 +54,7 @@
     padding: 3px;
     border: 1px solid rgb(0, 0, 0);
     margin-top: 15px;
-    width: 100px;
-    height: 100px;
+    width: 80%;
 }
 
 .mensaje-create__form_lbl {
@@ -135,6 +135,60 @@
 
 .checkboxes label:hover {
     background: #b3cef5;
+}
+
+.container-input {
+    background: var(--main-bg-color);
+    width: max-content;
+    padding: 3px;
+    margin-top: 10px;
+}
+
+.inputfile {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile+label {
+    max-width: 100%;
+    font-size: 1.25rem;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.inputfile+label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    margin-right: 0.25em;
+}
+
+.iborrainputfile {
+    font-size: 16px;
+    font-weight: normal;
+    font-family: 'Lato';
+}
+
+
+/* style 1 */
+
+.inputfile-1+label {
+    color: #fff;
+    width: 100%;
+}
+
+.inputfile-1:focus+label,
+.inputfile-1.has-focus+label,
+.inputfile-1+label:hover {
+    background-color: #006efd;
 }
 
 @media screen and (min-width:650px) {
