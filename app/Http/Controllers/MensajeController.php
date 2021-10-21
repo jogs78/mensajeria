@@ -54,6 +54,7 @@ class MensajeController extends Controller
         $mensaje = new mensaje();
         $mensaje -> titulo = $datos['titulo'];
         $mensaje -> descripcion = $datos['descripcion'];
+        //Estados... 0-Pendiente, 1-Aceptado, 2-Rechazado
         $mensaje -> estado = 0;
         $mensaje -> empleado_id= Auth::user()->id;
         $mensaje -> imagen = $url;
