@@ -98,6 +98,10 @@
     color: rgb(255, 255, 255);
 }
 
+#previewImage {
+    width: 40%;
+}
+
 @media screen and (min-width:650px) {
     .messages-edit__form {
         position: static;

@@ -31,7 +31,7 @@
                 </div>
                 
             </div>
-                <img class="" id="previewImage" src="{{$mensaje->imagen}}">
+                <img class="" id="previewImage" class="mensaje-create__form-preview" src="{{asset($mensaje->imagen)}}">
             </div>
             <div class="container_segmento">
                 <label for="">Carrera</label>

@@ -49,6 +49,7 @@ class MensajeController extends Controller
     public function store(Request $request)
     {
         $datos = $request->all();
+        //obtengo y guardo la imagen en el file system
         $img = $datos['file-1']->store('public/imagenes_mensajes');
         $url = Storage::url($img);
         $mensaje = new mensaje();
@@ -123,17 +124,26 @@ class MensajeController extends Controller
         $mensaje = Mensaje::find($id);
         $mensaje -> titulo = $request->titulo;
         $mensaje -> descripcion = $request->descripcion;
-        $mensaje -> carrera = $request->carrera;
-        $mensaje -> semestre = $request->semestre;
-        if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
-            $mensaje -> otros = 2;
-        }elseif(isset($_POST["servicio"])){
-            $mensaje -> otros = 0;
-        }elseif(isset($_POST["residencia"])){
-            $mensaje -> otros = 1;
-        }elseif(isset($_POST["general"])){
-            $mensaje -> otros = 3;
+        if ($request->hasFile('file-1')) {
+            $url = str_replace('storage', 'public', $mensaje->imagen);
+           if(Storage::disk('local')->exists($url)){
+            Storage::delete($url);
+            $img = $request->file('file-1')->store('public/imagenes_mensajes');
+            $url = Storage::url($img);
+            $mensaje -> imagen = $url;
+           }
         }
+        // $mensaje -> carrera = $request->carrera;
+        // $mensaje -> semestre = $request->semestre;
+        // if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+        //     $mensaje -> otros = 2;
+        // }elseif(isset($_POST["servicio"])){
+        //     $mensaje -> otros = 0;
+        // }elseif(isset($_POST["residencia"])){
+        //     $mensaje -> otros = 1;
+        // }elseif(isset($_POST["general"])){
+        //     $mensaje -> otros = 3;
+        // }
         $mensaje -> save();
         return redirect('/mensajes');
 

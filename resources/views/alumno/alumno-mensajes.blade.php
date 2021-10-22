@@ -9,7 +9,6 @@
 
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
-
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <title>Bienvenido</title>
 </head>
@@ -61,25 +60,24 @@
         </header>
 
         <section class="alumno-messages">
-            <div class="alumno-messages__container">
-                <div class="alumno-messages__content">
-                    <div class="image_container">
-                        <img src="https://www.ttandem.com/media/como-crear-un-calendario-de-publicaciones-en-redes-sociales.jpg"
-                            alt="">
-                        <i class="fas fa-chevron-circle-down message_btn_down"></i>
+            
+                <div class="alumno-messages__container">
+                    @foreach ($mensajes as $mensaje )
+                    <div class="alumno-messages__content">
+                        <div class="image_container">
+                            <img src="{{asset($mensaje->imagen)}}" alt="">
+                            <i class="fas fa-chevron-circle-down message_btn_down"></i>
+                        </div>
+                        <div class="alumno-messages__body_container">
+                            <label>Título: {{$mensaje->titulo}}</label>
+                            <small>Publicado el:<b> aqui va la fecha de publicacion</b></small>
+                            <p>{{$mensaje->descripcion}}
+                            </p>
+                        </div>
                     </div>
-                    <div class="alumno-messages__body_container">
-                        <label>Título: aqui el titulo de la publicacion</label>
-                        <small>Publicado el:<b> aqui va la fecha de publicacion</b></small>
-                        <p>Aqui la descripción del mensaje
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis iure nihil eligendi ipsa
-                            architecto facilis voluptas quisquam modi atque. Expedita, minus excepturi amet blanditiis
-                            quaerat
-                            itaque aut quidem sunt laboriosam!
-                        </p>
-                    </div>
+                    @endforeach
                 </div>
-            </div>
+            
 
             <script>
                 let message_btn_dow = document.getElementsByClassName('message_btn_down');

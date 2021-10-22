@@ -107,7 +107,6 @@ body {
         position: relative;
         height: 60px;
         background: var(--main-bg-color);
-        padding: 3px;
     }
     .account_cotainer {
         display: block !important;

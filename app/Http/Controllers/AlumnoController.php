@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\Mensaje;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +20,30 @@ class AlumnoController extends Controller
     
     public function index()
     {
-        return view('alumno.alumno-mensajes');
+        // SELECT titulo, descripcion, imagen FROM mensajes 
+        //INNER JOIN carrera_mensaje 
+        //INNER JOIN mensaje_semestre 
+        //WHERE carrera_mensaje.mensaje_id=mensajes.id 
+        //AND carrera_mensaje.carrera_id=2 
+        //AND mensaje_semestre.mensaje_id=mensajes.id 
+        //AND mensaje_semestre.semestre_id=3 AND mensajes.estado=0
+        $mensajes = DB::select('SELECT titulo, descripcion, imagen FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=0');
+        // $mensajes =DB::table('mensajes')
+        //             ->select('titulo', 'descripcion', 'imagen')
+        //             //->where('carrera_mensaje.mensaje_id', '=', 'mensajes.id', 'and', 'carrera_mensaje.carrera_id='.Auth::user()->carrera_id.'')
+        //             ->join('carrera_mensaje', function($join){
+        //                 $join->join('mensaje_semestre', function($join){
+        //                     $join->where('carrera_mensaje.mensaje_id', '=', 'mensajes.id')
+        //                     ->where(function($query){
+        //                         $query->where('carrera_mensaje.carrera_id', Auth::user()->carrera_id)
+        //                         ->where('mensaje_semestre.mensaje_id','mensajes.id')
+        //                         ->where('mensaje_semestre.semestre_id',Auth::user()->semestre_id)
+        //                         ->where('mensaje.estado', 0)
+        //                     });
+        //                 });
+        //             })->get();
+        
+        return view('alumno.alumno-mensajes', compact('mensajes'));
     }
 
     /**

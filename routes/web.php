@@ -16,13 +16,13 @@ use App\Models\Carrera;
 /*rutas login */
 Route::get('/log-in', function(){
     return view('login.login');
-})->name('login');
+})->name('login')->middleware('guest');
 Route::post('/log-in', 'AutenticarController@logIn');
 
 /*admin login */
 Route::get('/admins/log-in', function(){
     return view('login-empleado');
-})->name('login');
+})->name('login')->middleware('guest');
 Route::post('/admins/log-in', 'AutenticarController@logInAdmin');
 
 /*rutas registro */
