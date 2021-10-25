@@ -39,15 +39,15 @@
                 <div class="multiselect select2">
                     <div class="selectBox">
                         <select class="mensaje-create__form_select_semestre" name="semestre[]" id="">
-                            <option value="">Semestre</option>
-
+                            <option value="">Seleccione una carrera</option>
                         </select>
                         <div class="overSelect"></div>
                     </div>
                     <div class="checkboxes">
                         @foreach ($semestres as $semestre)
                             <label><input type="checkbox" name="sem[]" value="{{ $semestre->id }}"
-                                    {{ old('semestres') == $semestre->id ? 'selected' : '' }}>{{ $semestre->semestre }}</label>
+                                    {{ old('semestres') == $semestre->id ? 'selected' : '' }}> {{ $semestre->semestre }}
+                            </label>
                         @endforeach
                     </div>
                 </div>

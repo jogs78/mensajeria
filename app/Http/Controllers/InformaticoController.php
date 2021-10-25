@@ -102,8 +102,10 @@ class InformaticoController extends Controller
         $alumno = "";
         $empleado = "";
         if (Alumno::find($id)) {
+            $semestres = Semestre::all();
+            $carreras = Carrera::all();
             $alumno = Alumno::find($id);
-            return view('informatico.user-edit', compact('alumno', 'empleado'));
+            return view('informatico.user-edit', compact('alumno', 'empleado', 'semestres', 'carreras'));
         } elseif (Empleado::find($id)) {
             $empleado = Empleado::find($id);
             return view('informatico.user-edit', compact('alumno', 'empleado'));

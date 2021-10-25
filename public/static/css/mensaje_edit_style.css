@@ -99,7 +99,7 @@
 }
 
 #previewImage {
-    width: 40%;
+    width: 100%;
 }
 
 @media screen and (min-width:650px) {
@@ -134,5 +134,8 @@
         border: 0;
         border-top: 1px solid;
         border-bottom: 1px solid;
+    }
+    #previewImage {
+        width: 40%;
     }
 }

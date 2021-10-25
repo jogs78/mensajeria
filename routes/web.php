@@ -13,19 +13,15 @@ use App\Models\Carrera;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*rutas login */
-Route::get('/log-in', function(){
-    return view('login.login');
-})->name('login')->middleware('guest');
+/*rutas login alumnos*/
+Route::get('/log-in', function(){return view('login.login');})->name('login')->middleware('guest');
 Route::post('/log-in', 'AutenticarController@logIn');
 
-/*admin login */
-Route::get('/admins/log-in', function(){
-    return view('login-empleado');
-})->name('login')->middleware('guest');
+/*rutas login admins*/
+Route::get('/admins/log-in', function(){return view('login-empleado');})->name('login')->middleware('guest');
 Route::post('/admins/log-in', 'AutenticarController@logInAdmin');
 
-/*rutas registro */
+/*rutas registro*/
 Route::get('/sign-up',function(){
     $semestres = Semestre::all();$carreras = Carrera::all();
     return view('sign-up.sing-up', compact('semestres', 'carreras'));
@@ -38,11 +34,7 @@ Route::get('/log-out','AutenticarController@logOut');
 Route::get('/admins/log-out','AutenticarController@adminLogOut');
 
 
-Route::get('/', function(){
-    return view('dashboard');
-})->middleware('auth:admin');
-
-
+Route::get('/', function(){return view('dashboard');})->middleware('auth:admin');
 Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
 Route::resource('user', 'InformaticoController')->middleware('auth:admin');
 Route::resource('alumno', 'AlumnoController')->middleware('auth:admin');

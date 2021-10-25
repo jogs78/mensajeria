@@ -39,11 +39,9 @@ class AutenticarController extends Controller
         ], [
             'email.required' => 'El campo correo es requerido',
         ]);
-
         $email = $request->input('email');
         $password = $request->input('password');
         $credentials= ['correo' => $email, 'password' => $password];
-        
         if (Auth::guard('admin')->attempt($credentials)) {
             request()->session()->regenerate();
             return redirect('/');
@@ -53,6 +51,8 @@ class AutenticarController extends Controller
     }
     public function adminLogOut(){
         Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
         return redirect('/admins/log-in');
     }
     public function logOut(){
@@ -79,7 +79,6 @@ class AutenticarController extends Controller
             $alumno -> carrera_id = $personalInformation['carrera'];
             $alumno -> semestre_id = $personalInformation['semestre'];
             $alumno -> foto_perfil =Storage::url('user-profile-icon.jpg');
-            
             $alumno -> save();
             return redirect() -> back() -> with('message', 'Registro exitoso');
             return $personalInformation;

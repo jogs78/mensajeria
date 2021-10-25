@@ -28,8 +28,8 @@
                     <span class="user-list__table_item ">{{ $alumno->correo }}
                         <i class="user-list__viewmore fas fa-sort-down show"></i>
                         <div class="more_information">
-                            <span>Carrera: {{ $alumno->carrera_id }} </span>
-                            <span>Semestres: {{ $alumno->semestre_id }}</span>
+                            <span>Carrera: {{ $alumno->carrera->name }} </span>
+                            <span>Semestres: {{ $alumno->semestre->semestre }}</span>
                             <span>Rol: Estudiante</span>
                             <ul>
                                 <a href="/user/{{ $alumno->id }}/edit" style="color: black">

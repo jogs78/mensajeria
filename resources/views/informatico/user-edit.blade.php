@@ -37,11 +37,22 @@
             </div>
             <div class="form-edit__item">
                 <label for="">Carrera</label>
-                <input type="text" name="carrera" id="" value="{{ $alumno->carrera_id }}">
+                <select name="semestre" id="semestre" class="input">
+                    <option value="{{ $alumno->carrera->id}}">{{$alumno->carrera->name}}</option>
+                    @foreach ($carreras as $carrera)
+                            <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
+                    @endforeach
+                </select>
+            
             </div>
             <div class="form-edit__item">
                 <label for="">Semestre</label>
-                <input type="text" name="semestre" id="" value="{{ $alumno->semestre_id }}">
+                <select name="semestre" id="semestre" class="input">
+                    <option value="{{ $alumno->semestre_id }}">Semestre {{ $alumno->semestre_id }}</option>
+                    @foreach ($semestres as $semestre)
+                        <option value="{{ $semestre->id }}">Semestre {{ $semestre->semestre }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-edit__item">
                 <label for="">Correo</label>

@@ -93,21 +93,8 @@ class MensajeController extends Controller
     public function edit($id)
     {
         //$this->autorize('update', $id);
-        $carreras = [
-            'Ingen. Mécanica',
-            'Ingen. Sistemas Computacionales',
-            'Ingen. Industrial',
-            'Ingen. Electrónica',
-            'Ingen. Eléctrica',
-            'Ingen. Bioquímica',
-            'Ingen. Química',
-            'Ingen. Gestión Empresarial',
-            'Maestria en Ciencias en Ingeniería Bioquímica',
-            'Maestría en Ciencias en Ingeniería Mecatrónica',
-            'Doctorado en Ciencias de los Alimentos y Biotecs de los Alimentos y Biotecnología',
-            'Doctorado en Ciencias de la Ingeniería'
-        ];
-        $semestres = [1,2,3,4,5,6,7,8,9];
+        $carreras = Carrera::all();
+        $semestres = Semestre::all();
         $mensaje = Mensaje::find($id);
         return view('mensaje.mensaje-edit', compact('mensaje', 'carreras', 'semestres'));
     }
@@ -121,6 +108,7 @@ class MensajeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $datos = $request -> all();
         $mensaje = Mensaje::find($id);
         $mensaje -> titulo = $request->titulo;
         $mensaje -> descripcion = $request->descripcion;
@@ -133,6 +121,8 @@ class MensajeController extends Controller
             $mensaje -> imagen = $url;
            }
         }
+        $mensaje ->carreras()->sync(($datos['car']));
+        $mensaje ->semestres()->sync(($datos['sem']));
         // $mensaje -> carrera = $request->carrera;
         // $mensaje -> semestre = $request->semestre;
         // if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
