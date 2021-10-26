@@ -98,7 +98,235 @@ body {
     display: none;
 }
 
+
+/* dashboard-actores */
+
+.dashboard-EmisorRevisor__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-rows: 400px;
+    grid-auto-rows: max-content;
+    padding: 10px;
+    gap: 20px;
+    margin: auto;
+    min-width: max-content;
+    justify-content: center;
+}
+
+.dashboard-EmusorRevisor__infMensajes,
+.dashboard-EmisorRevisor__carrerasMensajes {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+    box-shadow: -2px 1px 5px rgba(83, 83, 83, 0.438);
+}
+
+.dashboard-EmusorRevisor__infMensajes {
+    align-items: center;
+}
+
+.img-dashboard {
+    width: 150px;
+}
+
+.lbl__info {
+    width: 100%;
+    padding: 4px;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.btn__verMensajes {
+    margin: auto;
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+    background-color: blue;
+    border-radius: 15px;
+    width: 80%;
+    text-align: center;
+}
+
+.list__carreras {
+    padding: 0 10px;
+}
+
+.list__carreras li {
+    padding: 3px;
+    font-size: 17px;
+    border-bottom: 1px solid;
+}
+
+
+/* difusor */
+
+.dashboard-difusor__contianer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr max-content 1fr;
+    grid-row-gap: 10px;
+    width: 98vw;
+    min-width: 300px;
+    overflow: auto;
+    height: 80vh;
+    padding: 10px;
+}
+
+.dashboard-difusor__mensajes {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.dashboard-difusor__mensajes img {
+    align-self: center;
+}
+
+.dashboard-difusor__alumnos {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.dashboard-difusor__alumnos img {
+    width: 25%;
+}
+
+.dashboard-difusor__carrerasMensajes {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    padding: 10px;
+}
+
+
+/* informatico */
+
+.dashboard-informatico {
+    height: 100%;
+}
+
+.dashboard-informatico__container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: min-content;
+    position: relative;
+}
+
+.alumnos-carreras__container {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    column-gap: 5px;
+    padding: 5px;
+    width: 100%;
+    align-self: center;
+    background: var(--main-bg-color);
+}
+
+.alumnos-carreras__ingenierias {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgb(255, 255, 255);
+    padding: 8px 5px;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.total-usuarios {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    width: 97%;
+}
+
+.total-usuarios__container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.total-usuarios__container div {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.total-usuarios__lbl_total {
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.total-usuarios__lbl {
+    padding: 3px;
+    border-bottom: 1px solid;
+}
+
+.total-usuarios__img {
+    width: 100px;
+}
+
+.btn__verUsuarios {
+    margin: 6px auto;
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+    background-color: var(--main-bg-color);
+    border-radius: 15px;
+    width: 30%;
+    text-align: center;
+}
+
+
+/* _______________ */
+
 @media screen and (min-width:650px) {
+    /* dashboard-actores */
+    .dashboard-difusor__contianer {
+        grid-template-columns: 300px 1fr;
+        grid-template-rows: repeat(3, 150px);
+        grid-gap: 10px;
+        width: 80vw;
+        height: auto;
+        margin: 25px auto;
+        box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    }
+    .dashboard-difusor__mensajes {
+        grid-row: span 3;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
+    .dashboard-difusor__mensajes img {
+        align-self: center;
+    }
+    .dashboard-difusor__alumnos {
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
+    .dashboard-difusor__alumnos img {
+        width: 15%;
+    }
+    .dashboard-difusor__carrerasMensajes {
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        grid-row: span 2;
+    }
+    .dashboard-informatico__container {
+        padding: 10px;
+        background: var(--main-bg-color);
+        height: 200px;
+    }
+    .alumnos-carreras__container {
+        width: 70%
+    }
+    .total-usuarios {
+        width: 50%;
+        background: rgb(255, 255, 255);
+        margin-top: 40px;
+    }
+    /* _____________ */
     body {
         display: flex;
         flex-direction: column;
@@ -119,6 +347,7 @@ body {
     .image-profile_container {
         display: flex;
         align-items: center;
+        padding: 3px 0;
     }
     .image-profile_container span {
         padding: 4px;
@@ -208,6 +437,7 @@ body {
     }
     .navigation_show {
         left: 0 !important;
+        position: fixed;
     }
     .menu-content {
         width: 500px;

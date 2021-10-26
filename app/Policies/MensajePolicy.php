@@ -38,4 +38,8 @@ class MensajePolicy
             return false;
         }
     }
+    public function aceptarRechazar(Empleado $empleado, Mensaje $mensaje){
+        if($empleado->rol == "Revisor")
+            return true;
+    }
 }

@@ -43,6 +43,24 @@
     object-position: center center;
 }
 
+.show__form_btn {
+    width: 40%;
+    padding: 4px;
+    margin: auto;
+    margin-bottom: auto;
+    margin-bottom: auto;
+    background: var(--main-bg-color) !important;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255) !important;
+    border-radius: 20px !important;
+    transition: transform 400ms;
+    font-size: 17px;
+}
+
+.show__form_btn:active {
+    transform: scale(.9);
+}
+
 @media screen and (min-width:650px) {
     .mensage-show__container {
         width: 50%;

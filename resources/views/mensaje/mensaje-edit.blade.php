@@ -1,13 +1,6 @@
 @extends('dashboard')
 @section('mensaje.mensaje-edit')
-    <style>
-        #mensajes {
-            border-radius: 5px 5px 0 0;
-            box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
-            color: rgb(251, 255, 35);
-        }
-
-    </style>
+    
     <section class="messages-edit">
         <form class="messages-edit__form" action="/mensajes/{{ $mensaje->id }}" method="POST"
             enctype="multipart/form-data">
@@ -20,8 +13,7 @@
 
             <div class="container">
                 <label for="">Descripción</label>
-                <input class="messages-edit__form_input" type="text" value="{{ $mensaje->descripcion }}"
-                    name="descripcion">
+                <textarea class="messages-edit__form_input" name="descripcion" id="" cols="30" rows="5" >{{ $mensaje->descripcion }}</textarea>
             </div>
             <div class="container_image">
                 <label for="">Imagen</label>
@@ -54,8 +46,7 @@
                         @endfor
                         <hr>
                         @for ($i = 0; $i < sizeof($carreras); $i++)
-                            <label><input name="car[]" type="checkbox"
-                                    value="{{ $carreras[$i]->id }}">{{ $carreras[$i]->name }}</label>
+                            <label><input name="car[]" type="checkbox" value="{{ $carreras[$i]->id }}">{{ $carreras[$i]->name }}</label>
                         @endfor
                     </div>
                 </div>
