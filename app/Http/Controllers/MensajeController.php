@@ -96,6 +96,7 @@ class MensajeController extends Controller
         $carreras = Carrera::all();
         $semestres = Semestre::all();
         $mensaje = Mensaje::find($id);
+        //return $mensaje->carreras;
         return view('mensaje.mensaje-edit', compact('mensaje', 'carreras', 'semestres'));
     }
 

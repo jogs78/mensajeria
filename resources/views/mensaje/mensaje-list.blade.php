@@ -15,6 +15,11 @@
 
 
     <section class="new-messages">
+        <style>
+            .dashboard-EmisorRevisror{
+                display: none;
+            }
+        </style>
         <a class="new-messages__link" href="/mensajes/create">Redactar mensaje</a>
         @if (sizeof($mensajes) == 0)
             <label class="image-title fas fa-exclamation-circle">Sin registros</label>

@@ -2,6 +2,11 @@
 @section('mensaje.mensaje-create')
 
     <section class="mensaje-create">
+        <style>
+            .dashboard-EmisorRevisror{
+                display: none;
+            }
+        </style>
         <form action="/mensajes" method="POST" class="mensaje-create__form" id="form" enctype="multipart/form-data">
             @csrf
             <div class="c1">

@@ -2,6 +2,11 @@
 @section('mensaje.mensaje-edit')
     
     <section class="messages-edit">
+        <style>
+            .dashboard-EmisorRevisror{
+                display: none;
+            }
+        </style>
         <form class="messages-edit__form" action="/mensajes/{{ $mensaje->id }}" method="POST"
             enctype="multipart/form-data">
             @csrf
@@ -39,44 +44,76 @@
                     </div>
                     <div class="checkboxes">
                         <br>
+                        <!-- Editar carrera-->
                         <hr> Selección actual:
-                        @for ($i = 0; $i < sizeof($mensaje->carreras); $i++)
-                            <label><input name="car[]" type="checkbox" value="{{ $mensaje->carreras[$i]->id }}"
-                                    checked>{{ $mensaje->carreras[$i]->name }}</label>
-                        @endfor
-                        <hr>
+                            @for ($i = 0; $i < sizeof($mensaje->carreras); $i++)
+                                <label>
+                                    <input name="car[]" type="checkbox" value="{{ $mensaje->carreras[$i]->id }}"checked>
+                                    {{ $mensaje->carreras[$i]->name }}
+                                </label>
+                            @endfor
+                        <hr> 
                         @for ($i = 0; $i < sizeof($carreras); $i++)
-                            <label><input name="car[]" type="checkbox" value="{{ $carreras[$i]->id }}">{{ $carreras[$i]->name }}</label>
+                            @php
+                                $contador=0
+                            @endphp
+                            @for ($j = 0; $j < sizeof($mensaje->carreras); $j++)
+                                @if ($carreras[$i]->name==$mensaje->carreras[$j]->name)
+                                    @php
+                                        $contador=1
+                                    @endphp
+                                @endif
+                            @endfor
+                            @if ($contador==0)
+                                <label>
+                                    <input name="car[]" type="checkbox" value="{{ $carreras[$i]->id }}">
+                                    {{ $carreras[$i]->name }}
+                                </label>
+                            @endif
                         @endfor
                     </div>
                 </div>
-                <label for="">Semestre</label>
-                <div class="multiselect select2">
-                    <div class="selectBox">
-                        <select class="mensaje-create__form_select_semestre" name="semestre" id="">
-
-                            <option>Seleccione una opción</option>
-
-
-                        </select>
-                        <div class="overSelect"></div>
+                <!-- Editar Semestre-->
+                <div class="container_segmento">
+                    <label for="">Semestre</label>
+                    <div class="multiselect">
+                        <div class="selectBox">
+                            <select class="mensaje-create__form_select_carrera" name="semestre" id="">
+                                <option>Seleccione una opción</option>
+                            </select>
+                            <div class="overSelect"></div>
+                        </div>
+                        <div class="checkboxes">
+                            <br>
+                            
+                            <hr> Selección actual:
+                                @for ($i = 0; $i < sizeof($mensaje->semestres); $i++)
+                                    <label>
+                                        <input name="sem[]" type="checkbox" value="{{ $mensaje->semestres[$i]->id }}"checked>
+                                        {{ $mensaje->semestres[$i]->semestre }} semestre
+                                    </label>
+                                @endfor
+                            <hr> 
+                            @for ($i = 0; $i < sizeof($semestres); $i++)
+                                @php
+                                    $contador=0
+                                @endphp
+                                @for ($j = 0; $j < sizeof($mensaje->semestres); $j++)
+                                    @if ($semestres[$i]->semestre==$mensaje->semestres[$j]->semestre)
+                                        @php
+                                            $contador=1
+                                        @endphp
+                                    @endif
+                                @endfor
+                                @if ($contador==0)
+                                    <label>
+                                        <input name="sem[]" type="checkbox" value="{{ $semestres[$i]->id }}">
+                                        {{ $semestres[$i]->semestre }} semestre
+                                    </label>
+                                @endif
+                            @endfor
+                        </div>
                     </div>
-                    <div class="checkboxes">
-                        <br>
-                        <hr>Selección actual:
-                        @for ($i = 0; $i < sizeof($mensaje->semestres); $i++)
-                            <label><input name="sem[]" type="checkbox" value="{{ $mensaje->semestres[$i]->id }}"
-                                    checked>Semestre {{ $mensaje->semestres[$i]->id }}</label>
-                        @endfor
-                        <hr>
-                        @for ($i = 0; $i < sizeof($semestres); $i++)
-                            <label><input name="sem[]" class="checkboxesSemestres" type="checkbox"
-                                    value="{{ $semestres[$i]->id }}"
-                                    {{ old('semestres') == $semestres[$i]->id ? 'selected' : '' }}>Semestre
-                                {{ $semestres[$i]->id }}</label>
-                        @endfor
-                    </div>
-                </div>
                     @if ($mensaje->otros == 0)
                         <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio"
                                 id="servicio_social" value="0"> Servicio social</span>

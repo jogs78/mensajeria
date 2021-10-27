@@ -2,6 +2,11 @@
 @section('mensaje.mensaje-show')
 
     <section class="mensage-show">
+        <style>
+            .dashboard-EmisorRevisror{
+                display: none;
+            }
+        </style>
         <div class="mensage-show__container">
             <div class="img"><img src="{{ $mensaje->imagen }}" alt=""></div>
             <div class="message-show__body">
