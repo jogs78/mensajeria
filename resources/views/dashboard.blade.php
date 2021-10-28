@@ -27,6 +27,7 @@
                 <div class="image-profile_container">
                     <img src="{{ Auth::user()->foto_perfil }}" alt="">
                     <span>{{ Auth::user()->nombre }}</span>
+                    <span>{{ Auth::user()->rol }}</span>
                 </div>
                 <i class="fas fa-caret-down" id="menu2"></i>
                 <div class="menu2-container" id="menu2-container">
@@ -75,7 +76,7 @@
                     <label class="lbl__info">Publicaciones totales: 0000</label>
                     <label class="lbl__info">Publicaciones aceptadas: 0000</label>
                     <label class="lbl__info">Publicaciones pendientes: 0000</label>
-                    <a href="" class="btn__verMensajes">Ver mensajes</a>
+                    <a href="/mensajes" class="btn__verMensajes">Ver mensajes</a>
                 </div>
                 <div class="dashboard-EmisorRevisor__carrerasMensajes">
                     <label class="lbl__info">Publicaciones por carreras</label>
@@ -97,7 +98,7 @@
                     <label class="lbl__info">Publicaciones totales: 0000</label>
                     <label class="lbl__info">Publicaciones aceptadas: 0000</label>
                     <label class="lbl__info">Publicaciones pendientes: 0000</label>
-                    <a href="" class="btn__verMensajes">Ver mensajes</a>
+                    <a href="/mensajes" class="btn__verMensajes">Ver mensajes</a>
                 </div>
                 <div class="dashboard-EmisorRevisor__carrerasMensajes">
                     <label class="lbl__info">Publicaciones por carreras</label>
@@ -117,7 +118,7 @@
                     <img class="img-dashboard"
                         src="https://iconarchive.com/download/i84522/designbolts/seo/Review-Post.ico" alt="">
                     <label for="">Mensajes totales: 00000</label>
-                    <a href="" class="btn__verMensajes">Ver mensajes</a>
+                    <a href="/mensajes" class="btn__verMensajes">Ver mensajes</a>
                 </div>
                 <div class="dashboard-difusor__alumnos">
                     <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="">
@@ -192,7 +193,7 @@
                         </div>
                     </div>
 
-                    <a href="" class="btn__verUsuarios"> Ver usuarios</a>
+                    <a href="/users" class="btn__verUsuarios"> Ver usuarios</a>
                 </div>
             </div>
         </section>

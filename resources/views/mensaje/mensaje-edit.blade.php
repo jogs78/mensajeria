@@ -3,7 +3,7 @@
     
     <section class="messages-edit">
         <style>
-            .dashboard-EmisorRevisror{
+            .dashboard-EmisorRevisror,.dashboard-difusor{
                 display: none;
             }
         </style>

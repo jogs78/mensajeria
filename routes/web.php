@@ -34,7 +34,7 @@ Route::get('/log-out','AutenticarController@logOut');
 Route::get('/admins/log-out','AutenticarController@adminLogOut');
 
 
-Route::get('/', function(){return view('dashboard');})->middleware('auth:admin');
+Route::get('/inicio', function(){return view('dashboard');})->middleware('auth:admin');
 Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
 Route::resource('user', 'InformaticoController')->middleware('auth:admin');
 Route::resource('alumno', 'AlumnoController')->middleware('auth:admin');

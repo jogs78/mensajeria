@@ -3,7 +3,7 @@
 
     <section class="mensage-show">
         <style>
-            .dashboard-EmisorRevisror{
+            .dashboard-EmisorRevisror, .dashboard-difusor{
                 display: none;
             }
         </style>
@@ -19,9 +19,15 @@
                 <label class="lbl" for="">Semestre: {{ $mensaje->semestre }}</label>
             </div>
             @can('aceptarRechazar', $mensaje)
-                <form action="" style="text-align: center">
-                    <button class="show__form_btn fas fa-check"> Aceptar</button>
-                    <button class="show__form_btn fas fa-times"> Rechazar</button>
+                <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
+                    @csrf
+                    @method('PUT')
+                    <input type="submit" name="estado" class="show__form_btn fas fa-check" value="Aceptar"> Aceptar
+                </form>
+                <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
+                    @csrf
+                    @method('PUT')
+                    <input type="submit" name="estado" class="show__form_btn fas fa-times" value="Rechazar"> Rechazar
                 </form>
             @endcan
         </div>

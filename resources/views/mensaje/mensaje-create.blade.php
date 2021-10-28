@@ -3,7 +3,7 @@
 
     <section class="mensaje-create">
         <style>
-            .dashboard-EmisorRevisror{
+            .dashboard-EmisorRevisror, .dashboard-difusor{
                 display: none;
             }
         </style>
@@ -30,7 +30,7 @@
                 <div class="multiselect">
                     <div class="selectBox">
                         <select class="mensaje-create__form_select_carrera" name="carrera" id="">
-                            <option value="">Seleccione una carrera</option>
+                            <option value="">Seleccione Carrera</option>
                         </select>
                         <div class="overSelect"></div>
                     </div>
@@ -44,7 +44,7 @@
                 <div class="multiselect select2">
                     <div class="selectBox">
                         <select class="mensaje-create__form_select_semestre" name="semestre[]" id="">
-                            <option value="">Seleccione una carrera</option>
+                            <option value="">Seleccione Semestre</option>
                         </select>
                         <div class="overSelect"></div>
                     </div>

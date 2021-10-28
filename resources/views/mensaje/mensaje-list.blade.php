@@ -16,7 +16,7 @@
 
     <section class="new-messages">
         <style>
-            .dashboard-EmisorRevisror{
+            .dashboard-EmisorRevisror, .dashboard-difusor{
                 display: none;
             }
         </style>
@@ -34,9 +34,9 @@
                         @elseif($mensaje->estado==1)
                             <label for="" class="new-messages__status-menssage">Estado: Aceptado</label>
                         @elseif($mensaje->estado==2)
-                            <label for="" class="new-messages__status-menssage">Estado: Enviado</label>
-                        @else
                             <label for="" class="new-messages__status-menssage">Estado: Rechazado</label>
+                        @else
+                            <label for="" class="new-messages__status-menssage">Estado: Publicado</label>
                         @endif
                         {{-- <label for="" class="new-messages__fecha-publicacion">Fecha de publicación</label> --}}
                     </div>
@@ -47,9 +47,9 @@
                             </a>
                         </div>
                         <div class="new-messages_show">
-                            <a href="/mensajes/{{ $mensaje->id }}" style="color: rgb(255, 255, 255)">
-                                <span class="far fa-file-alt" title="Leer"></span>
-                            </a>
+                                <a href="/mensajes/{{ $mensaje->id }}" style="color: rgb(255, 255, 255)">
+                                    <span class="far fa-file-alt" title="Leer"></span>
+                                </a>
                         </div>
                         <div class="new-messages_delete">
                             <form action="/mensajes/{{ $mensaje->id }}" method="POST" class="form_eliminar">

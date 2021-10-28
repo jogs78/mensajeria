@@ -44,7 +44,7 @@ class AutenticarController extends Controller
         $credentials= ['correo' => $email, 'password' => $password];
         if (Auth::guard('admin')->attempt($credentials)) {
             request()->session()->regenerate();
-            return redirect('/');
+            return redirect('/inicio');
         }else
             return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
         return back()->withErrors('¡Error! El usuario no existe')->withInput();

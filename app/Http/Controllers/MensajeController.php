@@ -7,6 +7,7 @@ use App\Models\Carrera;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class MensajeController extends Controller
@@ -21,7 +22,26 @@ class MensajeController extends Controller
     
     public function index()
     {
-        $mensajes=Mensaje::all();
+        //$id=Auth::user()->id;
+        if(Auth::user()->rol=='Emisor'){
+            $mensajes = DB::select('SELECT * FROM mensajes WHERE empleado_id='.Auth::user()->id);
+        }
+        elseif(Auth::user()->rol=='Revisor'){
+            $mensajesBD = Mensaje::with('empleado')->get();
+            $mensajes=array();
+            for($i=0; $i<sizeof($mensajesBD);$i++){
+                if(Auth::user()->puesto==$mensajesBD[$i]->empleado->quien_revisa){
+                    $mensajes[$i]=$mensajesBD[$i];
+                }
+                
+            }
+            //return $mensajes;
+        }
+        elseif(Auth::user()->rol=='Difusor'){
+            $mensajes = DB::select('SELECT * FROM mensajes WHERE estado=1');
+        }
+        
+        //return $id;
         $this->authorize('viewMensajes', App\Models\Mensaje::class);
         return view('mensaje.mensaje-list', compact('mensajes'));
     }
@@ -111,31 +131,46 @@ class MensajeController extends Controller
     {
         $datos = $request -> all();
         $mensaje = Mensaje::find($id);
-        $mensaje -> titulo = $request->titulo;
-        $mensaje -> descripcion = $request->descripcion;
-        if ($request->hasFile('file-1')) {
-            $url = str_replace('storage', 'public', $mensaje->imagen);
-           if(Storage::disk('local')->exists($url)){
-            Storage::delete($url);
-            $img = $request->file('file-1')->store('public/imagenes_mensajes');
-            $url = Storage::url($img);
-            $mensaje -> imagen = $url;
-           }
+        if(Auth::user()->rol=='Emisor'){
+            $mensaje -> titulo = $request->titulo;
+            $mensaje -> descripcion = $request->descripcion;
+            if ($request->hasFile('file-1')) {
+                $url = str_replace('storage', 'public', $mensaje->imagen);
+            if(Storage::disk('local')->exists($url)){
+                Storage::delete($url);
+                $img = $request->file('file-1')->store('public/imagenes_mensajes');
+                $url = Storage::url($img);
+                $mensaje -> imagen = $url;
+            }
+            }
+            $mensaje ->carreras()->sync(($datos['car']));
+            $mensaje ->semestres()->sync(($datos['sem']));
+            // $mensaje -> carrera = $request->carrera;
+            // $mensaje -> semestre = $request->semestre;
+            // if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+            //     $mensaje -> otros = 2;
+            // }elseif(isset($_POST["servicio"])){
+            //     $mensaje -> otros = 0;
+            // }elseif(isset($_POST["residencia"])){
+            //     $mensaje -> otros = 1;
+            // }elseif(isset($_POST["general"])){
+            //     $mensaje -> otros = 3;
+            // }
+            $mensaje -> save();
         }
-        $mensaje ->carreras()->sync(($datos['car']));
-        $mensaje ->semestres()->sync(($datos['sem']));
-        // $mensaje -> carrera = $request->carrera;
-        // $mensaje -> semestre = $request->semestre;
-        // if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
-        //     $mensaje -> otros = 2;
-        // }elseif(isset($_POST["servicio"])){
-        //     $mensaje -> otros = 0;
-        // }elseif(isset($_POST["residencia"])){
-        //     $mensaje -> otros = 1;
-        // }elseif(isset($_POST["general"])){
-        //     $mensaje -> otros = 3;
-        // }
-        $mensaje -> save();
+
+        if(Auth::user()->rol=='Revisor'){
+            //return $request->estado;
+            if($request->estado=='Aceptar'){
+                $mensaje->estado=1;
+            }
+            elseif($request->estado=='Rechazar'){
+                $mensaje->estado=2;
+            }
+            
+            $mensaje -> save();
+            
+        }
         return redirect('/mensajes');
 
     }
