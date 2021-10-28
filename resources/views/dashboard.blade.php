@@ -46,7 +46,7 @@
                 <div class="menu-container" id="menu">
                     <div class="menu-content">
                         <ul class="menu-list">
-                            <a id="home" class="menu-list__item fas fa-home home_selected" href="">
+                            <a id="home" class="menu-list__item fas fa-home home_selected" href="/inicio">
                                 <li class="text">Inicio</li>
                             </a>
                             @can('view', App\Models\Empleado::class)
@@ -193,7 +193,7 @@
                         </div>
                     </div>
 
-                    <a href="/users" class="btn__verUsuarios"> Ver usuarios</a>
+                    <a href="/user" class="btn__verUsuarios"> Ver usuarios</a>
                 </div>
             </div>
         </section>

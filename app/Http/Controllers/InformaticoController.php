@@ -19,12 +19,17 @@ class InformaticoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('view', Auth::user());
         $alumnos = Alumno::with('carrera', 'semestre')->get();
         $empleados = Empleado::where('id', '!=', Auth::user()->id)->get();
+        
+
+        //return $usuarios[1]->carrera;
         return view('informatico.user-list', compact('alumnos', 'empleados'));
+
+        
     }
     /**
      * Show the form for creating a new resource.

@@ -22,12 +22,12 @@
                 <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
                     @csrf
                     @method('PUT')
-                    <input type="submit" name="estado" class="show__form_btn fas fa-check" value="Aceptar"> Aceptar
+                    <input type="submit" name="estado" class="show__form_btn fas fa-check" value="Aceptar"> 
                 </form>
                 <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
                     @csrf
                     @method('PUT')
-                    <input type="submit" name="estado" class="show__form_btn fas fa-times" value="Rechazar"> Rechazar
+                    <input type="submit" name="estado" class="show__form_btn fas fa-times" value="Rechazar"> 
                 </form>
             @endcan
         </div>
