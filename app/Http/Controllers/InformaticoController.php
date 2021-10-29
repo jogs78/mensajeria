@@ -22,13 +22,12 @@ class InformaticoController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view', Auth::user());
-        $alumnos = Alumno::with('carrera', 'semestre')->get();
-        $empleados = Empleado::where('id', '!=', Auth::user()->id)->get();
+        $alumnos = Alumno::with('carrera', 'semestre')->paginate(100);
+        $empleados = Empleado::where('id', '!=', Auth::user()->id)->paginate(10);
         
 
         //return $usuarios[1]->carrera;
         return view('informatico.user-list', compact('alumnos', 'empleados'));
-
         
     }
     /**

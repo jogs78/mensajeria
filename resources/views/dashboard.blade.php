@@ -41,7 +41,7 @@
                     </ul>
                 </div>
             </div>
-            <nav class="nav">
+            <nav class="nav1">
                 <i class="fas fa-bars" id="navigation_btn"></i>
                 <div class="menu-container" id="menu">
                     <div class="menu-content">

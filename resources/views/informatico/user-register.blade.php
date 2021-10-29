@@ -1,6 +1,11 @@
 @extends('dashboard')
 @section('informatico.user-register')
-    
+<style>
+    .dashboard-informatico {
+        display: none;
+    }
+
+</style>
     <section class="user-list">
         <div class="user-register__container">
             

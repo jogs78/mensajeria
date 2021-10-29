@@ -1,13 +1,11 @@
 @extends('dashboard')
 @section('informatico.user-edit')
-    <style>
-        #users {
-            border-radius: 5px 5px 0 0;
-            box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.281);
-            color: rgb(251, 255, 35);
-        }
+<style>
+    .dashboard-informatico {
+        display: none;
+    }
 
-    </style>
+</style>
     @if (session('message'))
         {{ session('message') }}
 
