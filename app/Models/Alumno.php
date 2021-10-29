@@ -17,5 +17,24 @@ class Alumno extends Authenticatable
     public function carrera(){
         return $this -> belongsTo('App\Models\Carrera');
     }
+
+    public function scopeBuscarpor($query, $tipo, $buscar){
+        if(($tipo) && ($buscar)){
+            // if($tipo=='apellido_paterno'){
+            //     $tipo1='apellido_paterno';
+            //     $tipo2='apellido_materno';
+            //     return $query->where($tipo2, 'like','%'.$buscar.'%')->orWhere($tipo1, 'like','%'.$buscar.'%');
+            // }
+            return $query->where($tipo, 'like','%'.$buscar.'%');
+        }  
+    }
+
+    public function scopeFiltro($query, $car){
+        $tipo_car='carera_id';
+        if(($car) ){
+            return $query->where('carrera_id', '==' .$car);
+        }
+    }
+
     use HasFactory;
 }

@@ -9,16 +9,32 @@
     <section class="users-list">
         <div class="form-filtro__container">
             <form action="" class="form-filtro">
-                <select name="" id="" class="form-filtro__carrera">
-                    <option value="">Seleccione una opcion</option>
+                <select name="carreras"  class="form-filtro__carrera">
+                    <option >Carreras</option>
+                    @foreach ($carreras as $carrera)
+                        <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
+                    @endforeach
                 </select>
-                <select name="" id="" class="form-filtro__semestre">
-                    <option value="">Seleccione una opcion</option>
+                <select name="semestres" id="" class="form-filtro__semestre">
+                    <option value="">Semestres</option>
+                    @foreach ($semestres as $semestre)
+                            <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
+                    @endforeach
                 </select>
-                <button class="btn btn-dark">Filtrar</button>
+                <button class="btn btn-dark" >Filtrar</button>
             </form>
-            <form class="form-search" action=""><input class="form-search__numControl" type="text" placeholder="Número de control"><button
-                    class="btn-form__search fas fa-search btn-outline-primary" type="submit"></button></form>
+            <form class="form-search__numControl">
+                <select name="tipo">
+                    <option>Buscar por tipo</option>
+                    <option value="id">Número de Control</option>
+                    <option value="nombre">Nombre</option>
+                    <option value="apellido_paterno">Apellido Paterno</option>
+                    <option value="apellido_materno">Apellido Materno</option>
+                    <option value="correo">Correo</option>
+                </select>
+                <input name="buscarpor" class="form-search__numControl" type="search" placeholder="Buscar Por">
+                <button class="btn-form__search fas fa-search btn-outline-primary" type="submit"></button>
+            </form>
         </div>
         <div class="btn-select__container">
             <button class="btn-select" id="btn_alumno" value="1">Alumnos</button>

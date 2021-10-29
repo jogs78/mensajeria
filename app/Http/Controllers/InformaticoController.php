@@ -22,12 +22,21 @@ class InformaticoController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view', Auth::user());
-        $alumnos = Alumno::with('carrera', 'semestre')->paginate(100);
-        $empleados = Empleado::where('id', '!=', Auth::user()->id)->paginate(10);
-        
 
-        //return $usuarios[1]->carrera;
-        return view('informatico.user-list', compact('alumnos', 'empleados'));
+        $buscar=$request->get('buscarpor');
+        $tipo=$request->get('tipo');
+        
+        $tipo_carrera=$request->get('carreas');
+        $tipo_semestre=$request->get('semestres');
+        //return $tipo_carrera;
+
+        $alumnos = Alumno::filtro($tipo_carrera,$tipo_semestre)->buscarpor($tipo, $buscar)->with('carrera', 'semestre')->paginate(100);
+        $empleados = Empleado::where('id', '!=', Auth::user()->id)->paginate(10);
+        $carreras = Carrera::all();
+        $carreras = Carrera::all();
+        $semestres = Semestre::all();
+        
+        return view('informatico.user-list', compact('alumnos', 'empleados','carreras','semestres'));
         
     }
     /**
@@ -185,4 +194,7 @@ class InformaticoController extends Controller
             return redirect()->back()->with('message', 'ok');
         }
     }
+
+
+    
 }
