@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
+
 
 class Alumno extends Authenticatable
 {
@@ -29,11 +31,22 @@ class Alumno extends Authenticatable
         }  
     }
 
-    public function scopeFiltro($query, $car){
-        $tipo_car='carera_id';
-        if(($car) ){
-            return $query->where('carrera_id', '==' .$car);
+    public function scopeFiltroCarreraSemestre($query, $tipo_carrera,$tipo_semestre){
+
+        if($tipo_carrera && $tipo_semestre){
+            
+            return $query->where(function($query) use ($tipo_semestre, $tipo_carrera){
+                $query->where('carrera_id',$tipo_carrera)
+                      ->where('semestre_id',$tipo_semestre);
+            });    
         }
+        if($tipo_carrera){
+            return $query->where('carrera_id',$tipo_carrera);
+        }
+        if($tipo_semestre){
+            return $query->where('semestre_id',$tipo_semestre);
+        }
+        
     }
 
     use HasFactory;

@@ -16,5 +16,14 @@ class Empleado extends Authenticatable
     public function mensajes(){
         return $this -> hasMany('App\Models\Mensaje');
     }
-
+    public function scopeFiltroEmpleado($query, $tipoEmpleado, $buscarEmpleado){
+        
+        if($tipoEmpleado != "quien_revisa" && $buscarEmpleado){
+            
+            return $query->where($tipoEmpleado, 'like','%'.$buscarEmpleado.'%');
+        }  
+        if(($tipoEmpleado) == "quien_revisa" && ($buscarEmpleado)){
+            return $query->where($tipoEmpleado,$buscarEmpleado);
+        }
+    }
 }

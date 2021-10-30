@@ -45,7 +45,6 @@
 .form-search__numControl {
     padding: 3px;
     border-radius: 10px;
-    border: 1px solid;
     margin-right: 5px;
 }
 
@@ -178,6 +177,10 @@
     .eliminar::after {
         content: "Eliminar";
         position: relative;
+    }
+    .form-filtro__container select {
+        width: 100%;
+        margin: 2px 0;
     }
 }
 

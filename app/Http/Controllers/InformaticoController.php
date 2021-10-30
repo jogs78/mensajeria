@@ -22,17 +22,15 @@ class InformaticoController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view', Auth::user());
-
         $buscar=$request->get('buscarpor');
         $tipo=$request->get('tipo');
+        $buscarEmpleado=$request->get('buscarPor');
+        $tipoEmpleado=$request->get('tipoEmpleado');
+        $tipo_carrera=$request->get('carreras');
         
-        $tipo_carrera=$request->get('carreas');
         $tipo_semestre=$request->get('semestres');
-        //return $tipo_carrera;
-
-        $alumnos = Alumno::filtro($tipo_carrera,$tipo_semestre)->buscarpor($tipo, $buscar)->with('carrera', 'semestre')->paginate(100);
-        $empleados = Empleado::where('id', '!=', Auth::user()->id)->paginate(10);
-        $carreras = Carrera::all();
+        $alumnos = Alumno::FiltroCarreraSemestre($tipo_carrera,$tipo_semestre)->buscarpor($tipo, $buscar)->with('carrera', 'semestre')->paginate(100);
+        $empleados = Empleado::FiltroEmpleado($tipoEmpleado, $buscarEmpleado)->where('id', '!=', Auth::user()->id)->paginate(10);
         $carreras = Carrera::all();
         $semestres = Semestre::all();
         

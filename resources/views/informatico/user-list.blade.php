@@ -7,10 +7,10 @@
 
     </style>
     <section class="users-list">
-        <div class="form-filtro__container">
-            <form action="" class="form-filtro">
+        <div class="form-filtro__container" id="filtroAlumno">
+            <form action="" class="form-filtro" method="GET">
                 <select name="carreras"  class="form-filtro__carrera">
-                    <option >Carreras</option>
+                    <option value="">Carreras</option>
                     @foreach ($carreras as $carrera)
                         <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
                     @endforeach
@@ -23,9 +23,9 @@
                 </select>
                 <button class="btn btn-dark" >Filtrar</button>
             </form>
-            <form class="form-search__numControl">
+            <form class="form-search__numControl" method="GET">
                 <select name="tipo">
-                    <option>Buscar por tipo</option>
+                    <option value="">Buscar por tipo</option>
                     <option value="id">Número de Control</option>
                     <option value="nombre">Nombre</option>
                     <option value="apellido_paterno">Apellido Paterno</option>
@@ -33,6 +33,20 @@
                     <option value="correo">Correo</option>
                 </select>
                 <input name="buscarpor" class="form-search__numControl" type="search" placeholder="Buscar Por">
+                <button class="btn-form__search fas fa-search btn-outline-primary" type="submit"></button>
+            </form>
+        </div>
+        <div class="form-filtro__container" style="display: none; justify-content: end;" id="filtroEmpleado">
+            <form class="form-search__numControl" method="GET">
+                <select name="tipoEmpleado" >
+                    <option value="">Buscar por tipo</option>
+                    <option value="nombre">Nombre</option>
+                    <option value="apellido_paterno">Apellido Paterno</option>
+                    <option value="apellido_materno">Apellido Materno</option>
+                    <option value="correo">Correo</option>
+                    <option value="quien_revisa">Departamento</option>
+                </select>
+                <input name="buscarPor" class="form-search__numControl" type="search" placeholder="Buscar Por">
                 <button class="btn-form__search fas fa-search btn-outline-primary" type="submit"></button>
             </form>
         </div>
@@ -123,6 +137,8 @@
         let empleados = document.getElementById("tabla_empleados")
         let btn_alumno = document.getElementById("btn_alumno")
         let btn_empleado = document.getElementById("btn_empleado")
+        let filtroEmpleado = document.getElementById("filtroEmpleado")
+        let filtroAlumno = document.getElementById("filtroAlumno")
         empleados.style.display = "none"
         document.getElementById("pag2").style.display = "none"
         window.addEventListener('load', function(){
@@ -132,12 +148,17 @@
                 alumnos.style.display = "table"
                 document.getElementById("pag2").style.display = "none"
                 empleados.style.display = "none"
+                filtroEmpleado.style.display = "none"
+                
             }else if(sessionStorage.getItem("v1") == "0"){
                 btn_empleado.style.borderBottom = "5px solid #0d47a1"
                 empleados.style.display = "table"
                 document.getElementById("pag2").style.display = "block"
                 document.getElementById("pag1").style.display = "none"
                 alumnos.style.display = "none"
+                filtroEmpleado.style.display = "flex"
+                filtroAlumno.style.display = "none"
+
             }
         });
         btn_alumno.addEventListener('click', function() {
@@ -149,6 +170,9 @@
             sessionStorage.setItem("v1", btn_alumno.value);
             document.getElementById("pag2").style.display = "none"
             document.getElementById("pag1").style.display = "block"
+            filtroEmpleado.style.display = "none"
+            filtroAlumno.style.display = "flex"
+
         })
         btn_empleado.addEventListener('click', function() {
             alumnos.style.display = "none"
@@ -159,6 +183,9 @@
             btn_alumno.style.borderBottom = "0"
             btn_empleado.setAttribute("value", "0");
             sessionStorage.setItem("v1", btn_empleado.value);
+            filtroEmpleado.style.display = "flex"
+            filtroAlumno.style.display = "none"
+
         })
     </script>
 
