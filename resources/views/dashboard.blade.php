@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="{{ asset('static/css/user_list_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/user_edit_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
-
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <title>Bienvenido</title>
 </head>

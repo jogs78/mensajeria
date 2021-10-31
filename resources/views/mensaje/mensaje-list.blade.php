@@ -16,9 +16,11 @@
 
     <section class="new-messages">
         <style>
-            .dashboard-EmisorRevisror, .dashboard-difusor{
+            .dashboard-EmisorRevisror,
+            .dashboard-difusor {
                 display: none;
             }
+
         </style>
         <a class="new-messages__link" href="/mensajes/create">Redactar mensaje</a>
         @if (sizeof($mensajes) == 0)
@@ -38,19 +40,24 @@
                         @else
                             <label for="" class="new-messages__status-menssage">Estado: Publicado</label>
                         @endif
-                        {{-- <label for="" class="new-messages__fecha-publicacion">Fecha de publicación</label> --}}
+                        <label for="" class="new-messages__fecha-publicacion">Fecha de publicación:</label>
                     </div>
                     <div class="new-messages_actions">
-                        <div class="new-messages_edit">
-                            <a href="/mensajes/{{ $mensaje->id }}/edit" style="color: rgb(255, 255, 255)">
-                                <span class="fas fa-edit update" title="Editar"></span>
-                            </a>
-                        </div>
-                        <div class="new-messages_show">
+                        @can('edit', $mensaje)
+                            <div class="new-messages_edit">
+                                <a href="/mensajes/{{ $mensaje->id }}/edit" style="color: rgb(255, 255, 255)">
+                                    <span class="fas fa-edit update" title="Editar"></span>
+                                </a>
+                            </div>
+                        @endcan
+                        @can('show', $mensaje)
+                            <div class="new-messages_show">
                                 <a href="/mensajes/{{ $mensaje->id }}" style="color: rgb(255, 255, 255)">
                                     <span class="far fa-file-alt" title="Leer"></span>
                                 </a>
-                        </div>
+                            </div>
+                        @endcan
+                        @can('delete', $mensaje)
                         <div class="new-messages_delete">
                             <form action="/mensajes/{{ $mensaje->id }}" method="POST" class="form_eliminar">
                                 @csrf
@@ -59,6 +66,17 @@
                                     <span class="fas fa-trash-alt" title="Eliminar"></span>
                                 </button>
                             </form>
+                        @endcan
+                        @can('difundirMensaje', $mensaje)
+                        <div class="new-messages_delete" style="background: #e91e63 !important">
+                            <form action="/mensajes/{{ $mensaje->id }}" method="POST" class="form_eliminar">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">
+                                    <span class="fas fa-share-square" title="Difundir"></span>
+                                </button>
+                            </form>
+                        @endcan
                         </div>
                     </div>
                 </div>

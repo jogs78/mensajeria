@@ -68,7 +68,7 @@
                 @foreach ($alumnos as $alumno)
                     <tr>
                         <td data-label="Número de Control">{{ $alumno->id }}</td>
-                        <td data-label="Nombre Completo">
+                        <td data-label="Nombre Completo" class="full-name">
                             {{ $alumno->nombre . ' ' . $alumno->apellido_paterno . ' ' . $alumno->apellido_materno }}</td>
                         <td data-label="Correo">{{ $alumno->correo }}</td>
                         <td data-label="Carrera">{{ $alumno->carrera->name }}</td>
@@ -108,7 +108,7 @@
                 @foreach ($empleados as $empleado)
                     <tr>
                         <td data-label="ID">{{ $empleado->id }}</td>
-                        <td data-label="Nombre Completo">
+                        <td data-label="Nombre Completo" class="full-name">
                             {{ $empleado->nombre . ' ' . $empleado->apellido_paterno . ' ' . $empleado->apellido_materno }}</td>
                         <td data-label="Correo">{{ $empleado->correo }}</td>
                         <td data-label="Rol">{{ $empleado->rol }}</td>
@@ -131,7 +131,15 @@
             {{ $empleados->links() }}
         </div>
     </section>
-
+    @if (session('message') == 'ok')
+    <script>
+        Swal.fire(
+            'Eliminado!',
+            'Usuario eliminado con éxito',
+            'success'
+        )
+    </script>
+@endif
     <script>
         let alumnos = document.getElementById("tabla_alumnos")
         let empleados = document.getElementById("tabla_empleados")
@@ -139,6 +147,8 @@
         let btn_empleado = document.getElementById("btn_empleado")
         let filtroEmpleado = document.getElementById("filtroEmpleado")
         let filtroAlumno = document.getElementById("filtroAlumno")
+        let eliminar = document.getElementsByClassName('form-eliminar');
+        let fullName = document.getElementsByClassName('full-name')
         empleados.style.display = "none"
         document.getElementById("pag2").style.display = "none"
         window.addEventListener('load', function(){
@@ -187,6 +197,24 @@
             filtroAlumno.style.display = "none"
 
         })
+        for (let i = 0; i < eliminar.length; i++) {
+            eliminar[i].addEventListener('submit', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: '¿Esta seguro de querer eliminar al usuario '+fullName[i].textContent+'?',
+                    text: "No será posible revertir este cambio",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Eliminar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                });
+            });
+        }
     </script>
 
 @endsection

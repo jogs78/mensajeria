@@ -24,7 +24,9 @@ class MensajeController extends Controller
     {
         //$id=Auth::user()->id;
         if(Auth::user()->rol=='Emisor'){
-            $mensajes = DB::select('SELECT * FROM mensajes WHERE empleado_id='.Auth::user()->id);
+            //$mensajes = DB::select('SELECT * FROM mensajes WHERE empleado_id='.Auth::user()->id);
+            $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->get();
+            
         }
         elseif(Auth::user()->rol=='Revisor'){
             $mensajesBD = Mensaje::with('empleado')->get();
@@ -35,7 +37,7 @@ class MensajeController extends Controller
                 }
                 
             }
-            //return $mensajes;
+            
         }
         elseif(Auth::user()->rol=='Difusor'){
             $mensajes = DB::select('SELECT * FROM mensajes WHERE estado=1');
@@ -98,8 +100,9 @@ class MensajeController extends Controller
      */
     public function show($id)
     {
-
+        
         $mensaje = Mensaje::find($id);
+        $this->authorize('show', $mensaje);
         
         return view('mensaje.mensaje-show', compact('mensaje'));
     }
@@ -112,10 +115,11 @@ class MensajeController extends Controller
      */
     public function edit($id)
     {
-        //$this->autorize('update', $id);
         $carreras = Carrera::all();
         $semestres = Semestre::all();
         $mensaje = Mensaje::find($id);
+        $this->authorize('edit', $mensaje);
+
         //return $mensaje->carreras;
         return view('mensaje.mensaje-edit', compact('mensaje', 'carreras', 'semestres'));
     }
@@ -183,6 +187,7 @@ class MensajeController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Mensaje::find($id));
         if(Mensaje::destroy($id)){
             return redirect()->back()->with('message','ok');
         }

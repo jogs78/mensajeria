@@ -418,6 +418,7 @@ body {
         padding: 10px;
         color: wheat;
         margin: 3px;
+        z-index: 100;
     }
     .navigation_alternate_color {
         color: yellow !important;

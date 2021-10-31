@@ -74,10 +74,10 @@ class InformaticoController extends Controller
             return back()->with('message', 'Las contraseñas no coinciden')->withInput();
         }
         $empleado = new Empleado();
-        unset($informacion['numer_control']);
-        unset($informacion['carrera']);
-        unset($informacion['semestre']);
-        unset($informacion['password_confirm']);
+        // unset($informacion['numer_control']);
+        // unset($informacion['carrera']);
+        // unset($informacion['semestre']);
+        // unset($informacion['password_confirm']);
         $empleado->nombre = $informacion['name'];
         $empleado->apellido_paterno = $informacion['a_paterno'];
         $empleado->apellido_materno = $informacion['a_materno'];
@@ -87,7 +87,7 @@ class InformaticoController extends Controller
         $empleado->puesto = $informacion['puesto'];
         $empleado->quien_revisa = $informacion['quien_revisa'];
         $empleado->save();
-        return redirect()->back()->with('message', 'Registro exitoso');
+        return redirect()->back()->with('message', 'Registro existoso');
     }
 
     /**

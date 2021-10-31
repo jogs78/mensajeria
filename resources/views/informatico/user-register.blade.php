@@ -1,19 +1,30 @@
 @extends('dashboard')
 @section('informatico.user-register')
-<style>
-    .dashboard-informatico {
-        display: none;
-    }
+    <style>
+        .dashboard-informatico {
+            display: none;
+        }
 
-</style>
+    </style>
     <section class="user-list">
         <div class="user-register__container">
-            
-            @if (session('message'))
-                <div class="notification">
-                    {{ session('message') }}
-                </div>
 
+            @if (session('message'))
+                <script>
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        
+                        animation: true,
+                        position: 'top-left',
+                        showConfirmButton: false,
+                        timer: 2000
+                        
+                    });
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Registro exitoso!'
+                    })
+                </script>
             @endif
             <div class="user-select">
                 <button id="alumno" name="alumno" value="0">Alumno</button>

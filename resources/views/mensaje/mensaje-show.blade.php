@@ -19,16 +19,25 @@
                 <label class="lbl" for="">Semestre: {{ $mensaje->semestre }}</label>
             </div>
             @can('aceptarRechazar', $mensaje)
-                <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
+                <div class="div">
+                    <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
                     @csrf
                     @method('PUT')
-                    <input type="submit" name="estado" class="show__form_btn fas fa-check" value="Aceptar"> 
+                    <div class="show__form_btn">
+                        <i class="fas fa-check"></i>
+                        <input type="submit" class="show__form_btn" name="estado"  value="Aceptar" style="border:0 !important"> 
+
+                    </div>
                 </form>
                 <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
                     @csrf
                     @method('PUT')
-                    <input type="submit" name="estado" class="show__form_btn fas fa-times" value="Rechazar"> 
+                    <div class="show__form_btn">
+                        <i class="fas fa-times"></i>
+                        <input type="submit" name="estado" class="show__form_btn" value="Rechazar" style="border:0 !important"> 
+                    </div>
                 </form>
+            </div>
             @endcan
         </div>
     </section>
