@@ -17,10 +17,6 @@ use App\Models\Carrera;
 Route::get('/log-in', function(){return view('login.login');})->name('login')->middleware('guest');
 Route::post('/log-in', 'AutenticarController@logIn');
 
-/*rutas login admins*/
-Route::get('/admins/log-in', function(){return view('login-empleado');})->name('login')->middleware('guest');
-Route::post('/admins/log-in', 'AutenticarController@logInAdmin');
-
 /*rutas registro*/
 Route::get('/sign-up',function(){
     $semestres = Semestre::all();$carreras = Carrera::all();
@@ -33,6 +29,8 @@ Route::post('/sign-up', 'AutenticarController@signUp');
 Route::get('/log-out','AutenticarController@logOut');
 Route::get('/admins/log-out','AutenticarController@adminLogOut');
 
+/*Reset contraseña*/
+Route::post('resetPassword','AutenticarController@restPassword');
 
 Route::get('/inicio', function(){return view('dashboard');})->middleware('auth:admin');
 Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');

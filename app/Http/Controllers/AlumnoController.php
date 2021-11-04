@@ -121,6 +121,9 @@ class AlumnoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+    }
+    public function updatePassword(Request $request){
+
     }
 }

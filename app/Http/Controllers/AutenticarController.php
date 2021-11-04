@@ -22,14 +22,20 @@ class AutenticarController extends Controller
         $password = $request->input('password');
         $alumno = Alumno::where('correo', $email)->first();
         if(is_null($alumno)){
+            $credentials= ['correo' => $email, 'password' => $password];
+            if (Auth::guard('admin')->attempt($credentials)) {
+                request()->session()->regenerate();
+                return redirect('/inicio');
+            }
             return back()->withErrors('¡Error! El usuario no existe')->withInput();
-        }else{
-            if(Hash::check($password, $alumno -> contraseña)){
+        }elseif(Hash::check($password, $alumno -> contraseña)){
                 Auth::login($alumno);
                 return redirect('/mensajes-alumnos');
-            }else
-                return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
+        }else{
+            return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
         }
+                
+        
     }
     //admin
     public function logInAdmin(Request $request){
@@ -49,14 +55,11 @@ class AutenticarController extends Controller
             return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
         return back()->withErrors('¡Error! El usuario no existe')->withInput();
     }
-    public function adminLogOut(){
+   
+    public function logOut(){
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
-        return redirect('/admins/log-in');
-    }
-    public function logOut(){
-        Auth::logout();
         return redirect('/log-in');
     }
     public function signUp(Request $request){
@@ -87,5 +90,20 @@ class AutenticarController extends Controller
             return redirect() -> back() -> with('message', "¡Error de registro!");
         }   
 
+    }
+    public function restPassword(Request $request){
+        $alumno = Alumno::where('correo',$request->email)->first();
+        $empleado = Empleado::where('correo',$request->email)->first();
+        
+        if($alumno){
+            $alumno->contraseña= Hash::make($request->newPassword);
+            $alumno->save();
+        }elseif($empleado){
+            $empleado->password= Hash::make($request->newPassword);
+            $empleado->save();
+        }else{
+            return "El correo ingresado no existe o es erroneo";
+        }
+        return "Contraseña cambiada exitosamente";
     }
 }

@@ -32,11 +32,7 @@
                 <div class="menu2-container" id="menu2-container">
                     <ul id="menu2-list">
                         <li>Actualizar datos</li>
-                        @if (Auth::user()->rol != '')
-                            <li class="fas fa-sign-out-alt"><a href="/admins/log-out">Salir</a></li>
-                        @else
-                            <li class="fas fa-sign-out-alt"><a href="/log-out">Salir</a></li>
-                        @endif
+                        <li class="fas fa-sign-out-alt"><a href="/log-out">Salir</a></li>
                     </ul>
                 </div>
             </div>
