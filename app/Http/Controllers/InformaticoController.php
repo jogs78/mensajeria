@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Alumno;
 use App\Models\Empleado;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+
 use App\Models\Semestre;
 use App\Models\Carrera;
 use Illuminate\Support\Facades\Auth;

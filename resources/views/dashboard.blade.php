@@ -131,67 +131,47 @@
             </div>
         </section>
     @elseif (Auth::user()->rol == "Informático")
-        <section class="dashboard-informatico">
-            <div class="dashboard-informatico__container">
-                <div class="alumnos-carreras__container">
+    <section class="dashboard-informatico">
+        <div class="dashboard-informatico__container">
+            <div class="alumnos-carreras__container">
+                @php
+                    $i=0;
+                @endphp
+                @foreach ($carreras as $carrera)
                     <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 1</label>
-                        <label> 00000</label>
+                        <label>{{$carrera->name}}</label>
+                        <img src="{{$carrera->logo}}">  
+                        <label >Alumnos Registrados: {{$c_total[$i]}}</label>
+                        @php
+                            $i++;
+                        @endphp  
                     </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 2</label>
-                        <label> 00000</label>
-                    </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 3</label>
-                        <label> 00000</label>
-                    </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 4</label>
-                        <label> 00000</label>
-                    </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 5</label>
-                        <label> 00000</label>
-                    </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 6</label>
-                        <label> 00000</label>
-                    </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 7</label>
-                        <label> 00000</label>
-                    </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 8</label>
-                        <label> 00000</label>
-                    </div>
-                    <div class="alumnos-carreras__ingenierias">
-                        <label>ingenieria 9</label>
-                        <label> 00000</label>
-                    </div>
-                </div>
-                <div class="total-usuarios">
-                    <label class="total-usuarios__lbl_total">Usuarios registrados: 0000</label>
-                    <div class="total-usuarios__container">
-                        <div>
-                            <img class="total-usuarios__img"
-                                src="https://icons-for-free.com/iconfiles/png/512/student-131964785014431620.png"
-                                alt="">
-                            <label class="total-usuarios__lbl">Alumnos: 0000</label>
-                        </div>
-                        <div>
-
-                            <img class="total-usuarios__img"
-                                src="https://usefulicons.com/uploads/icons/202105/3714/84d810328ade.png" alt="">
-                            <label class="total-usuarios__lbl">Empleados: 0000</label>
-                        </div>
-                    </div>
-
-                    <a href="/user" class="btn__verUsuarios"> Ver usuarios</a>
-                </div>
+                @endforeach
             </div>
-        </section>
+            <div class="total-usuarios">
+                @php
+                    $total=$alumnos+$empleados;
+                @endphp
+                <label class="total-usuarios__lbl_total">Usuarios registrados: {{$total}}</label>
+                <div class="total-usuarios__container">
+                    <div>
+                        <img class="total-usuarios__img"
+                            src="https://icons-for-free.com/iconfiles/png/512/student-131964785014431620.png"
+                            alt="">
+                        <label class="total-usuarios__lbl">Alumnos: {{$alumnos}}</label>
+                    </div>
+                    <div>
+
+                        <img class="total-usuarios__img"
+                            src="https://usefulicons.com/uploads/icons/202105/3714/84d810328ade.png" alt="">
+                        <label class="total-usuarios__lbl">Empleados: {{$empleados}}</label>
+                    </div>
+                </div>
+
+                <a href="/user" class="btn__verUsuarios"> Ver usuarios</a>
+            </div>
+        </div>
+    </section>
     @endif
     @yield('mensaje.mensaje-list')
     @yield('mensaje.mensaje-create')
