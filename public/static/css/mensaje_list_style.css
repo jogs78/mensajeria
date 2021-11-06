@@ -17,6 +17,7 @@
     margin: 0 10px;
     flex-direction: column;
     margin-top: 10px;
+    transition: opacity .5s;
 }
 
 .new-messages__link {
@@ -117,11 +118,13 @@
     background: #ee2f2f;
 }
 
-.form_eliminar button {
+.form_eliminar button,
+.form_difundir button {
     background: transparent;
     border: 0;
     font-size: 20px;
     color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 @media screen and (min-width:650px) {

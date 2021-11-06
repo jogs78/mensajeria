@@ -22,9 +22,7 @@ class MensajeController extends Controller
     
     public function index()
     {
-        //$id=Auth::user()->id;
         if(Auth::user()->rol=='Emisor'){
-            //$mensajes = DB::select('SELECT * FROM mensajes WHERE empleado_id='.Auth::user()->id);
             $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->get();
             
         }
@@ -36,14 +34,11 @@ class MensajeController extends Controller
                     $mensajes[$i]=$mensajesBD[$i];
                 }
                 
-            }
-            
+            } 
         }
         elseif(Auth::user()->rol=='Difusor'){
-            $mensajes = DB::select('SELECT * FROM mensajes WHERE estado=1');
+            $mensajes = Mensaje::where('estado', 1)->get();
         }
-        
-        //return $id;
         $this->authorize('viewMensajes', App\Models\Mensaje::class);
         return view('mensaje.mensaje-list', compact('mensajes'));
     }
@@ -174,6 +169,11 @@ class MensajeController extends Controller
             
             $mensaje -> save();
             
+        }
+        if(Auth::user()->rol=='Difusor'){
+            $mensaje->estado=$request->estado;
+            $mensaje -> save();
+            return 'Mensaje difundido';
         }
         return redirect('/mensajes');
 

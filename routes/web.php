@@ -41,7 +41,7 @@ Route::get('/inicio', function(){
     $empleados = sizeof(Empleado::all());
     $c_total=array();
     for($i=0;$i<sizeof($carreras);$i++){
-        $total = DB::select('SELECT * FROM alumnos WHERE carrera_id='.$i+1);
+        $total = DB::select('SELECT * FROM alumnos WHERE carrera_id='.($i+1));
         $c_total[$i]=sizeof($total); 
     }
     return view('dashboard', compact('carreras','c_total','alumnos','empleados'));})->middleware('auth:admin');
@@ -49,6 +49,8 @@ Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
 Route::resource('user', 'InformaticoController')->middleware('auth:admin');
 Route::resource('alumno', 'AlumnoController')->middleware('auth:admin');
 Route::resource('mensajes', 'MensajeController')->middleware('auth:admin');
+Route::resource('carreras', 'CarrerasController')->middleware('auth:admin');
+
 
 
 

@@ -223,18 +223,100 @@ body {
     column-gap: 5px;
     padding: 5px;
     width: 100%;
-    align-self: center;
+    justify-content: center;
     background: var(--main-bg-color);
 }
 
 .alumnos-carreras__ingenierias {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     background: rgb(255, 255, 255);
-    padding: 8px 5px;
     border-radius: 7px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-career {
+    margin: auto;
+    font-size: 28px;
+    cursor: pointer;
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    padding: .5px;
+}
+
+.delete-career {
+    float: right;
+    font-size: 17px;
+    background: transparent;
+    border: 0;
+    padding: 2px;
+}
+
+.addCareer-container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: scale(0);
+    opacity: 0;
+    transition-property: all;
+    transition-duration: 700ms;
+    transition-delay: 100ms;
+}
+
+.closeWindow {
+    font-size: 25px;
+    cursor: pointer;
+    width: min-content;
+    align-self: end;
+}
+
+.form-addCareer {
+    margin: auto;
+    width: 300px;
+    min-width: 200px;
+    background: rgb(255, 255, 255);
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-addCareer__input {
+    padding: 3px;
+    margin: 5px;
+}
+
+.addCareer__show {
+    transform: scale(1);
+    z-index: 9;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.301);
+    transition-property: all;
+    transition-duration: 700ms;
+    transition-delay: 100ms;
+    backdrop-filter: blur(1px);
+}
+
+.alumnos-carreras__ingenierias label {
+    position: relative;
+    z-index: 9;
+    padding: 3px;
+}
+
+.img-logoCarrera {
+    position: absolute;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    z-index: 1;
+    opacity: .65;
 }
 
 .total-usuarios {
@@ -316,15 +398,17 @@ body {
     .dashboard-informatico__container {
         padding: 10px;
         background: var(--main-bg-color);
-        height: 200px;
+        height: min-content;
     }
     .alumnos-carreras__container {
-        width: 70%
+        width: 100%
     }
     .total-usuarios {
         width: 50%;
         background: rgb(255, 255, 255);
         margin-top: 40px;
+        position: absolute;
+        top: 90%;
     }
     /* _____________ */
     body {
