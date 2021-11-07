@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrera;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CarrerasController extends Controller
 {
@@ -34,7 +36,19 @@ class CarrerasController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->logo;
+        if($request->file('logo')){
+            $img = $request['logo']->store('public/imagenes_carreras');
+            $url = Storage::url($img);
+        }
+        $carrera = new Carrera();
+        $carrera->name = $request->carrera;
+        $carrera->logo = $url;
+        $carrera->save();
+        if($carrera->save()){
+            return "Carrera registrada!";
+        }else{
+            return "Hubo un error!";
+        }
     }
 
     /**
@@ -79,6 +93,7 @@ class CarrerasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $carrera= Carrera::destroy($id);
+        return "El registro ha sido eliminado";
     }
 }
