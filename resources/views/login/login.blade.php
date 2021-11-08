@@ -55,7 +55,12 @@
                                 value="{{ old('password') }}">
                             <label for="" class="lbl_contraseña">Contraseña</label>
                         </div>
-                        <input class="login__form_btn" type="submit" value="Iniciar">
+                        <label class="switch">
+                            <input type="checkbox" name="rememberMe" checked value ="true">
+                            <span class="slider round"></span>
+                           
+                        </label>
+                    <input class="login__form_btn" type="submit" value="Iniciar">
                     </form>
                     <div class="login__links">
                         <a href="/sign-up">Registrate aquí</a>
@@ -66,63 +71,6 @@
                 </div>
             </div>
     </section>
-    <style>
-        .resetPassword {
-            width: 100vw;
-            height: 100vh;
-            transform: scale(0);
-            opacity: 0;
-            display: flex;
-            transition-property: all;
-            transition-duration: 700ms;
-            transition-delay: 100ms;
-        }
-
-        .resetPasswordShow {
-            position: relative;
-            backdrop-filter: blur(1.5px);
-            display: flex;
-            transform: scale(1);
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.301);
-
-        }
-
-        .resetPassword-container {
-            margin: auto;
-            width: 300px;
-            min-width: 200px;
-            background: rgb(255, 255, 255);
-            padding: 10px;
-            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .resetPassword-form {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-
-        }
-
-        #email,
-        #newPassword {
-            padding: 4px;
-            margin: 5px 2px;
-            border: 0;
-            border-bottom: 1px solid;
-        }
-
-        .closeWindow {
-            font-size: 25px;
-            cursor: pointer;
-            width: min-content;
-            align-self: end;
-        }
-
-    </style>
     <section>
         <div class="resetPassword" id="resetPassword-container">
             <div class="resetPassword-container" id="con">

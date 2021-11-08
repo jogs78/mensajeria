@@ -21,15 +21,22 @@ class AutenticarController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $alumno = Alumno::where('correo', $email)->first();
+        $rememberMe = false;
+        if(isset($request->rememberMe)){
+            $rememberMe = true;
+        }
         if(is_null($alumno)){
+            
             $credentials= ['correo' => $email, 'password' => $password];
             if (Auth::guard('admin')->attempt($credentials)) {
-                request()->session()->regenerate();
+                $empleado = Empleado::where('correo', $email)->first();
+                Auth::login($empleado, $rememberMe);
+               
                 return redirect('/inicio');
             }
             return back()->withErrors('¡Error! El usuario no existe')->withInput();
         }elseif(Hash::check($password, $alumno -> contraseña)){
-                Auth::login($alumno);
+                Auth::login($alumno, $rememberMe);
                 return redirect('/mensajes-alumnos');
         }else{
             return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
@@ -63,7 +70,6 @@ class AutenticarController extends Controller
         return redirect('/log-in');
     }
     public function signUp(Request $request){
-        //  return $request;
         $personalInformation = $request -> all();
         if($personalInformation['password'] != $personalInformation['confirmar_password']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
@@ -94,7 +100,6 @@ class AutenticarController extends Controller
     public function restPassword(Request $request){
         $alumno = Alumno::where('correo',$request->email)->first();
         $empleado = Empleado::where('correo',$request->email)->first();
-        
         if($alumno){
             $alumno->contraseña= Hash::make($request->newPassword);
             $alumno->save();
