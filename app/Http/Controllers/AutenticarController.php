@@ -31,7 +31,6 @@ class AutenticarController extends Controller
             if (Auth::guard('admin')->attempt($credentials)) {
                 $empleado = Empleado::where('correo', $email)->first();
                 Auth::login($empleado, $rememberMe);
-               
                 return redirect('/inicio');
             }
             return back()->withErrors('¡Error! El usuario no existe')->withInput();
@@ -45,24 +44,6 @@ class AutenticarController extends Controller
         
     }
     //admin
-    public function logInAdmin(Request $request){
-        $validator=$request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ], [
-            'email.required' => 'El campo correo es requerido',
-        ]);
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $credentials= ['correo' => $email, 'password' => $password];
-        if (Auth::guard('admin')->attempt($credentials)) {
-            request()->session()->regenerate();
-            return redirect('/inicio');
-        }else
-            return back()->withErrors('¡Error! Autenticacion fallida')->withInput();
-        return back()->withErrors('¡Error! El usuario no existe')->withInput();
-    }
-   
     public function logOut(){
         Auth::logout();
         request()->session()->invalidate();

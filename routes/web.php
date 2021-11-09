@@ -36,15 +36,15 @@ Route::get('/admins/log-out','AutenticarController@adminLogOut');
 Route::post('resetPassword','AutenticarController@restPassword');
 
 Route::get('/inicio', function(){
-    $carreras = Carrera::all();
-    $alumnos = sizeof(Alumno::all());
-    $empleados = sizeof(Empleado::all());
+    $c_carreras = Carrera::all();
+    $c_alumnos = sizeof(Alumno::all());
+    $c_empleados = sizeof(Empleado::all());
     $c_total=array();
-    for($i=0;$i<sizeof($carreras);$i++){
+    for($i=0;$i<sizeof($c_carreras);$i++){
         $total = DB::select('SELECT * FROM alumnos WHERE carrera_id='.($i+1));
         $c_total[$i]=sizeof($total); 
     }
-    return view('dashboard', compact('carreras','c_total','alumnos','empleados'));})->middleware('auth:admin');
+    return view('dashboard', compact('c_carreras','c_total','c_alumnos','c_empleados'));})->middleware('auth:admin');
 Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
 Route::resource('user', 'InformaticoController')->middleware('auth:admin');
 Route::resource('alumno', 'AlumnoController')->middleware('auth:admin');

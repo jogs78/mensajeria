@@ -1,4 +1,11 @@
 @extends('dashboard')
+@php
+    $c_total=null;
+    $c_alumnos =null;
+    $c_empleados = null;
+    $c_carreras= null;
+
+@endphp
 @section('informatico.user-register')
     <style>
         .dashboard-informatico {

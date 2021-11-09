@@ -19,9 +19,10 @@ class InformaticoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    
     public function index(Request $request)
     {
+        $c_total = null;
         $this->authorize('view', Auth::user());
         $buscar=$request->get('buscarpor');
         $tipo=$request->get('tipo');
@@ -34,7 +35,6 @@ class InformaticoController extends Controller
         $empleados = Empleado::FiltroEmpleado($tipoEmpleado, $buscarEmpleado)->where('id', '!=', Auth::user()->id)->paginate(10);
         $carreras = Carrera::all();
         $semestres = Semestre::all();
-        
         return view('informatico.user-list', compact('alumnos', 'empleados','carreras','semestres'));
         
     }
