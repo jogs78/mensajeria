@@ -52,6 +52,5 @@ Route::resource('mensajes', 'MensajeController')->middleware('auth:admin');
 Route::resource('carreras', 'CarrerasController')->middleware('auth:admin');
 
 
-
-
-
+//E-mail verification
+Route::get('register/verify{code}','AutenticarController@verify');

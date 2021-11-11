@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Alumno extends Authenticatable
 {
-    protected $fillable = ['id', 'nombre', 'apellido_paterno', 'apellido_materno','correo', 'contraseña', 'foto_perfil', 'carrera_id', 'semestre_id']; 
+    protected $fillable = ['id', 'nombre', 'apellido_paterno', 'apellido_materno','correo', 'contraseña', 'foto_perfil', 'carrera_id', 'semestre_id', 'confirmation_code']; 
     
 //relacion 1:N inverso
     public function semestre(){

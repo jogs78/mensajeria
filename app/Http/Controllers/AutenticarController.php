@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
+use Mai;
+use Illuminate\Support\Str;
 class AutenticarController extends Controller
 {
     //alumno
@@ -21,25 +25,31 @@ class AutenticarController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $alumno = Alumno::where('correo', $email)->first();
-        $rememberMe = false;
-        if(isset($request->rememberMe)){
-            $rememberMe = true;
-        }
-        if(is_null($alumno)){
-            
-            $credentials= ['correo' => $email, 'password' => $password];
-            if (Auth::guard('admin')->attempt($credentials)) {
-                $empleado = Empleado::where('correo', $email)->first();
-                Auth::login($empleado, $rememberMe);
-                return redirect('/inicio');
+        if($alumno->confirmed==1){
+                $rememberMe = false;
+            if(isset($request->rememberMe)){
+                $rememberMe = true;
             }
-            return back()->withErrors('¡Error! El usuario no existe')->withInput();
-        }elseif(Hash::check($password, $alumno -> contraseña)){
-                Auth::login($alumno, $rememberMe);
-                return redirect('/mensajes-alumnos');
+            if(is_null($alumno)){
+                
+                $credentials= ['correo' => $email, 'password' => $password];
+                if (Auth::guard('admin')->attempt($credentials)) {
+                    $empleado = Empleado::where('correo', $email)->first();
+                    Auth::login($empleado, $rememberMe);
+                    return redirect('/inicio');
+                }
+                return back()->withErrors('¡Error! El usuario no existe')->withInput();
+            }elseif(Hash::check($password, $alumno -> contraseña)){
+                    Auth::login($alumno, $rememberMe);
+                    return redirect('/mensajes-alumnos');
+            }else{
+                return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
+            }
         }else{
-            return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
+            return redirect() -> back() -> with('message', "¡El correo no ha sio confirmado!");
         }
+        
+        
                 
         
     }
@@ -51,6 +61,7 @@ class AutenticarController extends Controller
         return redirect('/log-in');
     }
     public function signUp(Request $request){
+        $codigo=Str::random(25);
         $personalInformation = $request -> all();
         if($personalInformation['password'] != $personalInformation['confirmar_password']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
@@ -69,6 +80,14 @@ class AutenticarController extends Controller
             $alumno -> carrera_id = $personalInformation['carrera'];
             $alumno -> semestre_id = $personalInformation['semestre'];
             $alumno -> foto_perfil =Storage::url('user-profile-icon.jpg');
+            
+            $alumno -> confirmation_code=$codigo;
+            ///////
+            $data = [
+                'name' => $personalInformation['name'],
+                'confirmation_code' =>$codigo];
+            Mail::to($personalInformation['correo'])->send(new TestMail($data));
+            
             $alumno -> save();
             return redirect() -> back() -> with('message', 'Registro exitoso');
             return $personalInformation;
@@ -78,6 +97,19 @@ class AutenticarController extends Controller
         }   
 
     }
+
+    public function verify($code){
+        $alumno= Alumno::where('confirmation_code',$code)->first();
+        if(! $alumno){
+            return redirect('/Usuarios');
+        }
+
+        $alumno->confirmed=true;
+        $alumno->confirmation_code=null;
+        $alumno->save();
+        return redirect('/log-in');
+    }
+
     public function restPassword(Request $request){
         $alumno = Alumno::where('correo',$request->email)->first();
         $empleado = Empleado::where('correo',$request->email)->first();
