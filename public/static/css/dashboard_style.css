@@ -150,6 +150,8 @@ body {
 
 .list__carreras {
     padding: 0 10px;
+    width: max-content;
+    margin: auto;
 }
 
 .list__carreras li {
@@ -199,6 +201,7 @@ body {
 .dashboard-difusor__carrerasMensajes {
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     padding: 10px;
+    overflow: auto;
 }
 
 

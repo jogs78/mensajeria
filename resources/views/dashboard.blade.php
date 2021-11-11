@@ -70,8 +70,38 @@
         @include('emisor-revisor.dashboard-emisor_revisor')
     @elseif (Auth::user()->rol == "Difusor")
         @include('difusor.dashboard-difusor')
+        <script>
+            window.addEventListener("load", function() {
+                let mensajesTotal = document.getElementById('lblMensajesTotal');
+                let alumnosTotal = document.getElementById('lbl1alumnosTotal');
+                let mensajesByCarreras = document.getElementById('mensajesByCarreras');
+                let newLi = []
+                $.ajax({
+                url: '/panel-difusor',
+                method: 'GET',
+                cache: false,
+                contentType: false,
+                processData: false,
+                
+            }).done(function(res){
+                mensajesTotal.innerHTML = "Mensajes totales: "+res.mensajesTotales
+                alumnosTotal.innerHTML = "Alumnos registrados: "+res.alumnosTotales
+                console.log('Publicaciones por carrera:')
+                for(let i= 0; i<res.carreras.length; i++){
+                    newLi[i]= document.createElement('li');
+                    newLi[i].innerHTML = res.carreras[i].name+": "+res.MensajesByCarrera[i]
+                    mensajesByCarreras.appendChild(newLi[i])  
+                    //console.log(res.carreras[i].name+": "+res.MensajesByCarrera[i])
+                }
+                
+            });
+                
+         });
+        </script>
     @elseif (Auth::user()->rol == "Informático")
         @include('informatico.dashboard-informatico')
+        <script src="{{ asset('static/js/informatico.js') }}"></script>
+
     @endif
     @yield('mensaje.mensaje-list')
     @yield('mensaje.mensaje-create')
@@ -85,16 +115,7 @@
         let btnMenu = document.getElementById("navigation_btn");
         let menu = document.getElementById("menu");
         let btnmenu2 = document.getElementById("menu2");
-        let menu2 = document.getElementById("menu2-container")
-        let addCareer = document.getElementById('addCareer')
-        let close = document.getElementById('close')
-        let addCareerContainer = document.getElementById('addCareer-container')
-        let addCareerForm = document.getElementById('form-addCareer')
-        let deleteCareer = document.getElementsByClassName('deleteCareer')
-        let _token = document.querySelector('input[name="_token"]').value
-        let items = document.getElementsByClassName('carousel__elemento')
-        let carreraId = document.getElementsByClassName('carreraId')
-            
+        let menu2 = document.getElementById("menu2-container") 
         btnMenu.addEventListener('click', function() {
             menu.classList.toggle('navigation_show');
             btnMenu.classList.toggle('navigation_alternate_color')
@@ -102,96 +123,6 @@
         btnmenu2.addEventListener('click', function() {
             menu2.classList.toggle('showMenu2');
         });
-        addCareer.addEventListener('click', function() {
-            addCareerContainer.style.opacity = '1'
-            addCareerContainer.classList.add('addCareer__show');
-        })
-        close.addEventListener('click', function() {
-            addCareerContainer.style.opacity = '0'
-            addCareerContainer.classList.remove('addCareer__show');
-        })
-
-        addCareerForm.addEventListener('submit', function(event) {
-            let carrera = document.getElementById('addcarrera').value
-            let logo = document.getElementById('logo')
-            let formData = new FormData(this);
-            let newItem = document.createElement('div')
-            let newFormDel = document.createElement('form'), newBtnDel = document.createElement('button'), newLblCarrera = document.createElement('label'),
-            newImgCarrera = document.createElement('img'), newLblAlumnos = document.createElement('label'), newInId = document.createElement('input');
-            $.ajax({
-                url: '/carreras',
-                method: 'POST',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: formData,
-            }).done(function(res) {
-                Swal.fire({
-                    toast: true,
-                    position: 'top',
-                    icon: 'info',
-                    title: res,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                const newImg = logo.files[0];
-                const objURL = URL.createObjectURL(newImg)
-                newImgCarrera.setAttribute('src', objURL)
-                newImgCarrera.className = 'img-logoCarrera'
-                newLblAlumnos.innerHTML = "Alumnos registrados: 0"
-                newLblCarrera.innerHTML = carrera
-                newFormDel.className='deleteCareer'
-                newBtnDel.className='fas fa-minus-circle delete-career'
-                newFormDel.appendChild(newBtnDel)
-                newItem.className='carousel__elemento'
-                items[items.length - 1].insertAdjacentElement('afterend', newItem)
-                console.log(items[items.length - 1])
-                items[items.length - 1].insertAdjacentElement('afterbegin', newFormDel)
-                items[items.length - 1].insertAdjacentElement('beforeend', newLblCarrera)
-                items[items.length - 1].insertAdjacentElement('beforeend', newImgCarrera)
-                items[items.length - 1].insertAdjacentElement('beforeend', newLblAlumnos)
-                
-                
-            });
-            event.preventDefault();
-        });
-        
-
-        for (let i = 0; i < deleteCareer.length; i++) {
-            deleteCareer[i].addEventListener('submit', function(event) {
-                Swal.fire({
-                    title: '¿Seguro de eliminar?',
-                    text: "No se podra revertir el cambio!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Eliminar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '/carreras/'+carreraId[i].value,
-                            method: 'DELETE',
-                            data: {
-                                ID: carreraId[i].value,
-                                _token: _token,
-                            }
-                        }).done(function(res) {
-                            Swal.fire({
-                                toast: true,
-                                position: 'top',
-                                icon: 'info',
-                                title: res,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            items[i].remove();
-                        });
-                    }
-                })
-                event.preventDefault();
-            });
-        }
     </script>
 </body>
 

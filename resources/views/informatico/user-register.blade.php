@@ -65,6 +65,7 @@
                 </div>
 
                 <div class="div-item_container">
+                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Semestre*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
                     <select name="carrera" id="carrera" class="input">
                         <option value="">Seleccione una opción</option>
                         @foreach ($carreras as $carrera)
@@ -75,6 +76,7 @@
                 </div>
 
                 <div class="div-item_container">
+                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Carrera*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
                     <select name="semestre" id="semestre" class="input">
                         <option value="">Semestre</option>
                         @foreach ($semestres as $semestre)
@@ -104,8 +106,9 @@
                 </div>
 
                 <div class="div-item_container">
+                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Rol*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
                     <select name="rol" id="rol" class="input">
-                        <option value="">Rol: Elija una opción</option>
+                        <option value="">Elija una opción</option>
                         <option value="Informático">Informático</option>
                         <option value="Difusor">Difusor</option>
                         <option value="Revisor">Revisor</option>
@@ -121,8 +124,9 @@
                 </div>
 
                 <div class="div-item_container">
+                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Revisor*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
                     <select name="quien_revisa" id="quien_revisa" class="input">
-                        <option>Revisor: Elija una opción</option>
+                        <option>Elija una opción</option>
                         <option>Subdirección de Planeación y Vinculación</option>
                         <option>Subdirección Académica</option>
                         <option>Subdirección de Servicios Administrativos</option>
@@ -136,14 +140,9 @@
 
             </form>
         </div>
-
-
-
-
-
-
     </section>
     <script>
+        let opcContainer = document.getElementsByClassName('div-item_container')
         let label = document.getElementsByClassName("lbls");
         let input = document.getElementsByClassName("input");
         let alumnos = document.getElementById("alumno");
@@ -152,7 +151,7 @@
         let bandera = 0;
         let alum = 0;
         let enviar_btn = document.getElementById("btn_enviar");
-
+        console.log(opcContainer.length)
         window.addEventListener('load', function() {
             //alumnos.classList.add("btn__selected");
             //empleados.disabled=true;
@@ -182,8 +181,6 @@
                 bandera = 1;
                 form.setAttribute("action", "/user")
             }
-
-
         })
         for (let i = 0; i < input.length; i++) {
 
@@ -205,18 +202,14 @@
                 enviar_btn.disabled = false;
                 alumnos.setAttribute("value", "1");
                 sessionStorage.setItem("val", alumnos.value);
-
             } else {
                 empleados.disabled = false
                 bandera = 0
                 enviar_btn.disabled = true
                 alumnos.setAttribute("value", "0");
                 sessionStorage.setItem("val", alumnos.value);
-
             }
-
         });
-
         //Accion boton empleado
         empleados.addEventListener('click', function() {
             empleados.classList.toggle('btn__selected');
@@ -236,36 +229,17 @@
                 sessionStorage.setItem("emple", empleados.value);
             }
             form.setAttribute("action", "/user")
-            // form.setAttribute("action", "/h1")
-            //
-
-
-            // form.removeChild(input[0])
-            // form.removeChild( input[4])
-            // form.removeChild( input[5])
-
-        });
-
-
+            });
         function ocualtar_label_alumnos() {
-            input[9].classList.toggle('ocultar');
-            label[7].classList.toggle('ocultar');
-
-            input[10].classList.toggle('ocultar');
-            label[8].classList.toggle('ocultar');
-
-            input[11].classList.toggle('ocultar');
-            label[9].classList.toggle('ocultar');
+            opcContainer[9].classList.toggle('ocultar');
+            opcContainer[10].classList.toggle('ocultar');
+            opcContainer[11].classList.toggle('ocultar');
             form.setAttribute("action", "/alumno")
         }
-
         function ocualtar_label_empleados() {
-            input[0].classList.toggle('ocultar');
-            label[0].classList.toggle('ocultar');
-
-            input[4].classList.toggle('ocultar');
-            input[5].classList.toggle('ocultar');
-
+            opcContainer[0].classList.toggle('ocultar');
+            opcContainer[4].classList.toggle('ocultar');
+            opcContainer[5].classList.toggle('ocultar');
         }
     </script>
 

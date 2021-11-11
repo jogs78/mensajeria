@@ -197,7 +197,7 @@ class MensajeController extends Controller
     public function panelDifusor(){
     
         $carreras = Carrera::all();
-        $totalMensajes = Mensaje::where('estado','=', 3)->get();
+        $totalMensajes = Mensaje::where('estado','=', 3)->count();
         $totalAlumnos = Alumno::all()->count();
         $mensajesByCarrera = array();
         $mensaje = Mensaje::with('carreras')->get();
