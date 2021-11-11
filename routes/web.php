@@ -45,6 +45,7 @@ Route::get('/inicio', function(){
         $c_total[$i]=sizeof($total); 
     }
     return view('dashboard', compact('c_carreras','c_total','c_alumnos','c_empleados'));})->middleware('auth:admin');
+Route::get('/panel-difusor', 'MensajeController@panelDifusor')->middleware('auth:admin');
 Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
 Route::resource('user', 'InformaticoController')->middleware('auth:admin');
 Route::resource('alumno', 'AlumnoController')->middleware('auth:admin');

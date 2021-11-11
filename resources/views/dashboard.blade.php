@@ -66,9 +66,7 @@
             </nav>
         </div>
     </header>
-    @if (Auth::user()->rol == 'Emisor')
-        @include('emisor-revisor.dashboard-emisor_revisor')
-    @elseif (Auth::user()->rol == 'Revisor')
+    @if (Auth::user()->rol == 'Emisor'|| Auth::user()->rol == 'Revisor')
         @include('emisor-revisor.dashboard-emisor_revisor')
     @elseif (Auth::user()->rol == "Difusor")
         @include('difusor.dashboard-difusor')

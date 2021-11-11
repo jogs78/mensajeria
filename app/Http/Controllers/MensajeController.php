@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
 use App\Models\Mensaje;
 use App\Models\Carrera;
+use App\Models\Empleado;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -191,5 +193,20 @@ class MensajeController extends Controller
         if(Mensaje::destroy($id)){
             return redirect()->back()->with('message','ok');
         }
+    }
+    public function panelDifusor(){
+    
+        $carreras = Carrera::all();
+        $totalMensajes = Mensaje::where('estado','=', 3)->get();
+        $totalAlumnos = Alumno::all()->count();
+        $mensajesByCarrera = array();
+        $mensaje = Mensaje::with('carreras')->get();
+        
+        for($i = 0; $i<sizeof($carreras); $i++){
+            $total = DB::select('SELECT * FROM carrera_mensaje WHERE carrera_id='.($i+1));
+            $mensajesByCarrera[$i]=sizeof($total); 
+        }
+        $valores=['carreras'=> $carreras,'mensajesTotales'=> $totalMensajes,'alumnosTotales'=> $totalAlumnos,'MensajesByCarrera'=> $mensajesByCarrera];
+        return response()->json($valores);
     }
 }

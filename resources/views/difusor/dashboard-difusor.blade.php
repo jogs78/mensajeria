@@ -3,7 +3,7 @@
         <div class="dashboard-difusor__mensajes">
             <img class="img-dashboard"
                 src="https://iconarchive.com/download/i84522/designbolts/seo/Review-Post.ico" alt="">
-            <label for="">Mensajes totales: 00000</label>
+            <label for="" id="lblMensajesTotal">Mensajes totales: 00000</label>
             <a href="/mensajes" class="btn__verMensajes">Ver mensajes</a>
         </div>
         <div class="dashboard-difusor__alumnos">
@@ -20,4 +20,7 @@
             </ol>
         </div>
     </div>
+    <script>
+
+    </script>
 </section>
