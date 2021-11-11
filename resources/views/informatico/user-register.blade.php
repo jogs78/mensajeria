@@ -104,20 +104,30 @@
                 </div>
 
                 <div class="div-item_container">
-                    <input class="input" type="text" name="rol" value="{{ old('rol') }}">
-                    <label class="lbls" for="">Rol</label><br>
+                    <select name="rol" id="rol" class="input">
+                        <option value="">Rol: Elija una opción</option>
+                        <option value="Informático">Informático</option>
+                        <option value="Difusor">Difusor</option>
+                        <option value="Revisor">Revisor</option>
+                        <option value="Emisor">Emisor</option>
+                    </select>
                     {!! $errors->first('rol', '<small>:message</small><br>') !!}
                 </div>
 
                 <div class="div-item_container">
                     <input class="input" type="text" name="puesto" value="{{ old('puesto') }}">
-                    <label class="lbls" for="">Puesto</label><br>
+                    <label class="lbls" for="">Departamento</label><br>
                     {!! $errors->first('puesto', '<small>:message</small><br>') !!}
                 </div>
 
                 <div class="div-item_container">
-                    <input class="input" type="text" name="quien_revisa" value="{{ old('quien_revisa') }}">
-                    <label class="lbls" for="">¿Quien revisa?</label><br>
+                    <select name="quien_revisa" id="quien_revisa" class="input">
+                        <option>Revisor: Elija una opción</option>
+                        <option>Subdirección de Planeación y Vinculación</option>
+                        <option>Subdirección Académica</option>
+                        <option>Subdirección de Servicios Administrativos</option>
+                    </select>
+                    
                     {!! $errors->first('quien_revisa', '<small>:message</small><br>') !!}
                 </div>
 

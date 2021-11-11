@@ -48,6 +48,7 @@ class InformaticoController extends Controller
         $this->authorize('create', Auth::user());
         $semestres = Semestre::all();
         $carreras = Carrera::all();
+        //$empleados = DB::select('SELECT * FROM empleados WHERE rol="Revisor"');
         return view('informatico.user-register', compact('semestres', 'carreras'));
     }
 
@@ -60,6 +61,7 @@ class InformaticoController extends Controller
     public function store(Request $request)
     {
         $informacion = $request->all();
+        //return $informacion;
         request()->validate([
             'name' => 'required',
             'a_paterno' => 'required',
