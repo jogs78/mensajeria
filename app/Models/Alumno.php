@@ -22,11 +22,6 @@ class Alumno extends Authenticatable
 
     public function scopeBuscarpor($query, $tipo, $buscar){
         if(($tipo) && ($buscar)){
-            // if($tipo=='apellido_paterno'){
-            //     $tipo1='apellido_paterno';
-            //     $tipo2='apellido_materno';
-            //     return $query->where($tipo2, 'like','%'.$buscar.'%')->orWhere($tipo1, 'like','%'.$buscar.'%');
-            // }
             return $query->where($tipo, 'like','%'.$buscar.'%');
         }  
     }
@@ -48,6 +43,9 @@ class Alumno extends Authenticatable
         }
         
     }
+
+
+    
 
     use HasFactory;
 }

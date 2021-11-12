@@ -43,45 +43,55 @@
                 <form action="/sign-up" method="POST">
                     @csrf
                     <div class="login__personal_information">
-                        <input type="text" name="num_control" class="input_personal_information"
-                            value="{{ old('num_control') }}">
+                        {!! $errors->first('num_control', '<small>:message</small>') !!}
+                        <input type="text" name="num_control" class="input_personal_information" value="{{ old('num_control') }}"><br>
                         <label for="" class="lbl_personal_information">Número de control</label>
+                        
                     </div>
                     <div class="login__personal_information">
+                        {!! $errors->first('name', '<small>:message</small><br>') !!}
                         <input type="text" name="name" class="input_personal_information" value="{{ old('name') }}">
                         <label for="" class="lbl_personal_information">Nombre</label>
+                        
                     </div>
                     <div class="login__personal_information">
+                        {!! $errors->first('a_paterno', '<small>:message</small><br>') !!}
                         <input type="text" name="a_paterno" class="input_personal_information"
                             value="{{ old('a_paterno') }}">
                         <label for="" class="lbl_personal_information">Apellido paterno</label>
                     </div>
                     <div class="login__personal_information">
+                        {!! $errors->first('a_materno', '<small>:message</small><br>') !!}
                         <input type="text" name="a_materno" class="input_personal_information"
                             value="{{ old('a_materno') }}">
                         <label for="" class="lbl_personal_information">Apellido materno</label>
                     </div>
                     <div class="login__personal_information">
-                        <input type="text" name="correo" class="input_personal_information" value="{{ old('correo') }}">
+                        {!! $errors->first('correo', '<small>:message</small><br>') !!}
+                        <input type="email" name="correo" class="input_personal_information" value="{{ old('correo') }}">
                         <label for="" class="lbl_personal_information">Correo electrónico</label>
                     </div>
                     <div class="login__personal_information">
+                        {!! $errors->first('password', '<small>:message</small><br>') !!}
                         <input type="password" name="password" class="input_personal_information"
                             value="{{ old('password') }}">
                         <label for="" class="lbl_personal_information">Contraseña</label>
                     </div>
                     <div class="login__personal_information">
+                        {!! $errors->first('confirmar_password', '<small>:message</small><br>') !!}
                         <input type="password" name="confirmar_password" class="input_personal_information"
                             value="{{ old('confirmar_password') }}">
                         <label for="" class="lbl_personal_information">Confirmar contraseña</label>
                     </div>
                     <div class="login__extra_information">
+                        {!! $errors->first('carrera', '<small>:message</small><br>') !!}
                         <select name="carrera" id="carrera">
                             <option>Seleccione una opcion</option>
                             @foreach ($carreras as $carrera)
                                 <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
                             @endforeach
                         </select>
+                        {!! $errors->first('semestre', '<small>:message</small><br>') !!}
                         <select name="semestre" id="semestre">
                             <option value="">Semestre</option>
                             @foreach ($semestres as $semestre)

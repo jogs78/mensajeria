@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\TestMail;
+use App\Mail\restPasswordMail;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Input;
+use Session;
 use Mai;
 use Illuminate\Support\Str;
 
@@ -59,69 +62,99 @@ class AutenticarController extends Controller
     }
     public function signUp(Request $request)
     {
-        $codigo = Str::random(25);
-        $personalInformation = $request->all();
-        if ($personalInformation['password'] != $personalInformation['confirmar_password']) {
-            return back()->with('message', 'Las contraseñas no coinciden')->withInput();
-        } elseif ($personalInformation['num_control'] == "" || $personalInformation['name'] == "" || $personalInformation['a_paterno'] == "" || $personalInformation['a_materno'] == "" || $personalInformation['correo'] == "" || $personalInformation['password'] == "" || $personalInformation['confirmar_password'] == "" || $personalInformation['carrera'] == "" || $personalInformation['semestre'] == "") {
-            return back()->with('message', '¡Faltan campos por llenar!')->withInput();
-        } elseif ($personalInformation['password'] == $personalInformation['confirmar_password']) {
-            unset($personalInformation['confirmar_password']);
-            $alumno = new Alumno();
-            $personalInformation['num_control'] = intval($personalInformation['num_control']);
-            $alumno->id = $personalInformation['num_control'];
-            $alumno->nombre = $personalInformation['name'];
-            $alumno->apellido_paterno = $personalInformation['a_paterno'];
-            $alumno->apellido_materno = $personalInformation['a_materno'];
-            $alumno->correo = $personalInformation['correo'];
-            $alumno->contraseña = Hash::make($personalInformation['password']);
-            $alumno->carrera_id = $personalInformation['carrera'];
-            $alumno->semestre_id = $personalInformation['semestre'];
-            $alumno->foto_perfil = Storage::url('user-profile-icon.jpg');
-
-            $alumno->confirmation_code = $codigo;
-            ///////
-            $data = [
-                'name' => $personalInformation['name'],
-                'confirmation_code' => $codigo
-            ];
-            Mail::to($personalInformation['correo'])->send(new TestMail($data));
-
-            $alumno->save();
-            return redirect()->back()->with('message', 'Registro exitoso');
-            return $personalInformation;
-            return redirect('/Usuarios');
-        } else {
-            return redirect()->back()->with('message', "¡Error de registro!");
+        $codigo = Str::random(25);//generamos un codigo de confirmacion aleatorio
+        $personalInformation = $request->all();//obtenemos todos los datos puestos en el formulario
+        request()->validate([//validamos que los campos no esten vacios
+            'num_control' => 'required',
+            'name' => 'required',
+            'a_paterno' => 'required',
+            'a_materno' => 'required',
+            'correo' => 'required | email',
+            'password' => 'required',
+            'confirmar_password' => 'required',
+            'carrera' => 'required',
+            'semestre' => 'required'
+        ]);
+        // checamos si el número de control ya existe en la base
+        $users = Alumno::where('id', $personalInformation['num_control'])->get();
+        // checamos si el correol ya existe en la base
+        $correo = Alumno::where('correo', $personalInformation['correo'])->get();
+        // validamos si encontramos un registro
+        if(sizeof($users) > 0){
+            return redirect()->back()->with('message', "¡El número de control ya se encuentra registrado!");
+        }else{
+            //validamos si encontramos un correo existente
+            if(sizeof($correo) > 0){
+                return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
+            }else{
+                //validamos que las contraseñas coincidan
+                if ($personalInformation['password'] != $personalInformation['confirmar_password']) {
+                    return back()->with('message', 'Las contraseñas no coinciden')->withInput();
+                }
+                //si son iguales, procedemos a guardar el registro en la base
+                elseif ($personalInformation['password'] == $personalInformation['confirmar_password']) {
+                    unset($personalInformation['confirmar_password']);
+                    $alumno = new Alumno();
+                    $personalInformation['num_control'] = intval($personalInformation['num_control']);
+                    $alumno->id = $personalInformation['num_control'];
+                    $alumno->nombre = $personalInformation['name'];
+                    $alumno->apellido_paterno = $personalInformation['a_paterno'];
+                    $alumno->apellido_materno = $personalInformation['a_materno'];
+                    $alumno->correo = $personalInformation['correo'];
+                    $alumno->contraseña = Hash::make($personalInformation['password']);
+                    $alumno->carrera_id = $personalInformation['carrera'];
+                    $alumno->semestre_id = $personalInformation['semestre'];
+                    $alumno->foto_perfil = Storage::url('user-profile-icon.jpg');
+                    $alumno->confirmation_code = $codigo;
+                    //guardamos el nombre y el codigo para usarlos en la confirmacion de correo.
+                    $data = [
+                        'name' => $personalInformation['name'],
+                        'confirmation_code' => $codigo
+                    ];
+                    //pasamos los datos al archivo TestMail
+                    Mail::to($personalInformation['correo'])->send(new TestMail($data));
+                    $alumno->save();
+                    return redirect()->back()->with('message', 'Revise su correo para terminar el registro.');
+                    return redirect('/Usuarios');
+                }
+                //error de conexion
+                else {
+                    return redirect()->back()->with('message', "¡Error de registro!");
+                }
+            }
         }
     }
-
+    //Metodo para confirmar el correo.
     public function verify($code)
     {
         $alumno = Alumno::where('confirmation_code', $code)->first();
         if (!$alumno) {
-            return redirect('/Usuarios');
+            return redirect('/log-in');
         }
 
         $alumno->confirmed = true;
         $alumno->confirmation_code = null;
         $alumno->save();
         return redirect('/log-in');
+        
+       
     }
 
     public function restPassword(Request $request)
     {
+        $email = $request->email;
         $alumno = Alumno::where('correo', $request->email)->first();
         $empleado = Empleado::where('correo', $request->email)->first();
+
         if ($alumno) {
-            $alumno->contraseña = Hash::make($request->newPassword);
-            $alumno->save();
+            $data = ['name' => $alumno->nombre];
+            Mail::to($email)->send(new restPasswordMail($data));
+            return "Se a enviado un email al correo proporcionado";
+            
         } elseif ($empleado) {
-            $empleado->password = Hash::make($request->newPassword);
-            $empleado->save();
-        } else {
-            return "El correo ingresado no existe o es erroneo";
-        }
-        return "Contraseña cambiada exitosamente";
+            $data = ['name' => $empleado->nombre];
+            Mail::to($email)->send(new restPasswordMail($data));
+            return "Se a enviado un email al correo proporcionado xd";
+        } 
     }
 }
