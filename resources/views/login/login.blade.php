@@ -105,9 +105,8 @@
                 password.nextElementSibling.classList.add("fijar");
             }
         });
-        name.addEventListener("keyup", function() {
-            if (name.value.length >= 1) {
-                console.log
+        name.addEventListener("change", function(e) {
+            if (e.target.value.length >= 1) {
                 name.classList.add('bordes');
                 name.nextElementSibling.classList.add("fijar");
             } else {
@@ -115,8 +114,8 @@
                 name.nextElementSibling.classList.remove("fijar");
             }
         });
-        password.addEventListener("keyup", function() {
-            if (password.value.length >= 1) {
+        password.addEventListener("change", function(e) {
+            if (e.target.value.length >= 1) {
                 password.classList.add('bordes');
                 password.nextElementSibling.classList.add("fijar");
             } else {
