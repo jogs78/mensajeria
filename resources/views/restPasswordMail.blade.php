@@ -5,14 +5,12 @@
     </head>
 
     <body>
-        <p>Hola {{$name}}, se solicitó un reinicio de contraseña para su cuenta, en mensajería ittg.</p>
-        <p>Para confirmar esta solicitud, y configurar una nueva contraseña para su cuenta, por favor,
-            haga click en el siguiente enlace.
-        </p>
-        <a href="{{url('log-in')}}">
-            Clic para reiniciar contraseña
+        <p>Hola <b>{{$name}}</b>, se solicitó <b>Restablecer tu contraseña</b> para tu cuenta, en <b>"Mensajería ITTG"</b>.</p>
+        <p>Para continuar con la solicitud haz click en el siguiente enlace:</p>
+        <a href="{{url('/resetPassword/'.$email.'')}}">
+            Clic para recuperar contraseña
         </a>
-        <p>Si este reinicio de contraseña no fue solicitado por usted, no necesita hacer nada.</p>
+        <p><small>Si esta solicitud no fue hecha por ti, no necesita realizar ninguna acción.</small></p>
         
     </body>
 

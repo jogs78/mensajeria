@@ -79,7 +79,14 @@
                                             <span class="fas fa-share" title="Difundir"></span>
                                         </button>
                                     </form>
-                                @endcan
+
+
+                                </div>
+                            @endcan
+                            <div class="new-messages_show">
+                                <a href="/mensajes/{{ $mensaje->id }}" style="color: rgb(255, 255, 255)">
+                                    <span class="far fa-chart-bar" title="Estadisticas"></span>
+                                </a>
                             </div>
                         </div>
                     </div>

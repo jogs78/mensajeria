@@ -82,8 +82,7 @@
                     <label for="email">Correo electronico</label>
                     <input type="email" name="email" id="email" placeholder="ejemplo@email.com">
                     <label for="" id="vericaCorreo"></label>
-                    <label for="resetPassword">Contraseña nueva</label>
-                    <input type="password" name="resetPassword" id="newPassword" placeholder="************">
+                    
                     <button type="submit" class="login__form_btn" style="height: 30px">Enviar</button>
                 </form>
             </div>
@@ -92,7 +91,6 @@
     </section>
     <script>
         let name = document.getElementById("num_control");
-        let password = document.getElementById("password");
         let resetPassword = document.getElementById('resetPassword');
         let rpContainer = document.getElementById('resetPassword-container');
         let btnClose = document.getElementById('close')
@@ -139,17 +137,15 @@
         btnSave.addEventListener('submit', function(event) {
             console.log(1)
             let email = document.getElementById('email').value
-            let newPassword = document.getElementById('newPassword').value
             let _token = document.querySelector('input[name="_token"]').value
             $.ajax({
-                url: '/resetPassword',
-                method: 'POST',
+                url: '/sendMailReset',
+                method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
                     email: email,
-                    newPassword: newPassword,
                 }
             }).done(function(res) {
                 Swal.fire({
@@ -160,8 +156,6 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
-                email.value = ""
-                newPassword.value = ""
             });
             event.preventDefault();
         });

@@ -140,21 +140,51 @@ class AutenticarController extends Controller
        
     }
 
-    public function restPassword(Request $request)
+    public function sendMailReset(Request $request)
     {
         $email = $request->email;
         $alumno = Alumno::where('correo', $request->email)->first();
         $empleado = Empleado::where('correo', $request->email)->first();
 
         if ($alumno) {
-            $data = ['name' => $alumno->nombre];
+            $data = ['name' => $alumno->nombre,
+            'email' => $alumno->correo];
             Mail::to($email)->send(new restPasswordMail($data));
             return "Se a enviado un email al correo proporcionado";
-            
         } elseif ($empleado) {
-            $data = ['name' => $empleado->nombre];
+            $data = ['name' => $empleado->nombre,
+            'email' => $empleado->correo];
             Mail::to($email)->send(new restPasswordMail($data));
             return "Se a enviado un email al correo proporcionado xd";
+        } 
+    }
+    public function resetPasswordView($email)
+    {
+        $alumno = Alumno::where('correo', $email)->first();
+        $empleado = Empleado::where('correo', $email)->first();
+        $user = null;
+        if ($alumno) {
+            $user = $alumno;
+            return view('reset-password.reset-password', compact('user'));
+        } elseif ($empleado) {
+            $user = $empleado;
+            return view('reset-password.reset-password', compact('user'));
+        } 
+    }
+    public function resetPassword(Request $request)
+    {
+        $alumno = Alumno::where('correo', $request->correo)->first();
+        $empleado = Empleado::where('correo', $request->correo)->first();
+
+        if ($alumno) {
+          
+           $alumno->contraseña = Hash::make($request->p1);
+           $alumno->save(); 
+           return redirect('/log-in')->withErrors('Contraseña actualizada');
+        } elseif ($empleado) {
+           $empleado->password = Hash::make($request->p1);
+           $empleado->save(); 
+           return redirect('/log-in')->withErrors('Contraseña actualizada');
         } 
     }
 }

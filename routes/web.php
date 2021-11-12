@@ -33,7 +33,9 @@ Route::get('/log-out','AutenticarController@logOut');
 Route::get('/admins/log-out','AutenticarController@adminLogOut');
 
 /*Reset contraseña*/
-Route::post('resetPassword','AutenticarController@restPassword');
+Route::get('sendMailReset','AutenticarController@sendMailReset');
+Route::get('resetPassword/{email}','AutenticarController@resetPasswordView');
+Route::post('resetPassword','AutenticarController@resetPassword');
 
 Route::get('/inicio', function(){
     $c_carreras = Carrera::all();
