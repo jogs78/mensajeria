@@ -26,39 +26,85 @@
 <body>
     <header class="header">
         <div class="header_container">
-            <div class="account_cotainer">
-                <div class="image-profile_container">
-                    <img src="{{ Auth::user()->foto_perfil }}" alt="">
-                    <span>{{ Auth::user()->nombre }}</span>
-                    <span>{{ Auth::user()->rol }}</span>
-                </div>
-                <i class="fas fa-caret-down" id="menu2"></i>
-                <div class="menu2-container" id="menu2-container">
-                    <ul id="menu2-list">
-                        <li>Actualizar datos</li>
-                        <li class="fas fa-sign-out-alt"><a href="/log-out">Salir</a></li>
-                    </ul>
-                </div>
-            </div>
             <nav class="nav1">
                 <i class="fas fa-bars" id="navigation_btn"></i>
                 <div class="menu-container" id="menu">
+
                     <div class="menu-content">
+                        <div class="menu-content" id="personalInformation">
+                            <i class="fas fa-chevron-left" id="btnback" style="font-size:22px;"></i>
+                            <center>
+                                <figure class="img1">
+                                <img class="imgP" src="{{ Auth::user()->foto_perfil }}" id="imgProfileNew" title="foto">
+                            </figure>
+                                </center>
+                            <form id="actualizarInfo" style="display: flex; flex-direction:column;" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" value="{{ Auth::user()->id }}" id="idEmpleado">
+                                <div class="container-input" style="width: 100%;">
+                                    <input type="file" id="userP" name="imagProfile" accept="image/*" style="width: 100%;">
+                                </div>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nombre:</label>
+                                <div style="text-align: center;">
+                                    <input class="input" id="nombre" type="text" name="nombre"
+                                        value="{{ Auth::user()->nombre }}" disabled><i class="edit fas fa-edit"
+                                        style="font-size: 20px;"></i>
+                                </div>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Apellido
+                                    paterno:</label>
+                                <div style="text-align: center;">
+                                    <input class="input" id="a_paterno" type="text" name="a_paterno"
+                                        value="{{ Auth::user()->apellido_paterno }}" disabled><i
+                                        class="edit fas fa-edit" style="font-size: 20px;"></i>
+                                </div>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Apellido
+                                    materno:</label>
+                                <div style="text-align: center;">
+                                    <input class="input" id="a_materno" type="text" name="a_materno"
+                                        value="{{ Auth::user()->apellido_materno }}" disabled><i
+                                        class="edit fas fa-edit" style="font-size: 20px;"></i>
+                                </div>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Correo
+                                    electrónico:</label>
+                                <div style="text-align: center;">
+                                    <input class="input" id="correo" type="text" name="correo"
+                                        value="{{ Auth::user()->correo }}" disabled><i class="edit fas fa-edit"
+                                        style="font-size: 20px;"></i>
+                                </div>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nueva
+                                    contraseña:</label>
+                                <div style="text-align: center;">
+                                    <input class="input" id="password" type="password" name="password" disabled><i
+                                        class="edit fas fa-edit" style="font-size: 20px;"></i>
+                                </div>
+                                <button id="btnA">Guardar</button>
+                            </form>
+                        </div>
+                        <div class="image-profile_container">
+                            <center><figure class="img1">
+                                <img class="imgP" id="imgProfile" src="{{ Auth::user()->foto_perfil }}" alt="">
+                            </figure>
+                            </center>
+                            <label id="userName">{{ Auth::user()->nombre . ' ' . Auth::user()->apellido_paterno . ' ' . Auth::user()->apellido_materno }}</label>
+                            <label>{{ Auth::user()->rol }}</label>
+                            <label class="btnF" id="btnShow">Actualizar mis datos</label>
+                        </div>
+
                         <ul class="menu-list">
-                            <a id="home" class="menu-list__item fas fa-home home_selected" href="/inicio">
-                                <li class="text">Inicio</li>
-                            </a>
+                            <li class="menu-list__item fas fa-home"> <a id="home" class="text"
+                                    href="/inicio">Inicio </a></li>
                             @can('view', App\Models\Empleado::class)
-                                <a id="users" class="menu-list__item fas fa-user user_selected" href="/user">
-                                    <li class="text">Usuarios</li>
-                                </a>
+                                <li class="menu-list__item fas fa-user"><a id="users" class="text"
+                                        href="/user">Usuarios</a></li>
                             @endcan
                             @can('viewMensajes', App\Models\Mensaje::class)
-                                <a id="mensajes" class="menu-list__item fas fa-envelope message_selected" href="/mensajes">
-                                    <li class="text">Mensajes</li>
-                                </a>
-                            @endcan
+                                <li class="menu-list__item fas fa-envelope"><a id="mensajes" class="text"
+                                        href="/mensajes">Mensajes</a></li>
 
+                            @endcan
+                            <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
+                                href="/log-out">Salir </a></li>
 
                         </ul>
                     </div>
@@ -66,42 +112,14 @@
             </nav>
         </div>
     </header>
-    @if (Auth::user()->rol == 'Emisor'|| Auth::user()->rol == 'Revisor')
+    @if (Auth::user()->rol == 'Emisor' || Auth::user()->rol == 'Revisor')
         @include('emisor-revisor.dashboard-emisor_revisor')
     @elseif (Auth::user()->rol == "Difusor")
         @include('difusor.dashboard-difusor')
-        <script>
-            window.addEventListener("load", function() {
-                let mensajesTotal = document.getElementById('lblMensajesTotal');
-                let alumnosTotal = document.getElementById('lbl1alumnosTotal');
-                let mensajesByCarreras = document.getElementById('mensajesByCarreras');
-                let newLi = []
-                $.ajax({
-                url: '/panel-difusor',
-                method: 'GET',
-                cache: false,
-                contentType: false,
-                processData: false,
-                
-            }).done(function(res){
-                mensajesTotal.innerHTML = "Mensajes totales: "+res.mensajesTotales
-                alumnosTotal.innerHTML = "Alumnos registrados: "+res.alumnosTotales
-                console.log('Publicaciones por carrera:')
-                for(let i= 0; i<res.carreras.length; i++){
-                    newLi[i]= document.createElement('li');
-                    newLi[i].innerHTML = res.carreras[i].name+": "+res.MensajesByCarrera[i]
-                    mensajesByCarreras.appendChild(newLi[i])  
-                    //console.log(res.carreras[i].name+": "+res.MensajesByCarrera[i])
-                }
-                
-            });
-                
-         });
-        </script>
+        <script src="{{ asset('static/js/difusor.js') }}"></script>
     @elseif (Auth::user()->rol == "Informático")
         @include('informatico.dashboard-informatico')
         <script src="{{ asset('static/js/informatico.js') }}"></script>
-
     @endif
     @yield('mensaje.mensaje-list')
     @yield('mensaje.mensaje-create')
@@ -110,20 +128,8 @@
     @yield('informatico.user-register')
     @yield('informatico.user-list')
     @yield('informatico.user-edit')
-
-    <script>
-        let btnMenu = document.getElementById("navigation_btn");
-        let menu = document.getElementById("menu");
-        let btnmenu2 = document.getElementById("menu2");
-        let menu2 = document.getElementById("menu2-container") 
-        btnMenu.addEventListener('click', function() {
-            menu.classList.toggle('navigation_show');
-            btnMenu.classList.toggle('navigation_alternate_color')
-        });
-        btnmenu2.addEventListener('click', function() {
-            menu2.classList.toggle('showMenu2');
-        });
-    </script>
+    @yield('difusor.ver-estadisticas')
+    <script src="{{ asset('static/js/dashboard.js') }}"></script>
 </body>
 
 </html>

@@ -48,8 +48,11 @@ Route::get('/inicio', function(){
     }
     return view('dashboard', compact('c_carreras','c_total','c_alumnos','c_empleados'));})->middleware('auth:admin');
 Route::get('/panel-difusor', 'MensajeController@panelDifusor')->middleware('auth:admin');
+Route::get('/ver-estadisticas/{id}', 'EmpleadoController@verEstadisticas')->middleware('auth:admin');
+Route::get('/consultarEstadistica', 'EmpleadoController@consultarEstadistica')->middleware('auth:admin');
 Route::get('mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
 Route::resource('user', 'InformaticoController')->middleware('auth:admin');
+Route::resource('empleado', 'EmpleadoController')->middleware('auth:admin');
 Route::resource('alumno', 'AlumnoController')->middleware('auth:admin');
 Route::resource('mensajes', 'MensajeController')->middleware('auth:admin');
 Route::resource('carreras', 'CarrerasController')->middleware('auth:admin');

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use App\Models\Mensaje;
 use App\Models\Carrera;
-use App\Models\Empleado;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,16 +67,24 @@ class MensajeController extends Controller
     public function store(Request $request)
     {
         $datos = $request->all();
-        //obtengo y guardo la imagen en el file system
-        $img = $datos['file-1']->store('public/imagenes_mensajes');
-        $url = Storage::url($img);
         $mensaje = new mensaje();
+        
+        if($request->hasFile('file-1')){
+            $img = $datos['file-1']->store('public/imagenes_mensajes');
+            $url = Storage::url($img);
+            $mensaje -> imagen = $url;
+        }
+        if($request->hasFile('file-2')){
+            $img = $datos['file-2']->store('public/documentos_mensajes');
+            $urlDoc = Storage::url($img);
+            $mensaje -> documento = $urlDoc;
+        }
+        
         $mensaje -> titulo = $datos['titulo'];
         $mensaje -> descripcion = $datos['descripcion'];
         //Estados... 0-Pendiente, 1-Aceptado, 2-Rechazado
         $mensaje -> estado = 0;
         $mensaje -> empleado_id= Auth::user()->id;
-        $mensaje -> imagen = $url;
         $mensaje -> save();        
         for ($i=0; $i<sizeof($datos['car']); $i++){
             $mensaje ->carreras()->attach(($datos['car'])[$i]);
@@ -97,10 +104,8 @@ class MensajeController extends Controller
      */
     public function show($id)
     {
-        
         $mensaje = Mensaje::find($id);
         $this->authorize('show', $mensaje);
-        
         return view('mensaje.mensaje-show', compact('mensaje'));
     }
 
@@ -116,8 +121,6 @@ class MensajeController extends Controller
         $semestres = Semestre::all();
         $mensaje = Mensaje::find($id);
         $this->authorize('edit', $mensaje);
-
-        //return $mensaje->carreras;
         return view('mensaje.mensaje-edit', compact('mensaje', 'carreras', 'semestres'));
     }
 
@@ -135,14 +138,20 @@ class MensajeController extends Controller
         if(Auth::user()->rol=='Emisor'){
             $mensaje -> titulo = $request->titulo;
             $mensaje -> descripcion = $request->descripcion;
-            if ($request->hasFile('file-1')) {
+            
+            if($request->hasFile('file-1')){
                 $url = str_replace('storage', 'public', $mensaje->imagen);
-            if(Storage::disk('local')->exists($url)){
                 Storage::delete($url);
                 $img = $request->file('file-1')->store('public/imagenes_mensajes');
                 $url = Storage::url($img);
                 $mensaje -> imagen = $url;
             }
+            if($request->hasFile('file-2')){
+                $url = str_replace('storage', 'public', $mensaje->imagen);
+                Storage::delete($url);
+                $img = $datos['file-2']->store('public/documentos_mensajes');
+                $urlDoc = Storage::url($img);
+                $mensaje -> documento = $urlDoc;
             }
             $mensaje ->carreras()->sync(($datos['car']));
             $mensaje ->semestres()->sync(($datos['sem']));
@@ -159,18 +168,13 @@ class MensajeController extends Controller
             // }
             $mensaje -> save();
         }
-
         if(Auth::user()->rol=='Revisor'){
             //return $request->estado;
-            if($request->estado=='Aceptar'){
+            if($request->estado=='Aceptar')
                 $mensaje->estado=1;
-            }
-            elseif($request->estado=='Rechazar'){
+            elseif($request->estado=='Rechazar')
                 $mensaje->estado=2;
-            }
-            
             $mensaje -> save();
-            
         }
         if(Auth::user()->rol=='Difusor'){
             $mensaje->estado=$request->estado;
@@ -178,7 +182,6 @@ class MensajeController extends Controller
             return 'Mensaje difundido';
         }
         return redirect('/mensajes');
-
     }
 
     /**
@@ -195,13 +198,11 @@ class MensajeController extends Controller
         }
     }
     public function panelDifusor(){
-    
         $carreras = Carrera::all();
         $totalMensajes = Mensaje::where('estado','=', 3)->count();
         $totalAlumnos = Alumno::all()->count();
         $mensajesByCarrera = array();
         $mensaje = Mensaje::with('carreras')->get();
-        
         for($i = 0; $i<sizeof($carreras); $i++){
             $total = DB::select('SELECT * FROM carrera_mensaje WHERE carrera_id='.($i+1));
             $mensajesByCarrera[$i]=sizeof($total); 

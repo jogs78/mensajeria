@@ -11,17 +11,22 @@
 
         }
 
+        .dashboard-EmisorRevisror,
+        .dashboard-difusor {
+            display: none;
+        }
+
     </style>
-
-
     <section class="new-messages" id="new-messages">
-        <style>
-            .dashboard-EmisorRevisror,
-            .dashboard-difusor {
-                display: none;
-            }
-
-        </style>
+        @if (session('message') == 'ok')
+            <script>
+                Swal.fire(
+                    'Eliminado!',
+                    'Mensaje eliminado con éxito',
+                    'success'
+                )
+            </script>
+        @endif
         <a class="new-messages__link" href="/mensajes/create">Redactar mensaje</a>
         @if (sizeof($mensajes) == 0)
             <label class="image-title fas fa-exclamation-circle">Sin registros</label>
@@ -66,44 +71,35 @@
                                         <span class="fas fa-trash-alt" title="Eliminar"></span>
                                     </button>
                                 </form>
-                            @endcan
-                            @can('difundirMensaje', $mensaje)
-                                <div class="new-messages_delete" style="background: #e91e63 !important">
-                                    <form class="form_difundir" id="formDifundir" method="POST"
-                                        action="/mensajes/{{ $mensaje->id }}">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" value="{{ $mensaje->id }}" id="idMensaje">
-                                        <input type="hidden" name="estado" value="3" id="updateEstado">
-                                        <button type="submit">
-                                            <span class="fas fa-share" title="Difundir"></span>
-                                        </button>
-                                    </form>
-
-
-                                </div>
-                            @endcan
-                            <div class="new-messages_show">
-                                <a href="/mensajes/{{ $mensaje->id }}" style="color: rgb(255, 255, 255)">
-                                    <span class="far fa-chart-bar" title="Estadisticas"></span>
-                                </a>
                             </div>
+                        @endcan
+                        @can('difundirMensaje', $mensaje)
+                            <div class="new-messages_delete" style="background: #e91e63 !important">
+                                <form class="form_difundir" id="formDifundir" method="POST"
+                                    action="/mensajes/{{ $mensaje->id }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" value="{{ $mensaje->id }}" id="idMensaje">
+                                    <input type="hidden" name="estado" value="3" id="updateEstado">
+                                    <button type="submit">
+                                        <span class="fas fa-share" title="Difundir"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        @endcan
+                        <div class="new-messages_show">
+                            <a href="/ver-estadisticas/{{ $mensaje->id }}" style="color: rgb(255, 255, 255)">
+                                <span class="far fa-chart-bar" title="Estadisticas"></span>
+                            </a>
                         </div>
                     </div>
+                </div>
+                </div>
             @endforeach
         @endif
     </section>
-    @if (session('message') == 'ok')
-        <script>
-            Swal.fire(
-                'Eliminado!',
-                'Mensaje eliminado con éxito',
-                'success'
-            )
-        </script>
-    @endif
+
     <script>
-        let difundir = document.getElementById('formDifundir');
         let eliminar = document.getElementsByClassName('form_eliminar');
         for (let i = 0; i < eliminar.length; i++) {
             eliminar[i].addEventListener('submit', function(e) {
@@ -123,53 +119,5 @@
                 });
             });
         }
-        difundir.addEventListener('submit', function(event) {
-            let estado = document.getElementById('updateEstado').value;
-            let id = document.getElementById('idMensaje').value;
-            let mensajeContainer = document.getElementsByClassName('new-messages__container');
-            let messageSection = document.getElementById('new-messages')
-            $.ajax({
-                url: '/mensajes/' + id,
-                method: 'PUT',
-                data: {
-                    estado: estado,
-                    _token: '{{ csrf_token() }}',
-                },
-                dataType: 'html',
-            }).done(function(res) {
-                if (res) {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top',
-                        icon: 'info',
-                        title: res,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    for (let i = 0; i < mensajeContainer.length; i++) {
-                        if (mensajeContainer[i].id == id) {
-                            mensajeContainer[i].style.opacity = 0
-                            setTimeout(function() {
-                                messageSection.removeChild(mensajeContainer[i])
-                                const lbl = document.createElement("label")
-                                lbl.className = "image-title fas fa-exclamation-circle"
-                                lbl.innerHTML = "Sin registros"
-                                messageSection.appendChild(lbl);
-                            }, 800)
-                        }
-                    }
-                } else {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top',
-                        icon: 'error',
-                        title: 'Error',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            });
-            event.preventDefault();
-        });
     </script>
 @endsection

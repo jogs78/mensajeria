@@ -13,9 +13,7 @@
         <div class="dashboard-difusor__carrerasMensajes">
             <label class="lbl__info">Publicaciones por carreras</label>
             <ol class="list__carreras" id="mensajesByCarreras">
-                
             </ol>
         </div>
     </div>
-    
 </section>

@@ -12,9 +12,9 @@
     margin: auto;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     box-shadow: 1px 1px 4px rgb(155, 154, 154);
-    height: 88vh;
-    overflow-y: auto;
     align-content: flex-start;
+    position: relative;
+    top: 48px;
 }
 
 .container {
@@ -41,12 +41,6 @@
 
 .container_image input {
     padding: 3px;
-}
-
-.container_image label {
-    height: min-content;
-    border: 1px solid;
-    padding: 5px;
 }
 
 .container_segmento {
@@ -105,8 +99,6 @@
 
 @media screen and (min-width:650px) {
     .messages-edit__form {
-        position: static;
-        margin-top: 30px;
         height: auto;
         overflow: visible;
     }
@@ -137,6 +129,6 @@
         border-bottom: 1px solid;
     }
     #previewImage {
-        width: 40%;
+        width: 100%;
     }
 }

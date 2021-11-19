@@ -1,6 +1,8 @@
 .mensage-show {
     height: 100vh;
     display: flex;
+    position: relative;
+    top: 42px;
 }
 
 .mensage-show__container {

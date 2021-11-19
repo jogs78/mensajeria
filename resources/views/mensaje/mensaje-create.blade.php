@@ -3,9 +3,11 @@
 
     <section class="mensaje-create">
         <style>
-            .dashboard-EmisorRevisror, .dashboard-difusor{
+            .dashboard-EmisorRevisror,
+            .dashboard-difusor {
                 display: none;
             }
+
         </style>
         <form action="/mensajes" method="POST" class="mensaje-create__form" id="form" enctype="multipart/form-data">
             @csrf
@@ -14,16 +16,20 @@
                 <textarea placeholder="Descripción..." class="mensaje-create__form_body" name="descripcion" id="" cols="30"
                     rows="10"></textarea>
                 <label class="mensaje-create__form_lbl_adjuntar" for="">Adjuntar archivo</label>
-
-               
-
                 <div class="container-input">
-                    <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1"/>
+                    <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1" accept="image/*">
                     <label for="file-1">
-                        <span class="iborrainputfile fas fa-upload"> Seleccionar archivo</span>
+                        <span class="iborrainputfile fas fa-upload"> Seleccionar imagen</span>
                     </label>
                 </div>
                 <img class="mensaje-create__form-preview" id="previewImage">
+                <div class="container-input">
+                    <input type="file" name="file-2" id="file-2" class="inputfile inputfile-1" accept="application/pdf">
+                    <label for="file-2">
+                        <span class="iborrainputfile fas fa-upload"> Seleccionar documento</span>
+                    </label>
+                </div>
+                <label id="fileName"></label>
             </div>
             <div class="c2">
                 <label class="mensaje-create__form_lbl">Dirigido a:</label>
@@ -66,34 +72,7 @@
             </div>
             <input id="btn_enviar" class="btn_en" type="submit" value="Enviar">
         </form>
-        <script>
-            let expanded = false;
-            let checkboxes = document.getElementsByClassName("checkboxes");
-            let selectBox = document.getElementsByClassName("selectBox");
-            let previewImage = document.getElementById('previewImage');
-            let inputFile = document.getElementById('file-1');
-            for (let i = 0; i < 2; i++) {
-                selectBox[i].addEventListener("click", function() {
-                    if (!expanded) {
-                        checkboxes[i].style.display = "block";
-                        expanded = true;
-                    } else {
-                        checkboxes[i].style.display = "none";
-                        expanded = false;
-                    }
-                });
-            }
-            inputFile.addEventListener('change', function(e) {
-                let image = e.target.files[0];
-                let file = new FileReader();
-                file.onload = (e) => {
-                    previewImage.setAttribute('src', e.target.result)
-                }
-                file.readAsDataURL(image);
-            });
-        </script>
 
-
-
-
-    @endsection
+    </section>
+    <script src="{{ asset('static/js/mensajes.js') }}"></script>
+@endsection
