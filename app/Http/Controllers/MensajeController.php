@@ -21,14 +21,17 @@ class MensajeController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function index()
+    public function index(Request $request)
     {
+        $titulo = $request->titulo;
+        $fechaPublicacion = $request->fechaPub;
+        $carrera = $request->carrera;
+        $carreras = Carrera::all();
         if(Auth::user()->rol=='Emisor'){
-            $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->get();
-            
+            $mensajes= Mensaje::Filtro($titulo, $fechaPublicacion, $carrera)->where('empleado_id',Auth::user()->id)->get();
         }
         elseif(Auth::user()->rol=='Revisor'){
-            $mensajesBD = Mensaje::with('empleado')->get();
+            $mensajesBD = Mensaje::Filtro($titulo, $fechaPublicacion, $carrera)->with('empleado')->get();
             $mensajes=array();
             for($i=0; $i<sizeof($mensajesBD);$i++){
                 if(Auth::user()->puesto==$mensajesBD[$i]->empleado->quien_revisa){
@@ -38,10 +41,15 @@ class MensajeController extends Controller
             } 
         }
         elseif(Auth::user()->rol=='Difusor'){
-            $mensajes = Mensaje::where('estado', 1)->get();
+            if($request ){
+                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
+            }
+            else{
+                $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
+            }
         }
         $this->authorize('viewMensajes', App\Models\Mensaje::class);
-        return view('mensaje.mensaje-list', compact('mensajes'));
+        return view('mensaje.mensaje-list', compact('mensajes', 'carreras'));
     }
 
     /**

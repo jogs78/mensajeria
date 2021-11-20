@@ -3,7 +3,8 @@ window.addEventListener("load", function() {
     let alumnosTotal = document.getElementById('lbl1alumnosTotal');
     let mensajesByCarreras = document.getElementById('mensajesByCarreras');
     let newLi = []
-    let difundir = document.getElementById('formDifundir');
+    let difundir = document.getElementsByClassName('form_difundir');
+    let btnEstadisticas = document.getElementsByClassName('estadistica')
     $.ajax({
         url: '/panel-difusor',
         method: 'GET',
@@ -22,53 +23,163 @@ window.addEventListener("load", function() {
 
     });
     if (difundir) {
-        difundir.addEventListener('submit', function(event) {
-            let estado = document.getElementById('updateEstado').value;
-            let id = document.getElementById('idMensaje').value;
-            let mensajeContainer = document.getElementsByClassName('new-messages__container');
-            let messageSection = document.getElementById('new-messages')
-            $.ajax({
-                url: '/mensajes/' + id,
-                method: 'PUT',
-                data: {
-                    estado: estado,
-                    _token: '{{ csrf_token() }}',
-                },
-                dataType: 'html',
-            }).done(function(res) {
-                if (res) {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top',
-                        icon: 'info',
-                        title: res,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    for (let i = 0; i < mensajeContainer.length; i++) {
-                        if (mensajeContainer[i].id == id) {
-                            mensajeContainer[i].style.opacity = 0
+        let lblEstado = document.getElementsByClassName('new-messages__status-menssage');
+        let divDifundir = document.getElementsByClassName('new-messages_difundir');
+        for (let j = 0; j < difundir.length; j++) {
+            difundir[j].addEventListener('submit', function(event) {
+                let url = difundir[j].getAttribute('action')
+                let estado = document.getElementById('updateEstado').value;
+                let id = document.getElementsByClassName('idMensaje');
+                let mensajeContainer = document.getElementsByClassName('new-messages__container');
+                let messageSection = document.getElementById('new-messages')
+                console.log("anterior actual" + mensajeContainer.length)
+                $.ajax({
+                    url: url,
+                    method: 'PUT',
+                    data: {
+                        estado: estado,
+                        _token: $("input[name='_token']").val()
+                    },
+                    dataType: 'html',
+                }).done(function(res) {
+                    let d = difundir[j].getAttribute('action')
+                    let l = d.split('/')
+                    if (res) {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top',
+                            icon: 'info',
+                            title: res,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+
+
+                        if (mensajeContainer[j].id == l[2]) {
                             setTimeout(function() {
-                                messageSection.removeChild(mensajeContainer[i])
-                                const lbl = document.createElement("label")
-                                lbl.className = "image-title fas fa-exclamation-circle"
-                                lbl.innerHTML = "Sin registros"
-                                messageSection.appendChild(lbl);
+                                divDifundir[j].style.opacity = 0
+                                divDifundir[j].style.display = "none"
+                                lblEstado[j].innerHTML = "<b>Estado: Publicado</b>"
+                                lblEstado[j].style.background = "#0277BD";
                             }, 800)
                         }
+                    } else {
+                        Swal.fire({
+                            toast: true,
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
-                } else {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top',
-                        icon: 'error',
-                        title: 'Error',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                });
+                event.preventDefault();
+            });
+        }
+    }
+    if (btnEstadisticas) {
+        let graficaContainer = document.getElementById('graficaContainer')
+        let btnClose = document.getElementById('close')
+        let myChart = null;
+        let listCarreras = document.getElementById('listCarreras'),
+            listSemestres = document.getElementById('listSemestres');
+        for (let i = 0; i < btnEstadisticas.length; i++) {
+            btnEstadisticas[i].addEventListener('click', function() {
+                let id = btnEstadisticas[i].getAttribute("data-id")
+                solicitud(id)
+
+                // console.log(btnEstadisticas[i].getAttribute("data-id"))
+            })
+        }
+        btnClose.addEventListener('click', function() {
+            graficaContainer.style.display = 'none';
+            listCarreras.innerHTML = "";
+            listSemestres.innerHTML = "";
+            if (myChart) {
+                myChart.destroy();
+            }
+        })
+
+        function solicitud(id) {
+            $.ajax({
+                url: '/ver-estadisticas/' + id,
+                method: 'GET',
+                cache: false,
+                contentType: false,
+                processData: false,
+            }).done(function(res) {
+                let carreras = [];
+                let valores = [];
+                let datos = JSON.parse(res);
+                let tituloGrafica = datos[0].titulo;
+                let mensaje = []
+                mensaje = datos[0];
+                for (let i = 0; i < datos[1].length; i++) {
+                    carreras.push(datos[1][i].carrera);
+                }
+                for (let i = 0; i < datos[1].length; i++) {
+                    valores.push(datos[1][i].cantidadAlumnos);
+                }
+                generarGrafica(carreras, valores, tituloGrafica, mensaje);
+            });
+        }
+
+
+        function generarGrafica(carreras, valores, titulo, mensaje) {
+            graficaContainer.style.display = 'block';
+            console.log(listCarreras)
+            for (let i = 0; i < mensaje.carreras.length; i++) {
+                listCarreras.innerHTML = "<ul><li>" + mensaje.carreras[i].name + "</li></ul>" + listCarreras
+                    .innerHTML;
+                console.log(mensaje.carreras[i].name)
+            }
+            for (let i = 0; i < mensaje.semestres.length; i++) {
+                listSemestres.innerHTML = "<ul><li>Semestre:" + mensaje.semestres[i].semestre + "</li></ul>" +
+                    listSemestres.innerHTML;
+            }
+            const ctx = document.getElementById('myChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: carreras,
+                    datasets: [{
+                        data: valores,
+                        backgroundColor: [
+                            'rgb(103, 58, 183)',
+                            'rgb(76, 175, 80)',
+                            'rgb(205, 220, 57)',
+                            'rgb(24, 220, 179)',
+                            'rgb(213, 165, 151)',
+
+                            'rgb(33, 150, 243)',
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: titulo,
+                            color: '#FAF8ED',
+
+                            font: {
+                                size: 25,
+                            }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: 10
+                    }
                 }
             });
-            event.preventDefault();
-        });
+        }
     }
 });

@@ -23,4 +23,14 @@ class mensaje extends Model
     public function empleado(){
         return $this -> belongsTo('App\Models\Empleado');
     }
+    public function scopeFiltro($query, $titulo, $fechaPublicacion, $carrera){
+        if($titulo){
+            return $query->where('titulo', $titulo);
+        }
+        if($carrera){
+            return $query->whereHas('carreras', function ($q) use ($carrera) {
+                $q->where('carrera_id', $carrera);
+            });
+        } 
+    }
 }

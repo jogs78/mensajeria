@@ -54,10 +54,16 @@
     opacity: 0.8;
     background-size: 20px 20px;
     background-image: repeating-linear-gradient(0deg, #c6c9fc, #c6c9fc 1px, #e5e5f7 1px, #e5e5f7);
+    background: url('https://ead.tuxtla.tecnm.mx/pluginfile.php/1/theme_moove/loginbgimg/1631158096/pantalla%20inicial%20white-01.jpg');
+    background-repeat: repeat;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .new-messages__information label {
     padding: 3px;
+    width: max-content;
 }
 
 .new-messages__title {

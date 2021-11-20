@@ -121,12 +121,17 @@ class EmpleadoController extends Controller
         // return sizeof($mensaje->carreras);
         for($i = 0; $i<sizeof($mensaje->carreras); $i++){
             // Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count()
-            $alumnosMensajes[$i]=[
-                $mensaje->carreras[$i]->name => Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count(),
-            ] ;
+            // $alumnosMensajes[$i]= array($mensaje->carreras[$i]->name => Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count(),);
+            $alumnosMensajes[$i]= array(
+                'carrera' => $mensaje->carreras[$i]->name,
+                'cantidadAlumnos' => Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count(),
+                 
+            );
+            ;
         }
         // return $alumnosMensajes;
-        return view('difusor.ver-estadisticas');
+        return json_encode($respuesta = array($mensaje, $alumnosMensajes) );
+        
     }
     
 }

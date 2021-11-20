@@ -67,7 +67,7 @@ class MensajePolicy
     }
     public function difundirMensaje(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($empleado->rol == "Difusor")
+        if ($empleado->rol == "Difusor" && $mensaje->estado == 1)
             return true;
     }
 }
