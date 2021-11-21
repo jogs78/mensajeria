@@ -33,8 +33,9 @@
 .user-select {
     display: flex;
     font-size: 20px;
-    height: 40px;
+    height: min-content;
     position: relative;
+    flex-wrap: wrap;
 }
 
 #alumno,

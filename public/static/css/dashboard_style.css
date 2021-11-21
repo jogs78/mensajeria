@@ -443,24 +443,22 @@ i:hover {
     height: 100%;
 }
 
-.menu-list__item:hover {
-    content: none;
-}
-
 .text {
     padding: 10px;
     font-size: 20px;
     color: rgb(255, 255, 255);
 }
 
-.menu-list__item:hover {
+.menu-list__item:hover,
+.menu-list__item a:hover {
     border: 0;
     box-shadow: none;
     top: 0;
     color: rgb(251, 255, 35);
 }
 
-.menu-list__item::after {
+
+/* .menu-list__item::after {
     content: "";
     position: absolute;
     width: 0%;
@@ -480,7 +478,7 @@ i:hover {
     left: -50%;
     bottom: -15%;
     background: rgb(0, 0, 0);
-}
+} */
 
 #personalInformation {
     left: -100%;

@@ -16,6 +16,15 @@
             display: none;
         }
 
+        #btn1,
+        #btn2, #btn3 {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 4px;
+            background: transparent;
+        }
+
     </style>
     <section class="filtro-mensaje">
         @include('mensaje.mensaje-filtro')
@@ -31,6 +40,17 @@
             </script>
         @endif
         <a class="new-messages__link" href="/mensajes/create">Redactar mensaje</a>
+        <div class="user-select">
+            <form action="/mensajes" style="flex-grow:1; height:40px">
+                <button id="btn3" name="general" value="4">Ver todos los mensajes</button>
+            </form>
+            <form action="/mensajes" style="flex-grow:1; height:40px"">
+                <button id="btn1" name="estado" value="1">Mensajes pendientes</button>
+            </form>
+            <form action="/mensajes" style="flex-grow:1; height:40px">
+                <button id="btn2" name="estado" value="3">Mensajes difundidos</button>
+            </form>
+        </div>
         @if (sizeof($mensajes) == 0)
             <label class="image-title fas fa-exclamation-circle">Sin registros</label>
         @else
@@ -42,11 +62,14 @@
                         @if ($mensaje->estado == 0)
                             <label for="" class="new-messages__status-menssage">Estado: Pendiente</label>
                         @elseif($mensaje->estado==1)
-                            <label for="" class="new-messages__status-menssage" style="background: #558B2F"><b>Estado: Aceptado</b></label>
+                            <label for="" class="new-messages__status-menssage" style="background: #558B2F"><b>Estado:
+                                    Aceptado</b></label>
                         @elseif($mensaje->estado==2)
-                            <label for="" class="new-messages__status-menssage" style="background: #B71C1C"><b>Estado: Rechazado</b></label>
+                            <label for="" class="new-messages__status-menssage" style="background: #B71C1C"><b>Estado:
+                                    Rechazado</b></label>
                         @else
-                            <label for="" class="new-messages__status-menssage" style="background: #0277BD"><b>Estado: Publicado</b></label>
+                            <label for="" class="new-messages__status-menssage" style="background: #0277BD"><b>Estado:
+                                    Publicado</b></label>
                         @endif
                         <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación:</label>
                     </div>
@@ -77,20 +100,23 @@
                             </div>
                         @endcan
                         @can('difundirMensaje', $mensaje)
-                        <div class="new-messages_delete new-messages_difundir " style="background: #e91e63 !important">
-                            <form action="/mensajes/{{ $mensaje->id }}" method="POST" class="form_difundir">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="estado" value="3" id="updateEstado">
-                                <button type="submit">
-                                    <span class="fas fa-share" title="Difundir"></span>
-                                </button>
-                            </form>
-                        </div>
+                            <div class="new-messages_delete new-messages_difundir " style="background: #e91e63 !important">
+                                <form action="/mensajes/{{ $mensaje->id }}" method="POST" class="form_difundir">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="estado" value="3" id="updateEstado">
+                                    <button type="submit">
+                                        <span class="fas fa-share" title="Difundir"></span>
+                                    </button>
+                                </form>
+                            </div>
                         @endcan
-                        <div class="new-messages_show">
-                                <span style="color: rgb(255, 255, 255)"class="far fa-chart-bar estadistica" title="Estadisticas" data-id="{{$mensaje->id}}"></span>
-                        </div>
+                        @can('estadisticas', $mensaje)
+                            <div class="new-messages_show">
+                                <span style="color: rgb(255, 255, 255)" class="far fa-chart-bar estadistica"
+                                    title="Estadisticas" data-id="{{ $mensaje->id }}"></span>
+                            </div>
+                        @endcan
                     </div>
                 </div>
                 </div>
@@ -120,5 +146,60 @@
                 });
             });
         }
+    </script>
+
+    <script>
+        let btn1 = document.getElementById("btn1");
+        let btn2 = document.getElementById("btn2");
+        let btn3 = document.getElementById("btn3");
+        let b = 0;
+        let alum = 0;
+        window.addEventListener('load', function() {
+            
+            if(sessionStorage.getItem("val") == "1") {
+                btn1.classList.add('btn__selected');
+            }else if (sessionStorage.getItem("val") == "3") {
+                btn2.classList.add('btn__selected');
+            }else if (sessionStorage.getItem("val") == "4") {
+                btn3.classList.add('btn__selected');
+            }else{
+                btn3.classList.add('btn__selected');
+
+            }
+            btn1.addEventListener('click', function() {
+                sessionStorage.setItem("val", btn1.value);
+                btn1.classList.add('btn__selected');
+                btn2.classList.remove('btn__selected');
+                
+            });
+            btn2.addEventListener('click', function() {
+                sessionStorage.setItem("val", btn2.value);
+                btn2.classList.add('btn__selected');
+                btn1.classList.remove('btn__selected');
+                
+            });
+            btn3.addEventListener('click', function() {
+                sessionStorage.setItem("val", btn3.value);
+                btn3.classList.add('btn__selected');
+                btn2.classList.remove('btn__selected');
+                btn1.classList.remove('btn__selected');
+            });
+
+            function realizarSolicitud(estado) {
+                $.ajax({
+                    url: '/mensajes?estado='+estado,
+                    method: 'GET',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                }).done(function(res) {
+                    let respuesta = JSON.parse(res)
+                    let section = document.getElementById('new-messages');
+                    let contenedor = ""
+                    console.log(section[section.length])
+
+                });
+            }
+        })
     </script>
 @endsection

@@ -28,10 +28,20 @@ class MensajeController extends Controller
         $carrera = $request->carrera;
         $carreras = Carrera::all();
         if(Auth::user()->rol=='Emisor'){
-            $mensajes= Mensaje::Filtro($titulo, $fechaPublicacion, $carrera)->where('empleado_id',Auth::user()->id)->get();
+            if($request->estado){
+                $mensajes = Mensaje::where('estado', $request->estado)->where('empleado_id',Auth::user()->id)->paginate(50);
+                
+            }elseif($request){
+                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->where('empleado_id',Auth::user()->id)->paginate(50);
+            }
+            elseif($request->general){
+                $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->paginate(50);
+            }else{
+                $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->paginate(50);
+            }           
         }
         elseif(Auth::user()->rol=='Revisor'){
-            $mensajesBD = Mensaje::Filtro($titulo, $fechaPublicacion, $carrera)->with('empleado')->get();
+            $mensajesBD = Mensaje::Filtro($titulo, $fechaPublicacion, $carrera)->with('empleado')->paginate(50);
             $mensajes=array();
             for($i=0; $i<sizeof($mensajesBD);$i++){
                 if(Auth::user()->puesto==$mensajesBD[$i]->empleado->quien_revisa){
@@ -41,14 +51,20 @@ class MensajeController extends Controller
             } 
         }
         elseif(Auth::user()->rol=='Difusor'){
-            if($request ){
+            if($request->estado){
+                $mensajes = Mensaje::where('estado', $request->estado)->paginate(50);
+                
+            }elseif($request){
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
             }
-            else{
+            elseif($request->general){
+                $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
+            }else{
                 $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
             }
         }
         $this->authorize('viewMensajes', App\Models\Mensaje::class);
+    
         return view('mensaje.mensaje-list', compact('mensajes', 'carreras'));
     }
 

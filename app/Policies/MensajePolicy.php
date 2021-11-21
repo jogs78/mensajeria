@@ -70,4 +70,8 @@ class MensajePolicy
         if ($empleado->rol == "Difusor" && $mensaje->estado == 1)
             return true;
     }
+    public function estadisticas(Empleado $empleado, Mensaje $mensaje){
+        if ($empleado->rol == "Difusor" && $mensaje->estado == 3)
+        return true;
+    }
 }
