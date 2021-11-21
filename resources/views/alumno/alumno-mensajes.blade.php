@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap" rel="stylesheet">
     <title>Bienvenido</title>
 </head>
 
@@ -54,7 +57,7 @@
 
             .iborrainputfile {
                 font-size: 16px;
-                
+
             }
 
             .inputfile-1+label {
@@ -148,7 +151,7 @@
                             <ul class="menu-list">
                                 <li class="menu-list__item fas fa-home"> <a id="home" class="text" href="">Inicio
                                     </a></li>
-                                    <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
+                                <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
                                         href="/log-out">Salir </a></li>
                             </ul>
                         </div>
@@ -157,7 +160,7 @@
             </div>
         </header>
 
-        <section class="alumno-messages">
+        {{-- <section class="alumno-messages">
 
             <div class="alumno-messages__container">
                 @foreach ($mensajes as $mensaje)
@@ -197,6 +200,124 @@
 
                 }
             </script>
+        </section> --}}
+        <style>
+            section {
+                position: relative;
+                top: 42px;
+            }
+
+            dl {
+                margin: 5px 15px;
+                font-size: 20px;
+            }
+
+            dt {
+                font-family: 'Zilla Slab', serif;
+                font-weight: 800;
+                padding: 2px;
+                margin-left: 31px;
+
+            }
+
+            .contenedor::before {
+                margin: 2px 0 0 2px;
+                position: absolute;
+                content: counter(my-awesome-counter);
+                color: red;
+                font-weight: 800;
+                font-size: 30px;
+                top: 0;
+                left: 0;
+                border-radius: 50%;
+                width: 35px;
+                height: 35px;
+                text-align: center;
+                box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+            }
+
+            dd {
+                font-family: 'Zilla Slab', serif;
+                margin-top: 3px;
+
+            }
+
+            .ver-mas {
+                width: max-content;
+                padding: 5px;
+                background: #0d47a1;
+                color: white;
+                border-radius: 15px;
+                font-size: 18px;
+                font-weight: 100;
+                cursor: pointer;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            }
+
+            .contenedor {
+                position: relative;
+                counter-increment: my-awesome-counter;
+                padding: 5px;
+                border-radius: 10px;
+                margin-bottom: 15px;
+                box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+            }
+
+            .mensaje-container {
+                display: none;
+                background: #00000052;
+                width: 100%;
+                height: 100vh;
+                position: absolute;
+                z-index: 100;
+                top: 0;
+            }
+
+            #btnClose {
+                font-size: 30px;
+                float: right;
+                padding: 1px;
+                margin: 5px;
+                border-radius: 50%;
+                border: 1px solid rgb(255, 255, 255);
+                background: rgb(255, 255, 255);
+            }
+
+            .mensaje_body {
+                background: rgb(255, 255, 255);
+                padding: 5px;
+                margin: 11px;
+            }
+
+        </style>
+        <section class="lista-mensajes">
+            <dl>
+                <div class="contenedor">
+                    <dt>
+                        <p style="text-align: justify">Título: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Ratione incidunt rerum eos illum repudiandae dolores quia molestiae dolorem totam tempore
+                            reiciendis deleniti nobis similique aut quasi, voluptas pariatur iste omnis?</p>
+                    </dt>
+                    <dd><b>Fecha de publicacion:</b> este es el titulo del mensaje</dd>
+                    <dd title="ver mas" class="ver-mas"><b>ver más </b><i class="fas fa-plus-circle"></i></dd>
+                </div>
+            </dl>
+            <div class="mensaje-container" id="contenedor">
+                <div class="mensaje_body">
+                    <i class="fas fa-times-circle" id="btnClose"></i>
+                    <figure id="mensaje-img">
+                        <img src="" alt="">
+                    </figure>
+                    <div class="mensaje-informacion">
+                        <p>Titulo:</p>
+                        <p>Descipcion:</p>
+                        <label for=""><small><b>Fecha de publicacion:</b></small></label>
+                        <label for=""><small><b>Publicado por: aqui el dep al que pertenece el emisor</b></small></label>
+                        <label for=""></label>
+                        <label for="">Descargar pdf</label>
+                    </div>
+                </div>
+            </div>
         </section>
         <script>
             let btnMenu = document.getElementById("navigation_btn");
@@ -211,6 +332,20 @@
             let userName = document.getElementById('userName')
             let bandera = false;
             let img = null;
+            let btnVerMas = document.getElementsByClassName('ver-mas');
+            let btnClose = document.getElementById('btnClose');
+            let contendor = document.getElementById('contenedor');
+
+            for (let i = 0; i < btnVerMas.length; i++) {
+                btnVerMas[i].addEventListener('click', function() {
+                    contendor.style.display = 'block'
+                });
+            }
+            btnClose.addEventListener('click', function() {
+                contendor.style.display = 'none';
+
+            })
+
             btnMenu.addEventListener('click', function() {
                 menu.classList.toggle('navigation_show');
                 btnMenu.classList.toggle('navigation_alternate_color')
