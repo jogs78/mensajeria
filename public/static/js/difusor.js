@@ -44,6 +44,7 @@ window.addEventListener("load", function() {
                 }).done(function(res) {
                     let d = difundir[j].getAttribute('action')
                     let l = d.split('/')
+
                     if (res) {
                         Swal.fire({
                             toast: true,
@@ -73,6 +74,7 @@ window.addEventListener("load", function() {
                             showConfirmButton: false,
                             timer: 1500
                         })
+
                     }
                 });
                 event.preventDefault();

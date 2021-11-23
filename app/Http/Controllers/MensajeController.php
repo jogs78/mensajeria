@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Storage;
 class MensajeController extends Controller
 {
 
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index(Request $request)
     {
         $titulo = $request->titulo;
@@ -30,7 +30,7 @@ class MensajeController extends Controller
         if(Auth::user()->rol=='Emisor'){
             if($request->estado){
                 $mensajes = Mensaje::where('estado', $request->estado)->where('empleado_id',Auth::user()->id)->paginate(50);
-                
+
             }elseif($request){
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->where('empleado_id',Auth::user()->id)->paginate(50);
             }
@@ -38,7 +38,7 @@ class MensajeController extends Controller
                 $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->paginate(50);
             }else{
                 $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->paginate(50);
-            }           
+            }
         }
         elseif(Auth::user()->rol=='Revisor'){
             $mensajesBD = Mensaje::Filtro($titulo, $fechaPublicacion, $carrera)->with('empleado')->paginate(50);
@@ -47,13 +47,13 @@ class MensajeController extends Controller
                 if(Auth::user()->puesto==$mensajesBD[$i]->empleado->quien_revisa){
                     $mensajes[$i]=$mensajesBD[$i];
                 }
-                
-            } 
+
+            }
         }
         elseif(Auth::user()->rol=='Difusor'){
             if($request->estado){
                 $mensajes = Mensaje::where('estado', $request->estado)->paginate(50);
-                
+
             }elseif($request){
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
             }
@@ -64,7 +64,7 @@ class MensajeController extends Controller
             }
         }
         $this->authorize('viewMensajes', App\Models\Mensaje::class);
-    
+
         return view('mensaje.mensaje-list', compact('mensajes', 'carreras'));
     }
 
@@ -92,7 +92,7 @@ class MensajeController extends Controller
     {
         $datos = $request->all();
         $mensaje = new mensaje();
-        
+
         if($request->hasFile('file-1')){
             $img = $datos['file-1']->store('public/imagenes_mensajes');
             $url = Storage::url($img);
@@ -103,13 +103,13 @@ class MensajeController extends Controller
             $urlDoc = Storage::url($img);
             $mensaje -> documento = $urlDoc;
         }
-        
+
         $mensaje -> titulo = $datos['titulo'];
         $mensaje -> descripcion = $datos['descripcion'];
         //Estados... 0-Pendiente, 1-Aceptado, 2-Rechazado
         $mensaje -> estado = 0;
         $mensaje -> empleado_id= Auth::user()->id;
-        $mensaje -> save();        
+        $mensaje -> save();
         for ($i=0; $i<sizeof($datos['car']); $i++){
             $mensaje ->carreras()->attach(($datos['car'])[$i]);
         }
@@ -158,11 +158,11 @@ class MensajeController extends Controller
     public function update(Request $request, $id)
     {
         $datos = $request -> all();
-        $mensaje = Mensaje::find($id);
+        $mensaje = Mensaje::with('carreras', 'semestres', 'empleado')->get()->find($id);
         if(Auth::user()->rol=='Emisor'){
             $mensaje -> titulo = $request->titulo;
             $mensaje -> descripcion = $request->descripcion;
-            
+
             if($request->hasFile('file-1')){
                 $url = str_replace('storage', 'public', $mensaje->imagen);
                 Storage::delete($url);
@@ -201,8 +201,43 @@ class MensajeController extends Controller
             $mensaje -> save();
         }
         if(Auth::user()->rol=='Difusor'){
-            $mensaje->estado=$request->estado;
-            $mensaje -> save();
+            // $mensaje->estado=$request->estado;
+            // $mensaje -> save();
+            $users = array();
+            $users2 = array();
+            for($i = 0; $i < sizeof($mensaje->carreras); $i++){
+                for($j = 0; $j < sizeof($mensaje->semestres); $j++){
+                    array_push($users, Alumno::where('carrera_id', $mensaje->carreras[$i]->id)->where('semestre_id', $mensaje->semestres[$j]->id)->orderBy('nombre')->get());
+                    
+                }
+                
+            };
+            
+            // foreach($mensaje->carreras as $m){
+            //     foreach($mensaje->semestres as $s){
+            //         $u = Alumno::where('carrera_id', $m->id)->where('semestre_id', $s->id)->get();
+            //         array_push($users, $u);   
+            //     }
+            // }
+            for($i = 0 ; $i< sizeof($users); $i++){
+                if(sizeof($users[$i]) > 1){
+                    for($j = 0 ; $j< sizeof($users[$i]); $j++){
+                        if(sizeof($users[$i]) > 1){
+                            array_push($users2, $users[$i][$j]); 
+                        }
+                    }
+                }
+                
+                if(!empty($users[$i]) & sizeof($users[$i]) == 1){
+                    array_push($users2, $users[$i][0]); 
+                }else{
+                    continue;
+                }
+            }
+            return $users2;
+            return $users;
+            return $users[0][0];
+            // return $mensaje->carreras[0];
             return 'Mensaje difundido';
         }
         return redirect('/mensajes');
@@ -229,7 +264,7 @@ class MensajeController extends Controller
         $mensaje = Mensaje::with('carreras')->get();
         for($i = 0; $i<sizeof($carreras); $i++){
             $total = DB::select('SELECT * FROM carrera_mensaje WHERE carrera_id='.($i+1));
-            $mensajesByCarrera[$i]=sizeof($total); 
+            $mensajesByCarrera[$i]=sizeof($total);
         }
         $valores=['carreras'=> $carreras,'mensajesTotales'=> $totalMensajes,'alumnosTotales'=> $totalAlumnos,'MensajesByCarrera'=> $mensajesByCarrera];
         return response()->json($valores);

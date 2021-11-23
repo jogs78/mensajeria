@@ -21,8 +21,8 @@ class AlumnoController extends Controller
     public function index()
     {
         
-        $mensajes = DB::select('SELECT titulo, descripcion, imagen FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');
-        
+        $mensajes = DB::select('SELECT mensajes.id,titulo, descripcion, imagen FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');
+        // return $mensajes;
         return view('alumno.alumno-mensajes', compact('mensajes'));
     }
 
@@ -59,7 +59,6 @@ class AlumnoController extends Controller
         if($informacion['password'] != $informacion['password_confirm']){
             return back() -> with('message', 'Las contraseñas no coinciden')->withInput();
         }
-        
         $alumno = new Alumno();
         unset($informacion['rol']);
         unset($informacion['puesto']);
@@ -110,7 +109,23 @@ class AlumnoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $alumno = Alumno::find($id);
+        if ($request->hasFile('file-1')) {
+            $url = str_replace('storage', 'public', $alumno->foto_perfil);
+            Storage::delete($url);
+            $img = $request->file('file-1')->store('public/usuarios_foto_perfil');
+            $url = Storage::url($img);
+            $alumno -> foto_perfil = $url;
+        }
+        if($request->newPass != null){
+            $alumno->password =  Hash::make($request->newPass); 
+        }
+        $alumno->nombre = $request->nombre;
+        $alumno->apellido_paterno = $request->a_paterno;
+        $alumno->apellido_materno = $request->a_materno;
+        $alumno->correo = $request->correo;
+        $alumno->save();
+        return "¡Datos actualizado!";
     }
 
     /**
@@ -123,7 +138,10 @@ class AlumnoController extends Controller
     {
         
     }
-    public function updatePassword(Request $request){
-
+    public function verMensaje($id){
+        $mensaje = Mensaje::with('empleado')->get()->find($id);
+        // return json_encode($mensaje, $mensaje->empleado);
+        return $mensaje;
+        // return Mensaje::find($id)->empleado()->first();
     }
 }

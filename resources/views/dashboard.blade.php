@@ -31,17 +31,16 @@
                 <div class="menu-container" id="menu">
 
                     <div class="menu-content">
-                        <div class="menu-content" id="personalInformation">
+                        <div class="menu-content" id="personalInformation" tabindex="100">
                             <i class="fas fa-chevron-left" id="btnback" style="font-size:22px;"></i>
                             <center>
                                 <figure class="img1">
                                 <img class="imgP" src="{{ Auth::user()->foto_perfil }}" id="imgProfileNew" title="foto">
                             </figure>
                                 </center>
-                            <form id="actualizarInfo" style="display: flex; flex-direction:column;" method="POST" enctype="multipart/form-data">
+                            <form id="actualizarInfo" action="/empleado/{{ Auth::user()->id }}" style="display: flex; flex-direction:column;" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                <input type="hidden" value="{{ Auth::user()->id }}" id="idEmpleado">
                                 <div class="container-input" style="width: 100%;">
                                     <input type="file" id="userP" name="imagProfile" accept="image/*" style="width: 100%;">
                                 </div>
@@ -88,7 +87,7 @@
                             </center>
                             <label id="userName">{{ Auth::user()->nombre . ' ' . Auth::user()->apellido_paterno . ' ' . Auth::user()->apellido_materno }}</label>
                             <label>{{ Auth::user()->rol }}</label>
-                            <label class="btnF" id="btnShow">Actualizar mis datos</label>
+                            <label class="btnF" id="btnShow" >Actualizar mis datos</label>
                         </div>
 
                         <ul class="menu-list">

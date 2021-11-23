@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Empleado extends Authenticatable
 {
     public $timestamps = false;
-    
+    protected $hidden = ['password', 'remember_token', 'correo', 'quien_revisa', 'id'];
     protected $fillable = ['nombre', 'apellido_paterno', 'apellido_materno', 'correo', 'password', 'rol', 'puesto', 'quien_revisa', 'mensaje_id']; 
     use HasFactory;
 

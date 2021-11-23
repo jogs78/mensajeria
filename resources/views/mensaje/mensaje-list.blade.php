@@ -101,7 +101,7 @@
                         @endcan
                         @can('difundirMensaje', $mensaje)
                             <div class="new-messages_delete new-messages_difundir " style="background: #e91e63 !important">
-                                <form action="/mensajes/{{ $mensaje->id }}" method="POST" class="form_difundir">
+                                <form action="/mensajes/{{ $mensaje->id }}" method="POST" class="form_difundirs">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="estado" value="3" id="updateEstado">

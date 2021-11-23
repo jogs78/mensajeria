@@ -83,7 +83,6 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $empleado = Empleado::find($id);
         if ($request->hasFile('imagProfile')) {
             $url = str_replace('storage', 'public', $empleado->foto_perfil);

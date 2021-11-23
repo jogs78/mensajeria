@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap" rel="stylesheet">
@@ -80,23 +83,23 @@
                     <div class="menu-container" id="menu">
 
                         <div class="menu-content">
-                            <div class="menu-content" id="personalInformation">
+                            <div class="menu-content" id="personalInformation" tabindex="100">
                                 <i class="fas fa-chevron-left" id="btnback" style="font-size:22px;"></i>
                                 <center>
                                     <figure class="img1">
-                                        <img class="imgP" src="{{ Auth::user()->foto_perfil }}" id="imgProfile"
-                                            alt="">
+                                        <img class="imgP" src="{{ Auth::user()->foto_perfil }}"
+                                            id="imgProfileNew" alt="">
                                     </figure>
                                 </center>
-                                <form id="actualizarInfo" style="display: flex; flex-direction:column;" method="POST"
+                                <form id="actualizarInfo" action="/alumno/{{ Auth::user()->id }}"
+                                    style="display: flex; flex-direction:column;" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
-                                    <input type="hidden" value="{{ Auth::user()->id }}" id="idEmpleado">
                                     <div class="container-input">
-                                        <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1"
+                                        <input type="file" name="file-1" id="userP" class="inputfile inputfile-1"
                                             accept="image/*">
-                                        <label for="file-1">
+                                        <label for="userP">
                                             <span class="iborrainputfile fas fa-upload"> Actualizar foto</span>
                                         </label>
                                     </div>
@@ -139,8 +142,8 @@
                             <div class="image-profile_container">
                                 <center>
                                     <figure class="img1">
-                                        <img class="imgP" id="imgProfile1"
-                                            src="{{ Auth::user()->foto_perfil }}" alt="">
+                                        <img class="imgP" id="imgProfile" src="{{ Auth::user()->foto_perfil }}"
+                                            alt="">
                                     </figure>
                                 </center>
                                 <label
@@ -159,48 +162,6 @@
                 </nav>
             </div>
         </header>
-
-        {{-- <section class="alumno-messages">
-
-            <div class="alumno-messages__container">
-                @foreach ($mensajes as $mensaje)
-                    <div class="alumno-messages__content">
-                        <div class="image_container">
-                            <img src="{{ asset($mensaje->imagen) }}" alt="">
-                            <i class="fas fa-chevron-circle-down message_btn_down"></i>
-                        </div>
-                        <div class="alumno-messages__body_container">
-                            <label>Título: {{ $mensaje->titulo }}</label>
-                            <small>Publicado el:<b> aqui va la fecha de publicacion</b></small>
-                            <p>{{ $mensaje->descripcion }}
-                            </p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-
-            <script>
-                let message_btn_dow = document.getElementsByClassName('message_btn_down');
-                let message_body = document.getElementsByClassName('alumno-messages__body_container')
-                let toogle = 0;
-                for (let i = 0; i < message_btn_dow.length; i++) {
-                    message_btn_dow[i].addEventListener('click', function() {
-                        console.log("h")
-                        if (toogle == 0) {
-                            message_btn_dow[i].classList.add("message_btn_down_rotate");
-                            message_body[i].classList.add("alumno-messages__body_container_show");
-                            toogle = 1;
-                        } else {
-                            message_btn_dow[i].classList.remove("message_btn_down_rotate");
-                            message_body[i].classList.remove("alumno-messages__body_container_show");
-                            toogle = 0;
-                        }
-                    });
-
-                }
-            </script>
-        </section> --}}
         <style>
             section {
                 position: relative;
@@ -270,154 +231,186 @@
                 height: 100vh;
                 position: absolute;
                 z-index: 100;
-                top: 0;
+                top: -5px;
+                overflow: auto;
             }
 
             #btnClose {
-                font-size: 30px;
+                font-size: 23px;
                 float: right;
                 padding: 1px;
                 margin: 5px;
                 border-radius: 50%;
                 border: 1px solid rgb(255, 255, 255);
                 background: rgb(255, 255, 255);
+                height: min-content;
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: 10;
+            }
+
+            .mensaje-informacion {
+                width: min-content;
+                flex-grow: 1;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px
+            }
+
+            .mensaje-informacion p,
+            .mensaje-informacion label {
+                flex-grow: 1;
+                padding: 3px;
             }
 
             .mensaje_body {
                 background: rgb(255, 255, 255);
                 padding: 5px;
                 margin: 11px;
+                display: flex;
+                flex-wrap: wrap;
+                width: 98%;
+                margin: auto;
+                margin-top: 10px;
+                text-align: justify;
+                font-family: 'Zilla Slab', serif;
+            }
+
+            .figure {
+                height: max-content;
+                border-radius: 15px;
+                overflow: hidden;
+                text-align: center;
+            }
+
+            #image {
+                object-fit: scale-down;
+                object-position: center;
+                position: relative;
+                margin: auto
+            }
+
+
+
+            .cambiarMedida {
+                width: 100%;
+            }
+
+            .cambiarMedida1 {
+                width: 100%;
+            }
+
+            #title,
+            #descripcion,
+            #fechaPublicacion {
+                width: 100%;
+            }
+
+            @media screen and (min-width:650px) {
+
+                .cambiarMedida {
+                    width: 50%;
+                }
+
+                #btnClose {
+                    font-size: 30px;
+
+                }
             }
 
         </style>
         <section class="lista-mensajes">
             <dl>
-                <div class="contenedor">
-                    <dt>
-                        <p style="text-align: justify">Título: Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Ratione incidunt rerum eos illum repudiandae dolores quia molestiae dolorem totam tempore
-                            reiciendis deleniti nobis similique aut quasi, voluptas pariatur iste omnis?</p>
-                    </dt>
-                    <dd><b>Fecha de publicacion:</b> este es el titulo del mensaje</dd>
-                    <dd title="ver mas" class="ver-mas"><b>ver más </b><i class="fas fa-plus-circle"></i></dd>
-                </div>
+                @foreach ($mensajes as $mensaje)
+                    <div class="contenedor">
+                        <dt>
+                            <p style="text-align: justify">Título: {{ $mensaje->titulo }}</p>
+                        </dt>
+                        <dd><b>Fecha de publicacion:</b> este es el titulo del mensaje</dd>
+                        <dd title="ver mas" class="ver-mas" data-mensaje="{{ $mensaje->id }}"><b>ver más </b><i
+                                class="fas fa-plus-circle"></i></dd>
+                    </div>
+                @endforeach
             </dl>
+            {{-- aqui se muestra la ventana emergente con la info del mensaje --}}
+
             <div class="mensaje-container" id="contenedor">
                 <div class="mensaje_body">
                     <i class="fas fa-times-circle" id="btnClose"></i>
-                    <figure id="mensaje-img">
-                        <img src="" alt="">
+                    <figure class="figure image-container" id="imageContainer">
+                        <img id="image" class="image-zoom" src="" alt="">
                     </figure>
                     <div class="mensaje-informacion">
-                        <p>Titulo:</p>
-                        <p>Descipcion:</p>
-                        <label for=""><small><b>Fecha de publicacion:</b></small></label>
-                        <label for=""><small><b>Publicado por: aqui el dep al que pertenece el emisor</b></small></label>
-                        <label for=""></label>
-                        <label for="">Descargar pdf</label>
+                        <p id="title">Titulo:</p>
+                        <p id="description">Descipcion:</p>
+                        <label id="fechaPublicacion" for=""><small><b>Fecha de publicacion:</b></small></label>
+                        <label id="emisor" for=""><small><b>Publicado por: aqui el dep al que pertenece el
+                                    emisor</b></small></label>
+                        <label id="" for=""></label>
+                        <label id="documento" for="">Descargar pdf</label>
                     </div>
                 </div>
             </div>
         </section>
+        <script src="{{ asset('static/js/dashboard.js') }}"></script>
+
         <script>
-            let btnMenu = document.getElementById("navigation_btn");
-            let menu = document.getElementById("menu");
-            let personalInformation = document.getElementById('personalInformation')
-            let btnShow = document.getElementById('btnShow');
-            let btnBack = document.getElementById('btnback')
-            let btnEdit = document.getElementsByClassName('edit');
-            let inputInfo = document.getElementsByClassName('input')
-            let actualizarInfo = document.getElementById('actualizarInfo')
-            let inputFile = document.getElementById('file-1');
-            let userName = document.getElementById('userName')
-            let bandera = false;
-            let img = null;
             let btnVerMas = document.getElementsByClassName('ver-mas');
             let btnClose = document.getElementById('btnClose');
             let contendor = document.getElementById('contenedor');
 
+            let imageContainer = document.getElementById('imageContainer');
+            let image = document.getElementById('image')
+            let title = document.getElementById('title')
+            let description = document.getElementById('description')
+            let fechaPublicacion = document.getElementById('fechaPublicacion')
+            let emisor = document.getElementById('emisor')
+            let documento = document.getElementById('documento')
+
             for (let i = 0; i < btnVerMas.length; i++) {
                 btnVerMas[i].addEventListener('click', function() {
                     contendor.style.display = 'block'
+                    consultarMensaje(btnVerMas[i].dataset.mensaje)
                 });
             }
             btnClose.addEventListener('click', function() {
                 contendor.style.display = 'none';
+                $('#imageContainer').trigger('zoom.destroy');
+                imageContainer.classList.remove('cambiarMedida')
+                imageContainer.classList.remove('cambiarMedida1')
+                image.setAttribute('src', "")
 
             })
 
-            btnMenu.addEventListener('click', function() {
-                menu.classList.toggle('navigation_show');
-                btnMenu.classList.toggle('navigation_alternate_color')
-            });
-            btnShow.addEventListener('click', function() {
-                personalInformation.style.left = 0
-            });
-            btnBack.addEventListener('click', function() {
-                personalInformation.style.left = '-100%'
-            });
-            for (let i = 0; i < btnEdit.length; i++) {
-                btnEdit[i].addEventListener('click', function() {
-                    if (bandera == false) {
-                        inputInfo[i].disabled = false;
-                        bandera = true;
-                    } else {
-                        inputInfo[i].disabled = true;
-                        bandera = false;
-                    }
-
-                })
-            }
-            inputFile.addEventListener('change', function(e) {
-                let image = e.target.files[0];
-                img = image;
-                let file = new FileReader();
-                let imgProfile = document.getElementById('imgProfile')
-                let imgProfile1 = document.getElementById('imgProfile1')
-                file.onload = (e) => {
-                    imgProfile1.setAttribute('src', e.target.result)
-                    imgProfile.setAttribute('src', e.target.result)
-
-                }
-                file.readAsDataURL(image);
-            });
-            actualizarInfo.addEventListener('submit', function(e) {
-                let formData = new FormData(this);
-                let id = document.getElementById('idEmpleado').value;
-                var fullName = document.getElementById('nombre').value + " " + document.getElementById('a_paterno')
-                    .value + " " + document.getElementById('a_materno').value
-                formData.append("user_id", id);
-                formData.append("nombre", document.getElementById('nombre').value);
-                formData.append("a_paterno", document.getElementById('a_paterno').value);
-                formData.append("a_materno", document.getElementById('a_materno').value);
-                formData.append("correo", document.getElementById('correo').value);
-                formData.append("newPass", document.getElementById('password').value);
-
-
+            function consultarMensaje(id) {
                 $.ajax({
-                    url: '/empleado/' + id,
-                    method: 'POST',
-                    data: formData,
+                    url: '/ver-mensaje/' + id,
+                    method: 'GET',
+                    // data: formData,
                     contentType: false,
                     cache: false,
                     processData: false,
-
                 }).done(function(res) {
-
-                    userName.innerHTML = fullName;
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-left',
-                        icon: 'info',
-                        title: res,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    console.log(res)
+                    image.setAttribute('src', res.imagen)
+                    title.innerHTML = "<b>Título: <b>" + res.titulo
+                    description.innerHTML = "<b>Descripción: <b>" + res.descripcion
+                    fechaPublicacion.innerHTML = "<b>Fecha de publicacion: </b>"
+                    emisor.innerHTML = "<b>Publicado por: <b>" + res.empleado.puesto
+                    if (image.naturalHeight == 1280 & image.naturalWidth == 720) {
+                        imageContainer.classList.add('cambiarMedida')
+                        imageContainer.classList.remove('cambiarMedida1')
+                        image.style.width = "50%"
+                    } else if (image.naturalHeight == 500 & image.naturalWidth == 1500) {
+                        imageContainer.classList.remove('cambiarMedida')
+                        imageContainer.classList.add('cambiarMedida1')
+                        image.style.width = "80%"
+                    }
+                    $('#imageContainer').zoom({
+                        url: image.getAttribute('src')
+                    });
                 });
-
-                e.preventDefault();
-            });
+            }
         </script>
     @endguest
 
