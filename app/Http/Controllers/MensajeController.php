@@ -7,6 +7,7 @@ use App\Models\Alumno;
 use App\Models\Mensaje;
 use App\Models\Carrera;
 use App\Models\Semestre;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,27 +30,36 @@ class MensajeController extends Controller
         $carrera = $request->carrera;
         $carreras = Carrera::all();
         if(Auth::user()->rol=='Emisor'){
-            if($request->estado){
-                $mensajes = Mensaje::where('estado', $request->estado)->where('empleado_id',Auth::user()->id)->paginate(50);
-
-            }elseif($request){
-                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->where('empleado_id',Auth::user()->id)->paginate(50);
-            }
-            elseif($request->general){
-                $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->paginate(50);
+            if($request->general){
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 1)->orwhere('estado',3)->paginate(50);
+            }elseif($request->estado){
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', $request->estado)->paginate(50);
+            }elseif($request->titulo || $request->fechaPub || $request->carrera){
+                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->where('empleado_id', Auth::user()->id)->paginate(50);
             }else{
-                $mensajes= Mensaje::where('empleado_id',Auth::user()->id)->paginate(50);
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 1)->orwhere('estado',3)->paginate(50);
+
             }
         }
         elseif(Auth::user()->rol=='Revisor'){
-            $mensajesBD = Mensaje::Filtro($titulo, $fechaPublicacion, $carrera)->with('empleado')->paginate(50);
-            $mensajes=array();
-            for($i=0; $i<sizeof($mensajesBD);$i++){
-                if(Auth::user()->puesto==$mensajesBD[$i]->empleado->quien_revisa){
-                    $mensajes[$i]=$mensajesBD[$i];
-                }
-
+            if($request->general){
+                $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                    })->paginate(50);
+            }elseif($request->estado){
+                $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                    })->where('estado', $request->estado)->paginate(50);
+            }elseif($request->titulo || $request->fechaPub || $request->carrera){
+                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->whereHas('empleado', function(Builder $query){
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                    })->paginate(50);
+            }else{
+                $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                    })->paginate(50);
             }
+
         }
         elseif(Auth::user()->rol=='Difusor'){
             if($request->general){

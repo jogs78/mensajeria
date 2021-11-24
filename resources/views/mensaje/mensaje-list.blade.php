@@ -44,9 +44,16 @@
             <form action="/mensajes" style="flex-grow:1; height:40px">
                 <button id="btn3" name="general" value="4">Ver todos los mensajes</button>
             </form>
+            
+            @if (Auth::user()->rol = "Revisor")
+            <form action="/mensajes" style="flex-grow:1; height:40px">
+                <button id="btn1" name="estado" value="0">Mensajes por revisar</button>
+            </form>
+            @else
             <form action="/mensajes" style="flex-grow:1; height:40px"">
                 <button id="btn1" name="estado" value="1">Mensajes pendientes</button>
             </form>
+            @endif
             <form action="/mensajes" style="flex-grow:1; height:40px">
                 <button id="btn2" name="estado" value="3">Mensajes difundidos</button>
             </form>
@@ -60,7 +67,7 @@
                         <label for="" class="new-messages__title">Título: {{ $mensaje->titulo }}</label>
                         <p for="" class="new-messages__title">Descripción: {{ $mensaje->descripcion }}</p>
                         @if ($mensaje->estado == 0)
-                            <label for="" class="new-messages__status-menssage">Estado: Pendiente</label>
+                            <label for="" class="new-messages__status-menssage" style="background: #2f8b8b">Estado: Pendiente</label>
                         @elseif($mensaje->estado==1)
                             <label for="" class="new-messages__status-menssage" style="background: #558B2F"><b>Estado:
                                     Aceptado</b></label>
@@ -156,7 +163,7 @@
         let alum = 0;
         window.addEventListener('load', function() {
             
-            if(sessionStorage.getItem("val") == "1") {
+            if(sessionStorage.getItem("val") == "1" || sessionStorage.getItem("val") == "0") {
                 btn1.classList.add('btn__selected');
             }else if (sessionStorage.getItem("val") == "3") {
                 btn2.classList.add('btn__selected');
