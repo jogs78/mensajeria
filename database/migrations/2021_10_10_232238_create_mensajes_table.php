@@ -19,12 +19,13 @@ class CreateMensajesTable extends Migration
             $table->text('descripcion');
             $table->integer('estado');
             $table->string('imagen',600);
-
+            $table->text('documento');
             //llave foranea
             $table->unsignedBigInteger('empleado_id');
 
             $table->foreign('empleado_id')
                     ->references('id')->on('empleados');
+            $table->date('fecha_publicacion')->nullable();        
             $table->timestamps();//created_up updated_up
         });
     }

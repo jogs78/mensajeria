@@ -21,17 +21,18 @@ class CreateAlumnosTable extends Migration
             $table->string('correo',50);
             $table->string('contraseña',500);
             $table->string('foto_perfil',1000)->nullable();
-
             //llaves foraneas
             $table->unsignedBigInteger('carrera_id');
             $table->unsignedBigInteger('semestre_id');
-
             $table->foreign('carrera_id')
                     ->references('id')->on('carreras');
 
             $table->foreign('semestre_id')
                     ->references('id')->on('semestres');
 
+            $table->string('remember_token',1000)->nullable();
+            $table->boolean('confirmed')->nullable()->default(0);
+            $table->string('confirmation_code')->nullable();        
             $table->timestamps();//created_up updated_up
         });
     }

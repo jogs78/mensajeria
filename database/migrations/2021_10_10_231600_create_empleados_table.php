@@ -24,6 +24,9 @@ class CreateEmpleadosTable extends Migration
             $table->string('rol',50);
             $table->string('puesto', 100);
             $table->string('quien_revisa',100);
+            $table->string('remember_token',1000)->nullable();
+            $table->boolean('confirmed')->nullable()->default(0);
+            $table->string('confirmation_code')->nullable();
             $table->timestamps();//created_up updated_up
         });
     }

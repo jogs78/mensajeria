@@ -33,13 +33,13 @@ class MensajeController extends Controller
         
         if(Auth::user()->rol=='Emisor'){
             if($request->general){
-                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 1)->orwhere('estado',3)->paginate(50);
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->paginate(50);
             }elseif($request->estado){
-                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', $request->estado)->paginate(50);
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 0)->paginate(50);
             }elseif($request->titulo || $request->fechaPub || $request->carrera){
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->where('empleado_id', Auth::user()->id)->paginate(50);
             }else{
-                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 1)->orwhere('estado',3)->paginate(50);
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 3)->paginate(50);
 
             }
         }
