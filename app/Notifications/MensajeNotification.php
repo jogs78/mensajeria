@@ -56,14 +56,14 @@ class MensajeNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'mensaje_id' => $this->post->id,
-            'titulo' => $this->post->titulo,
-            'descripcion' => $this->post->descripcion,
-            'imagen' => $this->post->imagen,
-            'documento' => $this->post->documento,
-            'emisor' => $this->post->empleado_id,
-            'carreras' => $this->post->carreras,
-            'semestres' => $this->post->semestres,
+            'mensaje_id' => $this->mensaje->id,
+            'titulo' => $this->mensaje->titulo,
+            'descripcion' => $this->mensaje->descripcion,
+            'imagen' => $this->mensaje->imagen,
+            'documento' => $this->mensaje->documento,
+            'emisor' => $this->mensaje->empleado_id,
+            'carreras' => $this->mensaje->carreras,
+            'semestres' => $this->mensaje->semestres,
         ];
     }
 }

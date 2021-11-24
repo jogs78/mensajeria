@@ -44,6 +44,17 @@ class Alumno extends Authenticatable
         }
         
     }
+
+    public static function getMensaje($mensaje){
+        $users = array();
+        for($i = 0; $i < sizeof($mensaje->carreras); $i++){
+            for($j = 0; $j < sizeof($mensaje->semestres); $j++){
+                array_push($users, Alumno::where('carrera_id', $mensaje->carreras[$i]->id)->where('semestre_id', $mensaje->semestres[$j]->id)->orderBy('nombre')->get());
+            } 
+        };
+        return $u = (object) $users;
+    }
+
     use Notifiable;
 
     

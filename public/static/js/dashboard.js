@@ -10,34 +10,21 @@ window.addEventListener('load', function() {
     let userP = document.getElementById('userP');
     let userName = document.getElementById('userName')
     let bandera = false;
-    let bandera1 = false;
     let img = null;
     btnMenu.addEventListener('click', function() {
         menu.classList.toggle('navigation_show');
         btnMenu.classList.toggle('navigation_alternate_color')
-        personalInformation.focus();
 
     });
 
-    personalInformation.addEventListener('blur', function() {
-        personalInformation.focus();
-        if (bandera1) {
-            menu.classList.toggle('navigation_show');
-            btnMenu.classList.toggle('navigation_alternate_color')
-            bandera1 = false
-        }
-        bandera = false
-    });
+
 
     btnShow.addEventListener('click', function() {
         personalInformation.style.left = 0
         personalInformation.focus();
-        bandera1 = true
     });
     btnBack.addEventListener('click', function() {
         personalInformation.style.left = '-100%'
-        personalInformation.focus();
-        bandera1 = true
     });
     for (let i = 0; i < btnEdit.length; i++) {
         btnEdit[i].addEventListener('click', function() {
@@ -50,11 +37,8 @@ window.addEventListener('load', function() {
             }
         })
     }
-    userP.addEventListener('click', function() {
-        bandera1 = false
-    });
+    userP.addEventListener('click', function() {});
     userP.addEventListener('change', function(e) {
-        bandera1 = true
         let image = e.target.files[0];
         img = image;
         let file = new FileReader();

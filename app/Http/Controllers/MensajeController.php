@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MensajeEvent;
 use App\Models\Alumno;
 use App\Models\Mensaje;
 use App\Models\Carrera;
@@ -51,17 +52,18 @@ class MensajeController extends Controller
             }
         }
         elseif(Auth::user()->rol=='Difusor'){
-            if($request->estado){
-                $mensajes = Mensaje::where('estado', $request->estado)->paginate(50);
-
-            }elseif($request){
-                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
-            }
-            elseif($request->general){
+            if($request->general){
                 $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
+            }elseif($request->estado){
+                $mensajes = Mensaje::where('estado', $request->estado)->paginate(50);
+            }elseif($request->titulo || $request->fechaPub || $request->carrera){
+                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
             }else{
                 $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
+
             }
+            
+            
         }
         $this->authorize('viewMensajes', App\Models\Mensaje::class);
 
@@ -201,44 +203,13 @@ class MensajeController extends Controller
             $mensaje -> save();
         }
         if(Auth::user()->rol=='Difusor'){
-            // $mensaje->estado=$request->estado;
-            // $mensaje -> save();
-            $users = array();
-            $users2 = array();
-            for($i = 0; $i < sizeof($mensaje->carreras); $i++){
-                for($j = 0; $j < sizeof($mensaje->semestres); $j++){
-                    array_push($users, Alumno::where('carrera_id', $mensaje->carreras[$i]->id)->where('semestre_id', $mensaje->semestres[$j]->id)->orderBy('nombre')->get());
-                    
-                }
-                
-            };
             
-            // foreach($mensaje->carreras as $m){
-            //     foreach($mensaje->semestres as $s){
-            //         $u = Alumno::where('carrera_id', $m->id)->where('semestre_id', $s->id)->get();
-            //         array_push($users, $u);   
-            //     }
-            // }
-            for($i = 0 ; $i< sizeof($users); $i++){
-                if(sizeof($users[$i]) > 1){
-                    for($j = 0 ; $j< sizeof($users[$i]); $j++){
-                        if(sizeof($users[$i]) > 1){
-                            array_push($users2, $users[$i][$j]); 
-                        }
-                    }
-                }
-                
-                if(!empty($users[$i]) & sizeof($users[$i]) == 1){
-                    array_push($users2, $users[$i][0]); 
-                }else{
-                    continue;
-                }
-            }
-            return $users2;
-            return $users;
-            return $users[0][0];
-            // return $mensaje->carreras[0];
-            return 'Mensaje difundido';
+           
+            if(event(new MensajeEvent($mensaje))){
+                $mensaje->estado=$request->estado;
+            $mensaje -> save();
+                return 'Mensaje difundido';
+            }          
         }
         return redirect('/mensajes');
     }
