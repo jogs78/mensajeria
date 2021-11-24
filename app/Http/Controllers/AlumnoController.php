@@ -18,12 +18,18 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function index()
+    public function index(Request $request)
     {
         
+       if($request->mensajes_nuevos == true){
+        $mensajes = Auth::user()->unreadNotifications;
+        // return $mensajes[0]->data;
+        return view('alumno.mensajes-nuevos', compact('mensajes'));
+       }else{
         $mensajes = DB::select('SELECT mensajes.id,titulo, descripcion, imagen FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');
-        // return $mensajes;
-        return view('alumno.alumno-mensajes', compact('mensajes'));
+        return view('alumno.mensajes-viejos', compact('mensajes'));
+       }
+        
     }
 
     /**
@@ -138,10 +144,16 @@ class AlumnoController extends Controller
     {
         
     }
-    public function verMensaje($id){
+    public function verMensaje(Request $request,$id){
         $mensaje = Mensaje::with('empleado')->get()->find($id);
-        // return json_encode($mensaje, $mensaje->empleado);
+        if( $request->id_notification){
+            Auth::user()->unreadNotifications
+                ->when($request->id_notification, function($query) use ($request){
+                    return $query->where('id', $request->id_notification);
+                }
+                )->markAsRead();
+        }
         return $mensaje;
-        // return Mensaje::find($id)->empleado()->first();
+        
     }
 }

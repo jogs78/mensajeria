@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <link rel="stylesheet" href="{{ asset('static/css/dashboard_style.css') }}">
 
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
@@ -20,61 +22,7 @@
 </head>
 
 <body>
-    @guest
-        Inicia session para continuar
-    @else
-        <style>
-            .container-input {
-                background: var(--main-bg-color);
-                width: max-content;
-                padding: 3px;
-                margin-top: 10px;
-            }
-
-            .inputfile {
-                display: none;
-                overflow: hidden;
-                position: absolute;
-                z-index: -1;
-            }
-
-            .inputfile+label {
-                max-width: 100%;
-                font-size: 1.25rem;
-                font-weight: 700;
-                white-space: nowrap;
-                cursor: pointer;
-                display: inline-block;
-                padding: 6px;
-                border-radius: 6px;
-            }
-
-            .inputfile+label svg {
-                width: 1em;
-                height: 1em;
-                vertical-align: middle;
-                fill: currentColor;
-                margin-top: -0.25em;
-                margin-right: 0.25em;
-            }
-
-            .iborrainputfile {
-                font-size: 16px;
-
-            }
-
-            .inputfile-1+label {
-                color: #fff;
-                width: 100%;
-            }
-
-            .inputfile-1:focus+label,
-            .inputfile-1.has-focus+label,
-            .inputfile-1+label:hover {
-                background-color: #006efd;
-            }
-
-        </style>
+    
         <header class="header">
             <div class="header_container">
 
@@ -152,8 +100,14 @@
                                 <label class="btnF" id="btnShow">Actualizar mis datos</label>
                             </div>
                             <ul class="menu-list">
-                                <li class="menu-list__item fas fa-home"> <a id="home" class="text" href="">Inicio
-                                    </a></li>
+                                
+                                <li class="menu-list__item fas fa-envelope-open"> <a id="home" class="text"
+                                        href="/mensajes-alumnos">Mis mensajes </a></li>
+                                <li class="menu-list__item fas fa-envelope"> <a id="home" class="text"
+                                            href="/mensajes-alumnos?mensajes_nuevos=true">Mensajes nuevos
+                                            @if (count(Auth::user()->unreadNotifications) >0)
+                                            <span id="notificationMarker"></span>
+                                            @endif</a></li>
                                 <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
                                         href="/log-out">Salir </a></li>
                             </ul>
@@ -162,199 +116,10 @@
                 </nav>
             </div>
         </header>
-        <style>
-            section {
-                position: relative;
-                top: 42px;
-            }
 
-            dl {
-                margin: 5px 15px;
-                font-size: 20px;
-            }
-
-            dt {
-                font-family: 'Zilla Slab', serif;
-                font-weight: 800;
-                padding: 2px;
-                margin-left: 31px;
-
-            }
-
-            .contenedor::before {
-                margin: 2px 0 0 2px;
-                position: absolute;
-                content: counter(my-awesome-counter);
-                color: red;
-                font-weight: 800;
-                font-size: 30px;
-                top: 0;
-                left: 0;
-                border-radius: 50%;
-                width: 35px;
-                height: 35px;
-                text-align: center;
-                box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
-            }
-
-            dd {
-                font-family: 'Zilla Slab', serif;
-                margin-top: 3px;
-
-            }
-
-            .ver-mas {
-                width: max-content;
-                padding: 5px;
-                background: #0d47a1;
-                color: white;
-                border-radius: 15px;
-                font-size: 18px;
-                font-weight: 100;
-                cursor: pointer;
-                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-            }
-
-            .contenedor {
-                position: relative;
-                counter-increment: my-awesome-counter;
-                padding: 5px;
-                border-radius: 10px;
-                margin-bottom: 15px;
-                box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-            }
-
-            .mensaje-container {
-                display: none;
-                background: #00000052;
-                width: 100%;
-                height: 100vh;
-                position: absolute;
-                z-index: 100;
-                top: -5px;
-                overflow: auto;
-            }
-
-            #btnClose {
-                font-size: 23px;
-                float: right;
-                padding: 1px;
-                margin: 5px;
-                border-radius: 50%;
-                border: 1px solid rgb(255, 255, 255);
-                background: rgb(255, 255, 255);
-                height: min-content;
-                position: absolute;
-                right: 0;
-                top: 0;
-                z-index: 10;
-            }
-
-            .mensaje-informacion {
-                width: min-content;
-                flex-grow: 1;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 5px
-            }
-
-            .mensaje-informacion p,
-            .mensaje-informacion label {
-                flex-grow: 1;
-                padding: 3px;
-            }
-
-            .mensaje_body {
-                background: rgb(255, 255, 255);
-                padding: 5px;
-                margin: 11px;
-                display: flex;
-                flex-wrap: wrap;
-                width: 98%;
-                margin: auto;
-                margin-top: 10px;
-                text-align: justify;
-                font-family: 'Zilla Slab', serif;
-            }
-
-            .figure {
-                height: max-content;
-                border-radius: 15px;
-                overflow: hidden;
-                text-align: center;
-            }
-
-            #image {
-                object-fit: scale-down;
-                object-position: center;
-                position: relative;
-                margin: auto
-            }
-
-
-
-            .cambiarMedida {
-                width: 100%;
-            }
-
-            .cambiarMedida1 {
-                width: 100%;
-            }
-
-            #title,
-            #descripcion,
-            #fechaPublicacion {
-                width: 100%;
-            }
-
-            @media screen and (min-width:650px) {
-
-                .cambiarMedida {
-                    width: 50%;
-                }
-
-                #btnClose {
-                    font-size: 30px;
-
-                }
-            }
-
-        </style>
-        <section class="lista-mensajes">
-            <dl>
-                @foreach ($mensajes as $mensaje)
-                    <div class="contenedor">
-                        <dt>
-                            <p style="text-align: justify">Título: {{ $mensaje->titulo }}</p>
-                        </dt>
-                        <dd><b>Fecha de publicacion:</b> este es el titulo del mensaje</dd>
-                        <dd title="ver mas" class="ver-mas" data-mensaje="{{ $mensaje->id }}"><b>ver más </b><i
-                                class="fas fa-plus-circle"></i></dd>
-                    </div>
-                @endforeach
-            </dl>
-            {{-- aqui se muestra la ventana emergente con la info del mensaje --}}
-
-            <div class="mensaje-container" id="contenedor">
-                <div class="mensaje_body">
-                    <i class="fas fa-times-circle" id="btnClose"></i>
-                    <figure class="figure image-container" id="imageContainer">
-                        <img id="image" class="image-zoom" src="" alt="">
-                    </figure>
-                    <div class="mensaje-informacion">
-                        <p id="title">Titulo:</p>
-                        <p id="description">Descipcion:</p>
-                        <label id="fechaPublicacion" for=""><small><b>Fecha de publicacion:</b></small></label>
-                        <label id="emisor" for=""><small><b>Publicado por: aqui el dep al que pertenece el
-                                    emisor</b></small></label>
-                        <label id="" for=""></label>
-                        <label id="documento" for="">Descargar pdf</label>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @yield('mensajes-viejos')
+        @yield('mensajes-nuevos')
         <script src="{{ asset('static/js/dashboard.js') }}"></script>
-
         <script>
             let btnVerMas = document.getElementsByClassName('ver-mas');
             let btnClose = document.getElementById('btnClose');
@@ -371,7 +136,7 @@
             for (let i = 0; i < btnVerMas.length; i++) {
                 btnVerMas[i].addEventListener('click', function() {
                     contendor.style.display = 'block'
-                    consultarMensaje(btnVerMas[i].dataset.mensaje)
+                    consultarMensaje(btnVerMas[i].dataset.mensaje, btnVerMas[i].dataset.notificacion)
                 });
             }
             btnClose.addEventListener('click', function() {
@@ -383,11 +148,11 @@
 
             })
 
-            function consultarMensaje(id) {
+            function consultarMensaje(id, id_notification) {
                 $.ajax({
-                    url: '/ver-mensaje/' + id,
+                    url: '/ver-mensaje/' + id+"?id_notification="+id_notification,
                     method: 'GET',
-                    // data: formData,
+                    
                     contentType: false,
                     cache: false,
                     processData: false,
@@ -412,7 +177,7 @@
                 });
             }
         </script>
-    @endguest
+    
 
 </body>
 

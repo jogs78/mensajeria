@@ -25,10 +25,12 @@ class MensajeController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('viewMensajes', App\Models\Mensaje::class);
         $titulo = $request->titulo;
         $fechaPublicacion = $request->fechaPub;
         $carrera = $request->carrera;
         $carreras = Carrera::all();
+        
         if(Auth::user()->rol=='Emisor'){
             if($request->general){
                 $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 1)->orwhere('estado',3)->paginate(50);
@@ -42,6 +44,7 @@ class MensajeController extends Controller
             }
         }
         elseif(Auth::user()->rol=='Revisor'){
+            
             if($request->general){
                 $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
                     $query->where('quien_revisa', Auth::user()->puesto);
@@ -70,12 +73,10 @@ class MensajeController extends Controller
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
             }else{
                 $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
-
             }
             
             
         }
-        $this->authorize('viewMensajes', App\Models\Mensaje::class);
 
         return view('mensaje.mensaje-list', compact('mensajes', 'carreras'));
     }
