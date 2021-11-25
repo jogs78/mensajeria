@@ -58,7 +58,7 @@
            
             
             <form action="/mensajes" style="flex-grow:1; height:40px">
-                <button id="btn2" name="difundidos" value="3">Mensajes difundidos</button>
+                <button id="btn2" name="estado" value="3">Mensajes difundidos</button>
             </form>
         </div>
         @if (sizeof($mensajes) == 0)
@@ -67,7 +67,7 @@
             @foreach ($mensajes as $mensaje)
                 <div class="new-messages__container" id="{{ $mensaje->id }}">
                     <div class="new-messages__information">
-                        <label for="" class="new-messages__title">Título: {{ $mensaje->titulo }}</label>
+                        <p for="" class="new-messages__title">Título: {{ $mensaje->titulo }}</p>
                         <p for="" class="new-messages__title">Descripción: {{ $mensaje->descripcion }}</p>
                         @if ($mensaje->estado == 0)
                             <label for="" class="new-messages__status-menssage" style="background: #2f8b8b">Estado: Pendiente</label>
@@ -81,7 +81,9 @@
                             <label for="" class="new-messages__status-menssage" style="background: #0277BD"><b>Estado:
                                     Publicado</b></label>
                         @endif
-                        <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación:</label>
+                        @if ($mensaje->fecha_publicacion)
+                        <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación: {{\Carbon\Carbon::parse($mensaje->fecha_publicacion)->format('d/m/Y')}}</label>
+                        @endif
                     </div>
                     <div class="new-messages_actions">
                         @can('edit', $mensaje)

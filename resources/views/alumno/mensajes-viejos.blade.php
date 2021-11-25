@@ -7,7 +7,7 @@
                 <dt>
                     <p style="text-align: justify">Título: {{ $mensaje->titulo }}</p>
                 </dt>
-                <dd><b>Fecha de publicacion:</b> este es el titulo del mensaje</dd>
+                <dd><b>Fecha de publicacion:</b> {{ \Carbon\Carbon::parse($mensaje->fecha_publicacion)->format('d/m/Y') }}</dd>
                 <dd title="ver mas" class="ver-mas" data-mensaje="{{ $mensaje->id }}" data-notificacion = ""><b>ver más </b><i
                         class="fas fa-plus-circle"></i></dd>
             </div>

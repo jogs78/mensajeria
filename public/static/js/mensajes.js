@@ -16,6 +16,7 @@ window.addEventListener('load', function() {
                 expanded = false;
             }
         });
+
     }
     image.addEventListener('change', function(e) {
         let image = e.target.files[0];

@@ -42,7 +42,7 @@ class MensajePolicy
     }
     public function edit(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($mensaje->empleado_id == $empleado->id) {
+        if ($mensaje->empleado_id == $empleado->id & $mensaje->estado == 0) {
             return true;
         }
     }
@@ -56,13 +56,13 @@ class MensajePolicy
     }
     public function delete(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($empleado->rol == "Emisor" && $mensaje->empleado_id == $empleado->id) {
+        if ($empleado->rol == "Emisor" & $mensaje->empleado_id == $empleado->id & $mensaje->estado == 0) {
             return true;
         }
     }
     public function aceptarRechazar(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($empleado->rol == "Revisor")
+        if ($empleado->rol == "Revisor" & $mensaje->estado == 0)
             return true;
     }
     public function difundirMensaje(Empleado $empleado, Mensaje $mensaje)

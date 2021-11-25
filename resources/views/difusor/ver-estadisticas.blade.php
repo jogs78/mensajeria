@@ -6,15 +6,18 @@
         padding: 1px;
         float: right;
         margin: 5px;
+        cursor: pointer;
     }
 
     .estadisticas {
-        display: none;
-        position: absolute !important;
+        opacity: 0;
+        top: -200%;
+        position: absolute ;
         z-index: 4444;
         background: rgba(0, 0, 0, 0.425);
         width: 100%;
         height: 100vh;
+        transition: all 1s ease;
     }
 
     .dashboard-EmisorRevisror,
@@ -67,7 +70,7 @@
 
 </style>
 
-<section class="estadisticas" style="position: relative; top:42px" id="graficaContainer">
+<section class="estadisticas" id="graficaContainer">
     <i class="fas fa-times-circle" id="close"></i>
     <div
         style="position: relative; height:60vh; width:80vw; margin: auto;background: black;padding: 6px;margin: 10px auto;border-radius: 5px;">

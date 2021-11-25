@@ -56,8 +56,7 @@ class Alumno extends Authenticatable
     }
 
     use Notifiable;
-
-    
-
     use HasFactory;
+    public $timestamps = false;
+
 }

@@ -7,6 +7,7 @@ use App\Models\Alumno;
 use App\Models\Mensaje;
 use App\Models\Carrera;
 use App\Models\Semestre;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,16 +36,14 @@ class MensajeController extends Controller
             if($request->general){
                 $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->paginate(50);
             }elseif($request->estado){
-                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 0)->paginate(50);
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', $request->estado)->paginate(50);
             }elseif($request->titulo || $request->fechaPub || $request->carrera){
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->where('empleado_id', Auth::user()->id)->paginate(50);
             }else{
-                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 3)->paginate(50);
-
+                $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->paginate(50);
             }
         }
-        elseif(Auth::user()->rol=='Revisor'){
-            
+        elseif(Auth::user()->rol=='Revisor'){           
             if($request->general){
                 $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
                     $query->where('quien_revisa', Auth::user()->puesto);
@@ -62,7 +61,6 @@ class MensajeController extends Controller
                     $query->where('quien_revisa', Auth::user()->puesto);
                     })->paginate(50);
             }
-
         }
         elseif(Auth::user()->rol=='Difusor'){
             if($request->general){
@@ -73,11 +71,8 @@ class MensajeController extends Controller
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
             }else{
                 $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
-            }
-            
-            
+            }   
         }
-
         return view('mensaje.mensaje-list', compact('mensajes', 'carreras'));
     }
 
@@ -104,8 +99,15 @@ class MensajeController extends Controller
     public function store(Request $request)
     {
         $datos = $request->all();
+        request()->validate([
+            'file-1' => 'dimensions:min_width=720,max_width=1500, min_height=500, max_height=1280|required|image',
+            'file-2' =>'required',
+            'titulo' => 'required',
+            'descripcion' => 'required',
+            'car' => 'required',
+            'sem' => 'required'
+        ]);
         $mensaje = new mensaje();
-
         if($request->hasFile('file-1')){
             $img = $datos['file-1']->store('public/imagenes_mensajes');
             $url = Storage::url($img);
@@ -116,7 +118,6 @@ class MensajeController extends Controller
             $urlDoc = Storage::url($img);
             $mensaje -> documento = $urlDoc;
         }
-
         $mensaje -> titulo = $datos['titulo'];
         $mensaje -> descripcion = $datos['descripcion'];
         //Estados... 0-Pendiente, 1-Aceptado, 2-Rechazado
@@ -171,8 +172,17 @@ class MensajeController extends Controller
     public function update(Request $request, $id)
     {
         $datos = $request -> all();
+       
         $mensaje = Mensaje::with('carreras', 'semestres', 'empleado')->get()->find($id);
         if(Auth::user()->rol=='Emisor'){
+            request()->validate([
+                'file-1' => 'dimensions:min_width=720,max_width=1500, min_height=500, max_height=1280|required|image',
+                'file-2' =>'required',
+                'titulo' => 'required',
+                'descripcion' => 'required',
+                'car' => 'required',
+                'sem' => 'required'
+            ]);
             $mensaje -> titulo = $request->titulo;
             $mensaje -> descripcion = $request->descripcion;
 
@@ -204,24 +214,23 @@ class MensajeController extends Controller
             //     $mensaje -> otros = 3;
             // }
             $mensaje -> save();
-        }
-        if(Auth::user()->rol=='Revisor'){
-            //return $request->estado;
+        }elseif(Auth::user()->rol=='Revisor'){
+            
             if($request->estado=='Aceptar')
                 $mensaje->estado=1;
             elseif($request->estado=='Rechazar')
                 $mensaje->estado=2;
             $mensaje -> save();
-        }
-        if(Auth::user()->rol=='Difusor'){
-            
-           
+            return redirect('/mensajes');
+        }elseif(Auth::user()->rol=='Difusor'){
             if(event(new MensajeEvent($mensaje))){
+                $mensaje->fecha_publicacion = Carbon::now();
                 $mensaje->estado=$request->estado;
-            $mensaje -> save();
+                $mensaje -> save();
                 return 'Mensaje difundido';
             }          
         }
+        
         return redirect('/mensajes');
     }
 

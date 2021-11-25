@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Semestre extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
     //relacion 1:N 
     public function alumnos(){
         return $this -> hasMany('App\Models\Alumno');

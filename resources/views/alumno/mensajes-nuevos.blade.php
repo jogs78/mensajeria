@@ -13,11 +13,6 @@
                         data-notificacion="{{ $mensaje->id }}"><b>ver más </b><i class="fas fa-plus-circle"></i></dd>
                 </div>
             @empty
-                <style>
-  
-
-}
-                </style>
                 <div class="warning-container">
                     <p>Hola <b>{{Auth::user()->nombre." ".Auth::user()->apellido_paterno}}</b>, por el momento no hay mensajes nuevos para ti.</p>
 
@@ -36,8 +31,7 @@
                     <p id="title">Titulo:</p>
                     <p id="description">Descipcion:</p>
                     <label id="fechaPublicacion" for=""><small><b>Fecha de publicacion:</b></small></label>
-                    <label id="emisor" for=""><small><b>Publicado por: aqui el dep al que pertenece el
-                                emisor</b></small></label>
+                    <label id="emisor" for=""><small><b>Publicado por:</b></small></label>
                     <label id="" for=""></label>
                     <label id="documento" for="">Descargar pdf</label>
                 </div>

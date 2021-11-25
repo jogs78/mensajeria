@@ -13,14 +13,17 @@
             @csrf
             <div class="c1">
                 <input placeholder="Título" class="mensaje-create__form_title" type="text" name="titulo">
+                {!! $errors->first('titulo', '<small>:message</small><br>') !!}
                 <textarea placeholder="Descripción..." class="mensaje-create__form_body" name="descripcion" id="" cols="30"
                     rows="10"></textarea>
+                {!! $errors->first('descripcion', '<small>:message</small><br>') !!}
                 <label class="mensaje-create__form_lbl_adjuntar" for="">Adjuntar archivo</label>
                 <div class="container-input">
                     <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1" accept="image/*">
                     <label for="file-1">
                         <span class="iborrainputfile fas fa-upload"> Seleccionar imagen</span>
                     </label>
+                    {!! $errors->first('file-1', '<small>:message</small><br>') !!}
                 </div>
                 <img class="mensaje-create__form-preview" id="previewImage">
                 <div class="container-input">
@@ -28,6 +31,7 @@
                     <label for="file-2">
                         <span class="iborrainputfile fas fa-upload"> Seleccionar documento</span>
                     </label>
+                    {!! $errors->first('file-2', '<small>:message</small><br>') !!}
                 </div>
                 <label id="fileName"></label>
             </div>
@@ -40,12 +44,13 @@
                         </select>
                         <div class="overSelect"></div>
                     </div>
-                    <div class="checkboxes">
+                    <div class="checkboxes" tabindex="100">
                         @foreach ($carreras as $carrera)
                             <label><input type="checkbox" name="car[]" value="{{ $carrera->id }}"
                                     {{ old('carrera') == $carrera->id ? 'selected' : '' }}>{{ $carrera->name }}</label>
                         @endforeach
                     </div>
+                    {!! $errors->first('car', '<small>:message</small><br>') !!}
                 </div>
                 <div class="multiselect select2">
                     <div class="selectBox">
@@ -61,6 +66,7 @@
                             </label>
                         @endforeach
                     </div>
+                    {!! $errors->first('sem', '<small>:message</small><br>') !!}
                 </div>
 
                 <span><input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social"

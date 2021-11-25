@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use App\Models\Empleado;
 use App\Models\mensaje;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class EmpleadoController extends Controller
@@ -117,6 +119,7 @@ class EmpleadoController extends Controller
         $mensaje = mensaje::with('carreras', 'semestres')->where('id', $id)->first();
         // Alumno::with('carrera', 'semestre')->get();
         $alumnosMensajes = array();
+        $visitas = array();
         // return sizeof($mensaje->carreras);
         for($i = 0; $i<sizeof($mensaje->carreras); $i++){
             // Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count()
@@ -126,10 +129,37 @@ class EmpleadoController extends Controller
                 'cantidadAlumnos' => Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count(),
                  
             );
-            ;
+            
         }
-        // return $alumnosMensajes;
-        return json_encode($respuesta = array($mensaje, $alumnosMensajes) );
+        for($i = 0; $i < sizeof($mensaje->carreras); $i++){
+            for($j = 0; $j < sizeof($mensaje->semestres); $j++){
+                array_push($visitas, Alumno::whereHas('notifications', function(Builder $query){
+                    $query->where('read_at', null);
+                })
+                ->where('carrera_id', $mensaje->carreras[$i]->id)
+                ->where('semestre_id', $mensaje->semestres[$j]->id)
+                ->orderBy('nombre')->get());
+            } 
+        };
+        $visitas2 = array();
+        for($i = 0; $i < sizeof($visitas); $i++){
+            if(sizeof($visitas[$i]) >= 1  ){
+                for($j = 0; $j < sizeof($visitas[$i]); $j++){
+                    array_push($visitas2, $visitas[$i][$j]);
+                }
+            }
+        }
+        // return $visitas[3][0]->notifications[0]->id;
+        // return $visitas2;
+        // return $visitas;
+        // return $mensaje;
+        
+        // return $visitas;
+        //  return $alumnosMensajes;
+        return (object) $respuesta = array(
+            'mensaje' => $mensaje, 
+            'alumnosCarreras' => $alumnosMensajes, 
+            'vistas' => $visitas2);
         
     }
     

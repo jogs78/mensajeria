@@ -28,12 +28,15 @@
             <div class="container">
                 <label for="">Título</label>
                 <input class="messages-edit__form_input" type="text" value="{{ $mensaje->titulo }}" name="titulo">
+                {!! $errors->first('titulo', '<small>:message</small><br>') !!}
             </div>
 
             <div class="container">
                 <label for="">Descripción</label>
                 <textarea class="messages-edit__form_input" name="descripcion" id="" cols="30"
                     rows="5">{{ $mensaje->descripcion }}</textarea>
+                    {!! $errors->first('descripcion', '<small>:message</small><br>') !!}
+                
             </div>
             <div class="container_image">
                 <label for="" class="mensaje-create__form_lbl_adjuntar">Imagen</label>
@@ -43,6 +46,7 @@
                     <label for="file-1">
                         <span class="iborrainputfile fas fa-upload"> Seleccionar imagen</span>
                     </label>
+                    {!! $errors->first('file-1', '<small>:message</small><br>') !!}
                 </div>
                 <img style=" width: 40%;" id="previewImage" class="mensaje-create__form-preview"
                     src="{{ asset($mensaje->imagen) }}">
@@ -51,11 +55,10 @@
                     <label for="file-2">
                         <span class="iborrainputfile fas fa-upload"> Seleccionar documento</span>
                     </label>
+                    {!! $errors->first('file-2', '<small>:message</small><br>') !!}
                 </div>
-
-
                 <label id="fileName"></label>
-                <i class="fas fa-folder-open" id="verDocumento"> Ver documento</i>
+                <i class="fas fa-folder-open" id="verDocumento" style="margin-top: 20px;"> Ver documento</i>
             </div>
 
             <div class="container_segmento">
@@ -97,6 +100,7 @@
                             @endif
                         @endfor
                     </div>
+                    {!! $errors->first('car', '<small>:message</small><br>') !!}
                 </div>
                 <!-- Editar Semestre-->
                 <div class="container_segmento">
@@ -138,6 +142,7 @@
                                 @endif
                             @endfor
                         </div>
+                    {!! $errors->first('sem', '<small>:message</small><br>') !!}
                     </div>
                     @if ($mensaje->otros == 0)
                         <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio"

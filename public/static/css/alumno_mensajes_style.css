@@ -212,7 +212,9 @@ dd {
 }
 
 .mensaje-container {
-    display: none;
+    position: relative;
+    left: -200%;
+    opacity: 0;
     background: #00000052;
     width: 100%;
     height: 100vh;
@@ -220,6 +222,7 @@ dd {
     z-index: 100;
     top: -5px;
     overflow: auto;
+    transition: all 1s ease;
 }
 
 #btnClose {
@@ -240,9 +243,6 @@ dd {
 .mensaje-informacion {
     width: min-content;
     flex-grow: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px
 }
 
 .mensaje-informacion p,

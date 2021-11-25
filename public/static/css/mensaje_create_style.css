@@ -144,6 +144,14 @@
     width: max-content;
     padding: 3px;
     margin-top: 10px;
+    position: relative;
+}
+
+.container-input small {
+    position: absolute;
+    width: max-content;
+    top: 100%;
+    left: 0;
 }
 
 .inputfile {
@@ -192,6 +200,7 @@
 
 @media screen and (min-width:650px) {
     .mensaje-create__form {
+        grid-template-columns: repeat(auto-fit, minmax(max-content, 450px));
         height: auto;
         margin-bottom: 20px;
     }

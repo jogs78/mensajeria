@@ -135,16 +135,18 @@
 
             for (let i = 0; i < btnVerMas.length; i++) {
                 btnVerMas[i].addEventListener('click', function() {
-                    contendor.style.display = 'block'
+                    contendor.style.opacity = 1
+                    contendor.style.left = "0";
                     consultarMensaje(btnVerMas[i].dataset.mensaje, btnVerMas[i].dataset.notificacion)
                 });
             }
             btnClose.addEventListener('click', function() {
-                contendor.style.display = 'none';
                 $('#imageContainer').trigger('zoom.destroy');
                 imageContainer.classList.remove('cambiarMedida')
                 imageContainer.classList.remove('cambiarMedida1')
-                image.setAttribute('src', "")
+                image.removeAttribute('src')
+                contendor.style.opacity = 0;
+                contendor.style.left = "-200%";
 
             })
 
@@ -160,13 +162,15 @@
                     image.setAttribute('src', res.imagen)
                     title.innerHTML = "<b>Título: <b>" + res.titulo
                     description.innerHTML = "<b>Descripción: <b>" + res.descripcion
-                    fechaPublicacion.innerHTML = "<b>Fecha de publicacion: </b>"
+                    fechaPublicacion.innerHTML = "<b>Fecha de publicacion: </b>"+res.fecha_publicacion
                     emisor.innerHTML = "<b>Publicado por: <b>" + res.empleado.puesto
-                    if (image.naturalHeight == 1280 & image.naturalWidth == 720) {
+                    if (image.naturalHeight <= 1280 & image.naturalWidth >= 720) {
+                        
                         imageContainer.classList.add('cambiarMedida')
                         imageContainer.classList.remove('cambiarMedida1')
                         image.style.width = "50%"
-                    } else if (image.naturalHeight == 500 & image.naturalWidth == 1500) {
+                    } else if (image.naturalHeight >= 500 & image.naturalWidth <= 1500) {
+                        
                         imageContainer.classList.remove('cambiarMedida')
                         imageContainer.classList.add('cambiarMedida1')
                         image.style.width = "80%"

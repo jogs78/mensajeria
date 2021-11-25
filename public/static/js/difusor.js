@@ -89,6 +89,8 @@ window.addEventListener("load", function() {
             listSemestres = document.getElementById('listSemestres');
         for (let i = 0; i < btnEstadisticas.length; i++) {
             btnEstadisticas[i].addEventListener('click', function() {
+                graficaContainer.style.opacity = 1;
+                graficaContainer.style.top = "42px";
                 let id = btnEstadisticas[i].getAttribute("data-id")
                 solicitud(id)
 
@@ -96,7 +98,8 @@ window.addEventListener("load", function() {
             })
         }
         btnClose.addEventListener('click', function() {
-            graficaContainer.style.display = 'none';
+            graficaContainer.style.opacity = 0;
+            graficaContainer.style.top = "-200%";
             listCarreras.innerHTML = "";
             listSemestres.innerHTML = "";
             if (myChart) {
@@ -114,33 +117,26 @@ window.addEventListener("load", function() {
             }).done(function(res) {
                 let carreras = [];
                 let valores = [];
-                let datos = JSON.parse(res);
-                let tituloGrafica = datos[0].titulo;
+                let datos = res
+                let tituloGrafica = datos.mensaje.titulo;
                 let mensaje = []
-                mensaje = datos[0];
-                for (let i = 0; i < datos[1].length; i++) {
-                    carreras.push(datos[1][i].carrera);
+                mensaje = datos.mensaje
+                for (let i = 0; i < datos.alumnosCarreras.length; i++) {
+                    listCarreras.innerHTML = "<ul><li>" + mensaje.carreras[i].name + "</li></ul>" + listCarreras
+                        .innerHTML;
                 }
-                for (let i = 0; i < datos[1].length; i++) {
-                    valores.push(datos[1][i].cantidadAlumnos);
+                for (let i = 0; i < datos.alumnosCarreras.length; i++) {
+                    listSemestres.innerHTML = "<ul><li>Semestre:" + mensaje.semestres[i].semestre + "</li></ul>" +
+                        listSemestres.innerHTML;
                 }
-                generarGrafica(carreras, valores, tituloGrafica, mensaje);
+                generarGrafica(carreras, valores, tituloGrafica);
+                console.log(datos)
             });
+
         }
 
 
-        function generarGrafica(carreras, valores, titulo, mensaje) {
-            graficaContainer.style.display = 'block';
-            console.log(listCarreras)
-            for (let i = 0; i < mensaje.carreras.length; i++) {
-                listCarreras.innerHTML = "<ul><li>" + mensaje.carreras[i].name + "</li></ul>" + listCarreras
-                    .innerHTML;
-                console.log(mensaje.carreras[i].name)
-            }
-            for (let i = 0; i < mensaje.semestres.length; i++) {
-                listSemestres.innerHTML = "<ul><li>Semestre:" + mensaje.semestres[i].semestre + "</li></ul>" +
-                    listSemestres.innerHTML;
-            }
+        function generarGrafica(carreras, valores, titulo) {
             const ctx = document.getElementById('myChart').getContext('2d');
             myChart = new Chart(ctx, {
                 type: 'doughnut',
