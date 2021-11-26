@@ -85,6 +85,8 @@ window.addEventListener("load", function() {
         let graficaContainer = document.getElementById('graficaContainer')
         let btnClose = document.getElementById('close')
         let myChart = null;
+        let lblsContainer = document.getElementById('lbls-container')
+        let newLabel = document.createElement('label')
         let listCarreras = document.getElementById('listCarreras'),
             listSemestres = document.getElementById('listSemestres');
         for (let i = 0; i < btnEstadisticas.length; i++) {
@@ -121,6 +123,7 @@ window.addEventListener("load", function() {
                 let tituloGrafica = datos.mensaje.titulo;
                 let mensaje = []
                 mensaje = datos.mensaje
+                valores = []
                 for (let i = 0; i < datos.alumnosCarreras.length; i++) {
                     listCarreras.innerHTML = "<ul><li>" + mensaje.carreras[i].name + "</li></ul>" + listCarreras
                         .innerHTML;
@@ -129,12 +132,28 @@ window.addEventListener("load", function() {
                     listSemestres.innerHTML = "<ul><li>Semestre:" + mensaje.semestres[i].semestre + "</li></ul>" +
                         listSemestres.innerHTML;
                 }
+                for (let i = 0; i < datos.alumnosCarreras.length; i++) {
+                    valores.push(datos.alumnosCarreras[i].cantidadAlumnos);
+                    carreras.push(datos.alumnosCarreras[i].carrera);
+                }
                 generarGrafica(carreras, valores, tituloGrafica);
-                console.log(datos)
+                if (datos.visitas.length == 0) {
+                    newLabel.innerHTML = "Ningun alumno ha visto esta publicación"
+                    lblsContainer.appendChild(newLabel)
+                } else {
+                    for (let i = 0; i < datos.visitas.length; i++) {
+                        console.log(lblsContainer)
+                        for (let j = 0; j < datos.alumnosCarreras.length; j++) {
+
+                            newLabel.innerHTML = datos.visitas[i].carrera + ":" + datos.visitas[i].visitas + "/" + datos.alumnosCarreras[i].cantidadAlumnos
+                            lblsContainer.appendChild(newLabel)
+
+                        }
+                    }
+                }
             });
 
         }
-
 
         function generarGrafica(carreras, valores, titulo) {
             const ctx = document.getElementById('myChart').getContext('2d');

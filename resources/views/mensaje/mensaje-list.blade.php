@@ -42,13 +42,13 @@
         <a class="new-messages__link" href="/mensajes/create">Redactar mensaje</a>
         <div class="user-select">
             <form action="/mensajes" style="flex-grow:1; height:40px">
-                <button id="btn3" name="general" value="4">Ver todos los mensajes</button>
+                <button id="btn3" name="general" value="all">Ver todos los mensajes</button>
             </form>
             
             
             @if (Auth::user()->rol == "Revisor")
                 <form action="/mensajes" style="flex-grow:1; height:40px"">
-                    <button id="btn1" name="estado" value="0">Mensajes por revisar</button>
+                    <button id="btn1" name="estado" value="1">Mensajes por revisar</button>
                 </form>
             @else
                <form action="/mensajes" style="flex-grow:1; height:40px"">
@@ -67,7 +67,7 @@
             @foreach ($mensajes as $mensaje)
                 <div class="new-messages__container" id="{{ $mensaje->id }}">
                     <div class="new-messages__information">
-                        <p for="" class="new-messages__title">Título: {{ $mensaje->titulo }}</p>
+                        <label for="" class="new-messages__title">Título: {{ $mensaje->titulo }}</label>
                         <p for="" class="new-messages__title">Descripción: {{ $mensaje->descripcion }}</p>
                         @if ($mensaje->estado == 0)
                             <label for="" class="new-messages__status-menssage" style="background: #2f8b8b">Estado: Pendiente</label>
@@ -82,7 +82,7 @@
                                     Publicado</b></label>
                         @endif
                         @if ($mensaje->fecha_publicacion)
-                        <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación: {{\Carbon\Carbon::parse($mensaje->fecha_publicacion)->format('d/m/Y')}}</label>
+                        <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación: {{$mensaje->fecha_publicacion}}</label>
                         @endif
                     </div>
                     <div class="new-messages_actions">

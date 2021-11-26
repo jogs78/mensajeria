@@ -115,52 +115,63 @@ class EmpleadoController extends Controller
         //
     }
     public function verEstadisticas($id){
-        // $mensaje = mensaje::where('id', $id)::with('carreras', 'semestres')->get();
         $mensaje = mensaje::with('carreras', 'semestres')->where('id', $id)->first();
-        // Alumno::with('carrera', 'semestre')->get();
-        $alumnosMensajes = array();
-        $visitas = array();
-        // return sizeof($mensaje->carreras);
+        $alumnosMensajes = array(); $visitas = array(); $visitas2 = array(); $visitasContador = array(); $contador = 0;
         for($i = 0; $i<sizeof($mensaje->carreras); $i++){
-            // Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count()
-            // $alumnosMensajes[$i]= array($mensaje->carreras[$i]->name => Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count(),);
             $alumnosMensajes[$i]= array(
                 'carrera' => $mensaje->carreras[$i]->name,
                 'cantidadAlumnos' => Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count(),
-                 
             );
-            
         }
         for($i = 0; $i < sizeof($mensaje->carreras); $i++){
             for($j = 0; $j < sizeof($mensaje->semestres); $j++){
-                array_push($visitas, Alumno::whereHas('notifications', function(Builder $query){
-                    $query->where('read_at', null);
+                $con = Alumno::whereHas('notifications', function(Builder $query){
+                    $query->where('read_at','!=', null);
                 })
                 ->where('carrera_id', $mensaje->carreras[$i]->id)
                 ->where('semestre_id', $mensaje->semestres[$j]->id)
-                ->orderBy('nombre')->get());
+                ->orderBy('nombre')->get();
+                if(sizeof($con) > 0){
+                    for($k = 0; $k<sizeof($con); $k ++){
+                    array_push($visitas, $con[$k]);
+                    }
+                }else unset($con);
             } 
         };
-        $visitas2 = array();
-        for($i = 0; $i < sizeof($visitas); $i++){
-            if(sizeof($visitas[$i]) >= 1  ){
-                for($j = 0; $j < sizeof($visitas[$i]); $j++){
-                    array_push($visitas2, $visitas[$i][$j]);
+        for($i = 0; $i < sizeof($mensaje->carreras); $i++){
+            for($j = 0; $j < sizeof($visitas); $j++){
+                if($mensaje->carreras[$i]->id == $visitas[$j]->carrera_id){
+                    $contador +=1;
+                    if(sizeof($visitas2) == 0){
+                        array_push($visitas2, ['carrera' => $mensaje->carreras[$i]->name,
+                        'visitas' => $contador,]);
+                    }else{
+                        if($mensaje->carreras[$i]->name == $visitas2[$j-1]['carrera']){
+                            $visitas2[$j-1]['visitas'] = $visitas2[$j-1]['visitas'] + $contador;
+                            unset($mensaje->carreras[$i]->name);
+                        }  
+                        array_push($visitas2, ['carrera' => $mensaje->carreras[$i]->name,
+                        'visitas' => $contador,]);                
+                    }   
+                    $contador =0;                   
                 }
-            }
+            }           
         }
-        // return $visitas[3][0]->notifications[0]->id;
-        // return $visitas2;
-        // return $visitas;
-        // return $mensaje;
         
-        // return $visitas;
-        //  return $alumnosMensajes;
+       for($i = 0; $i < sizeof($visitas2); $i++){
+           if(is_null($visitas2[$i]['carrera'])){
+            unset($visitas2[$i]);
+           }else{
+               array_push($visitasContador, $visitas2[$i]);
+           }
+       }
+        
         return (object) $respuesta = array(
             'mensaje' => $mensaje, 
             'alumnosCarreras' => $alumnosMensajes, 
-            'vistas' => $visitas2);
+            'visitas' => $visitasContador);
         
     }
-    
 }
+
+

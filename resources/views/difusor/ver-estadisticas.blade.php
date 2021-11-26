@@ -7,12 +7,17 @@
         float: right;
         margin: 5px;
         cursor: pointer;
+        transition: transform .5s ease;
+    }
+
+    #close:active {
+        transform: scale(.9);
     }
 
     .estadisticas {
         opacity: 0;
         top: -200%;
-        position: absolute ;
+        position: absolute;
         z-index: 4444;
         background: rgba(0, 0, 0, 0.425);
         width: 100%;
@@ -77,10 +82,9 @@
         <canvas id="myChart"></canvas>
     </div>
     <div class="lbl-container">
-        <div class="lbls-inf">
+        <div class="lbls-inf" id="lbls-container">
             <label for="" class="" style="display:block;">Alumnos que han visto esta publicación</label>
-            <label for="" class="" style="text-decoration: underline">Carrera 1: 10/100</label>
-            <label for="" class="" style="text-decoration: underline">Carrera 1: 10/100</label>
+
         </div>
         <label for="" class="lbls-inf" id='listCarreras'> </label>
         <label for="" class="lbls-inf" id="listSemestres"></label>
@@ -89,5 +93,3 @@
 </section>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
 <script src="{{ asset('static/js/mensajes.js') }}"></script>
-
-
