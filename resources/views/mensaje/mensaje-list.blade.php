@@ -47,18 +47,18 @@
             
             
             @if (Auth::user()->rol == "Revisor")
-                <form action="/mensajes" style="flex-grow:1; height:40px"">
+                <form action="/mensajes" style="flex-grow:1; height:40px">
                     <button id="btn1" name="estado" value="1">Mensajes por revisar</button>
                 </form>
             @else
-               <form action="/mensajes" style="flex-grow:1; height:40px"">
+               <form action="/mensajes" style="flex-grow:1; height:40px">
                 <button id="btn1" name="estado" value="1">Mensajes pendientes</button>
             </form>  
             @endif
            
             
             <form action="/mensajes" style="flex-grow:1; height:40px">
-                <button id="btn2" name="estado" value="3">Mensajes difundidos</button>
+                <button id="btn2" name="difundido" value="3">Mensajes difundidos</button>
             </form>
         </div>
         @if (sizeof($mensajes) == 0)
