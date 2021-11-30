@@ -28,8 +28,7 @@ class MensajeListener
      */
     public function handle($event)
     {
-        $users = array();
-            $alumnos = array(); //lista de usuarios nueva
+        
         foreach( Alumno::getMensaje($event->mensaje) as $alumno){
             Notification::send($alumno, new MensajeNotification($event->mensaje));
         }

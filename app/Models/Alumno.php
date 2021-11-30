@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Mensaje;
 use Illuminate\Support\Facades\DB;
 
 
@@ -45,11 +46,16 @@ class Alumno extends Authenticatable
         
     }
 
-    public static function getMensaje($mensaje){
+    public static function getMensaje(Mensaje $mensaje){
         $users = array();
         for($i = 0; $i < sizeof($mensaje->carreras); $i++){
             for($j = 0; $j < sizeof($mensaje->semestres); $j++){
-                array_push($users, Alumno::where('carrera_id', $mensaje->carreras[$i]->id)->where('semestre_id', $mensaje->semestres[$j]->id)->orderBy('nombre')->get());
+                $con = Alumno::where('carrera_id', $mensaje->carreras[$i]->id)->where('semestre_id', $mensaje->semestres[$j]->id)->orderBy('nombre')->get();
+                if(sizeof($con) > 0 ){
+                    for($k = 0; $k<sizeof($con); $k ++){
+                    array_push($users, $con[$k]);
+                    }
+                }else unset($con);
             } 
         };
         return $u = (object) $users;

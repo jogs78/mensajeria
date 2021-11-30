@@ -20,6 +20,8 @@
 
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
+    @laravelPWA
+
     <title>Bienvenido</title>
 </head>
 

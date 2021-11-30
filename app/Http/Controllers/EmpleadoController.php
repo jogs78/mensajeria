@@ -116,13 +116,22 @@ class EmpleadoController extends Controller
     }
     public function verEstadisticas($id){
         $mensaje = mensaje::with('carreras', 'semestres')->where('id', $id)->first();
-        $alumnosMensajes = array(); $visitas = array(); $visitas2 = array(); $visitasContador = array(); $contador = 0;
-        for($i = 0; $i<sizeof($mensaje->carreras); $i++){
-            $alumnosMensajes[$i]= array(
-                'carrera' => $mensaje->carreras[$i]->name,
-                'cantidadAlumnos' => Alumno::where('carrera_id', $mensaje->carreras[$i]->id )->count(),
-            );
+        $alumnosMensajes = array();
+        $a1 = array(); $visitas = array(); $visitas2 = array(); $visitasContador = array(); $contador = 0;
+        for($i = 0; $i < sizeof($mensaje->carreras); $i++){
+            for($j = 0; $j < sizeof($mensaje->semestres); $j++){
+                $sql = Alumno::where('carrera_id', $mensaje->carreras[$i]->id)->where('semestre_id', $mensaje->semestres[$j]->id)->count();
+                array_push($a1, [
+                    'carrera' => $mensaje->carreras[$i]->name,
+                    'cantidadAlumnos' => $sql,
+                ]);
+            } 
+            
         }
+        for($i = 0; $i < sizeof($a1); $i++){
+            if($a1[$i]['cantidadAlumnos'] > 0) array_push($alumnosMensajes,$a1[$i]);
+        }
+
         for($i = 0; $i < sizeof($mensaje->carreras); $i++){
             for($j = 0; $j < sizeof($mensaje->semestres); $j++){
                 $con = Alumno::whereHas('notifications', function(Builder $query){

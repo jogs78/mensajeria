@@ -7,6 +7,7 @@ use App\Models\Alumno;
 use App\Models\Mensaje;
 use App\Models\Carrera;
 use App\Models\Semestre;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -211,7 +212,8 @@ class MensajeController extends Controller
            
             if(event(new MensajeEvent($mensaje))){
                 $mensaje->estado=$request->estado;
-            $mensaje -> save();
+                $mensaje->fecha_publicacion = Carbon::now();
+                $mensaje -> save();
                 return 'Mensaje difundido';
             }          
         }
@@ -232,15 +234,36 @@ class MensajeController extends Controller
         }
     }
     public function panelDifusor(){
+        Mensaje::whereHas('empleado', function(Builder $query){
+            $query->where('quien_revisa', Auth::user()->puesto);})->paginate(50);
         $carreras = Carrera::all();
         $totalMensajes = Mensaje::where('estado','=', 3)->count();
         $totalAlumnos = Alumno::all()->count();
         $mensajesByCarrera = array();
-        $mensaje = Mensaje::with('carreras')->get();
+        $mensaje = Mensaje::with('carreras')->where('estado', 3)->get();
+        // return $mensaje;
+
+        // for($i = 0; $i<sizeof($carreras); $i++){
+        //     $total = DB::select('SELECT * FROM carrera_mensaje WHERE carrera_id='.($i+1));
+        //     $mensajesByCarrera[$i]=sizeof($total);
+        // }
         for($i = 0; $i<sizeof($carreras); $i++){
-            $total = DB::select('SELECT * FROM carrera_mensaje WHERE carrera_id='.($i+1));
-            $mensajesByCarrera[$i]=sizeof($total);
+            $total = Mensaje::whereHas('carreras', function(Builder $query) use ($carreras, $i){
+                $query->where('carrera_id', $carreras[$i]->id);})->where('estado', 3)->count();
+            if($total >0){
+                array_push($mensajesByCarrera, [
+                    'carrera' => $carreras[$i]->name,
+                    'total' => $total
+            ]);
+            }else{
+                array_push($mensajesByCarrera, [
+                    'carrera' => $carreras[$i]->name,
+                    'total' => 0
+                            ]);
+            }
+            
         }
+// return $mensajesByCarrera;
         $valores=['carreras'=> $carreras,'mensajesTotales'=> $totalMensajes,'alumnosTotales'=> $totalAlumnos,'MensajesByCarrera'=> $mensajesByCarrera];
         return response()->json($valores);
     }

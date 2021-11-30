@@ -5,22 +5,24 @@ window.addEventListener("load", function() {
     let newLi = []
     let difundir = document.getElementsByClassName('form_difundir');
     let btnEstadisticas = document.getElementsByClassName('estadistica')
+    const loader_container = this.document.querySelector('.preloader_container')
+
     $.ajax({
         url: '/panel-difusor',
         method: 'GET',
         cache: false,
         contentType: false,
         processData: false,
-
     }).done(function(res) {
+        loader_container.style.opacity = 0
+        loader_container.style.visibility = 'hidden'
         mensajesTotal.innerHTML = "Mensajes totales: " + res.mensajesTotales
         alumnosTotal.innerHTML = "Alumnos registrados: " + res.alumnosTotales
         for (let i = 0; i < res.carreras.length; i++) {
             newLi[i] = document.createElement('li');
-            newLi[i].innerHTML = res.carreras[i].name + ": " + res.MensajesByCarrera[i]
+            newLi[i].innerHTML = res.MensajesByCarrera[i].carrera + ": " + res.MensajesByCarrera[i].total
             mensajesByCarreras.appendChild(newLi[i])
         }
-
     });
     if (difundir) {
         let lblEstado = document.getElementsByClassName('new-messages__status-menssage');
@@ -29,9 +31,7 @@ window.addEventListener("load", function() {
             difundir[j].addEventListener('submit', function(event) {
                 let url = difundir[j].getAttribute('action')
                 let estado = document.getElementById('updateEstado').value;
-                let id = document.getElementsByClassName('idMensaje');
                 let mensajeContainer = document.getElementsByClassName('new-messages__container');
-                let messageSection = document.getElementById('new-messages')
                 console.log("anterior actual" + mensajeContainer.length)
                 $.ajax({
                     url: url,
@@ -54,17 +54,12 @@ window.addEventListener("load", function() {
                             showConfirmButton: false,
                             timer: 1500
                         });
+                        divDifundir[j].style.opacity = 0
+                        divDifundir[j].style.display = "none"
+                        lblEstado[j].innerHTML = "<b>Estado: Publicado</b>"
+                        lblEstado[j].style.background = "#0277BD";
 
 
-
-                        if (mensajeContainer[j].id == l[2]) {
-                            setTimeout(function() {
-                                divDifundir[j].style.opacity = 0
-                                divDifundir[j].style.display = "none"
-                                lblEstado[j].innerHTML = "<b>Estado: Publicado</b>"
-                                lblEstado[j].style.background = "#0277BD";
-                            }, 800)
-                        }
                     } else {
                         Swal.fire({
                             toast: true,
@@ -144,9 +139,9 @@ window.addEventListener("load", function() {
                     for (let i = 0; i < datos.visitas.length; i++) {
                         console.log(lblsContainer)
                         for (let j = 0; j < datos.alumnosCarreras.length; j++) {
-
-                            newLabel.innerHTML = datos.visitas[i].carrera + ":" + datos.visitas[i].visitas + "/" + datos.alumnosCarreras[i].cantidadAlumnos
-                            lblsContainer.appendChild(newLabel)
+                            console.log(lblsContainer.childElementCount)
+                            newLabel.innerHTML = newLabel.innerText + datos.visitas[i].carrera + ":" + datos.visitas[i].visitas + "/" + datos.alumnosCarreras[j].cantidadAlumnos
+                            lblsContainer.insertAdjacentElement('beforeend', newLabel)
 
                         }
                     }

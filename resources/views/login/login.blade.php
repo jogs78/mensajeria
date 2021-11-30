@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+
+    @laravelPWA
     <title>BIENVENIDO</title>
 </head>
 

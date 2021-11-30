@@ -16,5 +16,59 @@
             </ol>
         </div>
     </div>
+    <style>
+        .preloader_container {
+    position: absolute;
+    display: flex;
+    margin: auto;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    flex-direction: column;
+    background: #ffffff;
+    transition: all 1s;
+    z-index: 100;
+
+}
+        .preloader{
+
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    border: 10px solid #00000087;
+    border-radius: 50%;
+    animation: spin 2000ms linear 100ms infinite normal forwards;
+}
+@keyframes spin {
+    0%{
+        transform: rotate(0deg);
+        border-top: 10px solid #666;
+    }
+    50%{
+        transform: rotate(180deg);
+        border-top: 10px solid rgba(102, 102, 102, 0.514);
+    }
+    100%{
+        transform: rotate(360deg);
+        border-top: 10px solid rgba(102, 102, 102, 0);
+    }
+}
+.span{
+    position: absolute;
+margin: auto;
+top: 59%;
+bottom: 50%;
+font-size: 20px;
+text-align: center;
+width: 100%;
+color: rgb(0, 0, 0);
+font-weight: 800;
+}
+    </style>
     
 </section>
+<div class="preloader_container">
+        <div class="preloader"></div>
+        <span class="span">Cargando...</span>
+
+    </div>
