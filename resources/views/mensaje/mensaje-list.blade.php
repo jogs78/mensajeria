@@ -67,8 +67,8 @@
             @foreach ($mensajes as $mensaje)
                 <div class="new-messages__container" id="{{ $mensaje->id }}">
                     <div class="new-messages__information">
-                        <label for="" class="new-messages__title">Título: {{ $mensaje->titulo }}</label>
-                        <p for="" class="new-messages__title">Descripción: {{ $mensaje->descripcion }}</p>
+                        <p style="text-align: justify" class="new-messages__title">Título: {{ $mensaje->titulo }}</p>
+                        <p style="text-align: justify" class="new-messages__title">Descripción: {{ $mensaje->descripcion }}</p>
                         @if ($mensaje->estado == 0)
                             <label for="" class="new-messages__status-menssage" style="background: #2f8b8b">Estado: Pendiente</label>
                         @elseif($mensaje->estado==1)
@@ -82,7 +82,7 @@
                                     Publicado</b></label>
                         @endif
                         @if ($mensaje->fecha_publicacion)
-                        <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación: {{$mensaje->fecha_publicacion}}</label>
+                        <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación: {{\Carbon\Carbon::parse($mensaje->fecha_publicacion)->format('d/m/Y')}}</label>
                         @endif
                     </div>
                     <div class="new-messages_actions">

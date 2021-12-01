@@ -8,22 +8,23 @@
     flex-direction: column;
     padding: 10px;
     height: max-content;
-    width: min-content;
+    width: 100%;
 }
 
 .mensaje-create__form {
     position: relative;
-    top: 48px;
+    top: 10px;
     width: 90vw;
     height: auto;
     min-width: 300px;
     margin: auto;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     /* grid-template-columns: 500px 500px; */
-    grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+    /* grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
     grid-template-rows: max-content;
     grid-gap: 5px;
-    justify-content: center;
+    justify-content: center; */
     padding: 5px;
     border-radius: 5px;
     box-shadow: 1px 1px 4px rgb(155, 154, 154);
@@ -32,7 +33,6 @@
 .mensaje-create__form_body {
     resize: none;
     padding: 3px;
-    margin-top: 15px;
 }
 
 .mensaje-create__form_title {
@@ -48,8 +48,8 @@
 .mensaje-create__form_lbl_adjuntar {
     padding: 5px;
     margin-top: 15px;
-    border: 1px solid rgb(0, 0, 0);
-    width: 300px;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    width: 100%;
     overflow: auto;
 }
 
@@ -61,7 +61,7 @@
 
 .mensaje-create__form_lbl {
     padding: 5px;
-    border: 1px solid rgb(0, 0, 0);
+    border-bottom: 1px solid rgb(0, 0, 0);
 }
 
 .mensaje-create__form_select_carrera {
@@ -82,10 +82,14 @@
 .btn_en {
     width: 30%;
     margin: 10px auto;
-    border: 1px solid !important;
+    border: 0;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
     padding: 5px;
     background: transparent;
     height: min-content;
+    font-size: 15px;
+    font-weight: 800;
 }
 
 .multiselect {
@@ -200,7 +204,7 @@
 
 @media screen and (min-width:650px) {
     .mensaje-create__form {
-        grid-template-columns: repeat(auto-fit, minmax(max-content, 450px));
+        /* grid-template-columns: repeat(auto-fit, minmax(max-content, 450px)); */
         height: auto;
         margin-bottom: 20px;
     }

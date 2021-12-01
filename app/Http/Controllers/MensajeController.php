@@ -97,6 +97,14 @@ class MensajeController extends Controller
      */
     public function store(Request $request)
     {
+        request()->validate([
+            'titulo' => 'required',
+            'descripcion' => 'required',
+            'file-1' => 'required| dimensions:max_width=1500,max_height=1280',
+            'file-2' => 'required| mimetypes:application/pdf',
+            'car' => 'required',
+            'sem' => 'required',
+        ]);
         $datos = $request->all();
         $mensaje = new mensaje();
 
@@ -135,7 +143,7 @@ class MensajeController extends Controller
      */
     public function show($id)
     {
-        $mensaje = Mensaje::find($id);
+        $mensaje = Mensaje::with('carreras', 'semestres')->get()->find($id);
         $this->authorize('show', $mensaje);
         return view('mensaje.mensaje-show', compact('mensaje'));
     }
@@ -164,6 +172,14 @@ class MensajeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        request()->validate([
+            'titulo' => 'required',
+            'descripcion' => 'required',
+            'file-1' => 'dimensions:min_width=700,min_height=500, max_width=1500,max_height=1280',
+            'file-2' => ' mimetypes:application/pdf',
+            'car' => 'required',
+            'sem' => 'required',
+        ]);
         $datos = $request -> all();
         $mensaje = Mensaje::with('carreras', 'semestres', 'empleado')->get()->find($id);
         if(Auth::user()->rol=='Emisor'){

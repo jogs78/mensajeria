@@ -35,8 +35,14 @@ window.addEventListener('load', function() {
 
     });
     if (verDocumento) {
+        let close = document.getElementById('close')
+        let MostrarDocumento = document.getElementById('MostrarDocumento');
+        close.addEventListener('click', function() {
+            MostrarDocumento.style.display = "none"
+
+        })
         verDocumento.addEventListener('click', function() {
-            let MostrarDocumento = document.getElementById('MostrarDocumento');
+
             MostrarDocumento.style.display = "block"
         });
     }

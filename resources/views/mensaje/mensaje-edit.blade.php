@@ -1,6 +1,9 @@
 @extends('dashboard')
 @section('mensaje.mensaje-edit')
-    <embed src="{{ $mensaje->documento }}" id="MostrarDocumento" />
+    <div class="pdf-container" id="MostrarDocumento">
+        <i class="fas fa-times-circle" id="close"></i>
+        <embed src="{{ $mensaje->documento }}" />
+    </div>
 
     <section class="messages-edit">
         <style>
@@ -9,15 +12,31 @@
                 display: none;
             }
 
-            embed {
+            .pdf-container {
                 display: none;
+
+                width: 100%;
+                height: 100%;
+                background: #38383d;
+                overflow: hidden;
                 position: fixed;
-                width: 90wv;
-                height: 80vh;
+                z-index: 1000000000;
+            }
+
+            .pdf-container i {
+                color: white;
+                font-size: 30px;
+                float: right;
+                margin: 5px;
+                cursor: pointer;
+            }
+
+            embed {
+                position: relative;
+                width: 100%;
+                height: 100%;
                 z-index: 9999;
-                top: 42px;
                 left: 0;
-                margin: 2%;
             }
 
         </style>
@@ -35,8 +54,8 @@
                 <label for="">Descripción</label>
                 <textarea class="messages-edit__form_input" name="descripcion" id="" cols="30"
                     rows="5">{{ $mensaje->descripcion }}</textarea>
-                    {!! $errors->first('descripcion', '<small>:message</small><br>') !!}
-                
+                {!! $errors->first('descripcion', '<small>:message</small><br>') !!}
+
             </div>
             <div class="container_image">
                 <label for="" class="mensaje-create__form_lbl_adjuntar">Imagen</label>
@@ -142,7 +161,7 @@
                                 @endif
                             @endfor
                         </div>
-                    {!! $errors->first('sem', '<small>:message</small><br>') !!}
+                        {!! $errors->first('sem', '<small>:message</small><br>') !!}
                     </div>
                     @if ($mensaje->otros == 0)
                         <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio"

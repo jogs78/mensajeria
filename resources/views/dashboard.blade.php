@@ -16,11 +16,10 @@
     <link rel="stylesheet" href="{{ asset('static/css/user_edit_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('static/glider/glider.min.css') }}">
+    <link rel="manifest" href="{{ route('laravelpwa.manifest') }}">
     <script src="{{ asset('static/glider/glider.min.js') }}"></script>
-
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
-    @laravelPWA
 
     <title>Bienvenido</title>
 </head>

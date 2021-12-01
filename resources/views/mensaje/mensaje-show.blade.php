@@ -10,13 +10,22 @@
         <div class="mensage-show__container">
             <div class="img"><img src="{{ $mensaje->imagen }}" alt=""></div>
             <div class="message-show__body">
-                <label for="">Título: </label>
-                <label class="lbl" for="">{{ $mensaje->titulo }}</label>
-                <label for="">Descripción:</label>
-                <label class="lbl" for="">{{ $mensaje->descripcion }}</label>
-                <label for="">Segmento: </label>
-                <label class="lbl" for="">Carrera: {{ $mensaje->carrera }}</label>
-                <label class="lbl" for="">Semestre: {{ $mensaje->semestre }}</label>
+                <p class="lbl"><b>Título:</b> {{ $mensaje->titulo }}</p>
+                <p class="lbl"><b>Descripción:</b> {{ $mensaje->descripcion }}</p>
+                <label for="" class="lbl"><b>Segmento:</b> </label>
+                <ul>
+                    <li style="list-style: none"><b>Carreras:</b></li>
+                    @foreach ($mensaje->carreras as $carrera)
+                            <li style="list-style: none"><input type="checkbox" name="" id="" checked disabled> {{$carrera->name}}</li>
+                    @endforeach
+                </ul>
+                <ul>
+                    <li style="list-style: none"><b>Semestres:</b></li>
+                @foreach ($mensaje->semestres as $semestre)
+                        <li style="list-style: none"><input type="checkbox" name="" id="" checked disabled> {{$semestre->semestre}}</li>
+                @endforeach
+            </ul>
+            <label for="" style="text-decoration: underline"><b><small>Publicado el: {{\Carbon\Carbon::parse($mensaje->fecha_publicacion)->format('d/m/Y')}}</small></b></label>
             </div>
             @can('aceptarRechazar', $mensaje)
                 <div class="div">

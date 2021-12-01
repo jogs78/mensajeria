@@ -1,54 +1,38 @@
 .mensage-show {
+    width: 100%;
     height: 100vh;
-    display: flex;
-    position: relative;
-    top: 42px;
+    padding: 10px;
 }
 
 .mensage-show__container {
-    margin: auto;
-    width: 80%;
-    min-width: 300px;
-    height: 80%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    overflow: auto;
-    padding: 10px 5px;
+    padding: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
 }
 
 .lbl {
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 25px 25px 25px 0;
-    padding: 9px;
-    margin: 10px;
-    box-shadow: 0px 2px 3px #aeadad;
-    border-radius: 11px;
+    text-align: justify;
+    padding: 2px;
 }
 
-.message-show__body {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-    padding: 5px;
+.lbl b {
+    font-size: 17px;
 }
 
 .img {
+    height: min-content;
     width: 100%;
-    height: 200px;
-    min-width: 300px;
 }
 
 .img img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center center;
-}
-
-.div {
-    display: flex;
-    width: max-content;
+    width: 90%;
+    object-fit: scale-down;
+    object-position: center;
+    display: block;
     margin: auto;
+    border-radius: 5px;
 }
 
 .show__form_btn {
@@ -66,18 +50,11 @@
 }
 
 @media screen and (min-width:650px) {
-    .mensage-show__container {
-        width: 50%;
-        height: auto;
-        overflow: unset;
+    .lbl b {
+        font-size: 20px;
     }
-    .message-show__body {
-        width: 50%;
-        margin: auto;
-    }
-    .img {
-        height: 250px;
-        border: 8px double #0d47a18c;
-        padding: 3px;
+    .img img {
+        height: 80%;
+        width: 60%;
     }
 }

@@ -12,12 +12,15 @@
         <form action="/mensajes" method="POST" class="mensaje-create__form" id="form" enctype="multipart/form-data">
             @csrf
             <div class="c1">
+                <span><b>Título:</b></span>
                 <input placeholder="Título" class="mensaje-create__form_title" type="text" name="titulo">
                 {!! $errors->first('titulo', '<small>:message</small><br>') !!}
+                <span><b>Descripción:</b></span>
                 <textarea placeholder="Descripción..." class="mensaje-create__form_body" name="descripcion" id="" cols="30"
                     rows="10"></textarea>
                 {!! $errors->first('descripcion', '<small>:message</small><br>') !!}
                 <label class="mensaje-create__form_lbl_adjuntar" for="">Adjuntar archivo</label>
+                <span><b><small>** Nota: la dimension maxima de la imagen debe de ser: 1280x700 ó 1500x500 **</small></b></span>
                 <div class="container-input">
                     <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1" accept="image/*">
                     <label for="file-1">
@@ -69,14 +72,16 @@
                     {!! $errors->first('sem', '<small>:message</small><br>') !!}
                 </div>
 
-                <span><input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social"
+                <div>
+                    <span><input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social"
                         value="0"> Servicio social</span>
                 <span><input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1">
                     Residencia</span>
                 <span><input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3">
                     General</span>
+                </div>
             </div>
-            <input id="btn_enviar" class="btn_en" type="submit" value="Enviar">
+            <input  class="btn_en" type="submit" value="Enviar">
         </form>
 
     </section>
