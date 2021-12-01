@@ -11,6 +11,7 @@ window.addEventListener('load', function() {
     let userName = document.getElementById('userName')
     let bandera = false;
     let img = null;
+    let menuContainer = document.getElementById('menuContainer')
     btnMenu.addEventListener('click', function() {
         menu.classList.toggle('navigation_show');
         btnMenu.classList.toggle('navigation_alternate_color')
@@ -21,7 +22,7 @@ window.addEventListener('load', function() {
 
     btnShow.addEventListener('click', function() {
         personalInformation.style.left = 0
-        personalInformation.focus();
+        actualizarInfo.style.width = menuContainer.clientWidth + "px"
     });
     btnBack.addEventListener('click', function() {
         personalInformation.style.left = '-100%'

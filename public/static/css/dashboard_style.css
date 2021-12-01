@@ -393,7 +393,7 @@
     list-style: none;
     position: relative;
     padding: 5px;
-    font-size: 30px;
+    font-size: 18px;
     color: rgb(255, 255, 255);
 }
 
@@ -433,7 +433,7 @@ i:hover {
 }
 
 .menu-content {
-    width: 50vw;
+    width: max-content;
     height: 100vh;
     background: var(--main-bg-color);
     min-width: 200px;
@@ -447,40 +447,17 @@ i:hover {
 .text {
     position: relative;
     padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
     color: rgb(255, 255, 255);
 }
 
 .menu-list__item:hover,
-.menu-list__item a:hover {
+.text:hover {
     border: 0;
     box-shadow: none;
     top: 0;
     color: rgb(251, 255, 35);
 }
-
-
-/* .menu-list__item::after {
-    content: "";
-    position: absolute;
-    width: 0%;
-    height: 8%;
-    bottom: 0;
-    left: 50%;
-    border-radius: 0 5px;
-    z-index: -1;
-    transition-property: left, width;
-    transition-duration: 1500ms;
-    transition-delay: 350ms;
-    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.menu-list__item:hover::after {
-    width: 200%;
-    left: -50%;
-    bottom: -15%;
-    background: rgb(0, 0, 0);
-} */
 
 #personalInformation {
     left: -100%;
@@ -568,6 +545,12 @@ i:hover {
 
 @media screen and (min-width:650px) {
     /* dashboard-actores */
+    .menu-list__item {
+        font-size: 20px;
+    }
+    .text {
+        font-size: 20px;
+    }
     .dashboard-difusor__contianer {
         grid-template-columns: 300px 1fr;
         grid-template-rows: repeat(3, 150px);

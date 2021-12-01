@@ -173,9 +173,9 @@ dt {
     margin: 2px 0 0 2px;
     position: absolute;
     content: counter(my-awesome-counter);
-    color: red;
+    color: #0063fd;
     font-weight: 800;
-    font-size: 30px;
+    font-size: 25px;
     top: 0;
     left: 0;
     border-radius: 50%;
@@ -215,7 +215,7 @@ dd {
     position: relative;
     left: -200%;
     opacity: 0;
-    background: #00000052;
+    background: #ffffff;
     width: 100%;
     height: 100vh;
     position: absolute;
@@ -243,6 +243,7 @@ dd {
 .mensaje-informacion {
     width: min-content;
     flex-grow: 1;
+    padding: 8px;
 }
 
 .mensaje-informacion p,
@@ -257,7 +258,7 @@ dd {
     margin: 11px;
     display: flex;
     flex-wrap: wrap;
-    width: 98%;
+    width: 100%;
     margin: auto;
     margin-top: 10px;
     text-align: justify;
@@ -273,21 +274,29 @@ dd {
     object-fit: scale-down;
     object-position: center;
     position: relative;
-    margin: auto
-}
-
-.cambiarMedida {
+    margin: auto;
     width: 100%;
 }
 
-.cambiarMedida1 {
+label {
+    display: block;
     width: 100%;
 }
 
-#title,
-#descripcion,
-#fechaPublicacion {
-    width: 100%;
+#documento {
+    margin: auto;
+    text-align: center;
+    display: block;
+    transition: transform 500ms;
+    width: max-content;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#documento:active {
+    transform: scale(.9);
+    background: #0d47a1;
+    color: white;
 }
 
 .warning-container {
@@ -302,15 +311,20 @@ dd {
 .warning-container p {
     font-size: 23px;
     text-align: center;
-    color: skyblue;
+    color: rgb(0, 0, 0);
     text-decoration: underline;
 }
 
 @media screen and (min-width:650px) {
-    .cambiarMedida {
-        width: 50%;
-    }
     #btnClose {
         font-size: 30px;
+    }
+    #image {
+        width: 70%;
+    }
+    .contenedor::before {
+        font-size: 30px;
+        width: 35px;
+        height: 35px;
     }
 }

@@ -31,7 +31,7 @@
                 <i class="fas fa-bars" id="navigation_btn"></i>
                 <div class="menu-container" id="menu">
 
-                    <div class="menu-content">
+                    <div class="menu-content" id="menuContainer">
                         <div class="menu-content" id="personalInformation" >
                             <i class="fas fa-chevron-left" id="btnback" style="font-size:22px;"></i>
                             <center>

@@ -33,7 +33,7 @@
                 <label id="emisor" for=""><small><b>Publicado por: aqui el dep al que pertenece el
                             emisor</b></small></label>
                 <label id="" for=""></label>
-                <label id="documento" for="">Descargar pdf</label>
+                <a href="" id="documento" target="__BLANK">Descargar PDF</a>
             </div>
         </div>
     </div>
