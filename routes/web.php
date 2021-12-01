@@ -25,6 +25,9 @@ Route::get('/sign-up',function(){
     $semestres = Semestre::all();$carreras = Carrera::all();
     return view('sign-up.sing-up', compact('semestres', 'carreras'));
 });
+Route::get('/offline',function(){
+    return view('vendor.laravelpwa.offline');
+});
 Route::post('/sign-up', 'AutenticarController@signUp');
 
 

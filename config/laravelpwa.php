@@ -5,7 +5,9 @@ return [
     'manifest' => [
         'name' => 'Mensajería ITTG',
         'short_name' => 'Mensajería ITTG',
+        'description'=> "Aplicacion de mensajería para la comunidad del ITTG",
         'start_url' => '/inicio',
+        'scope' => '/inicio',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
         'display' => 'standalone',
@@ -57,22 +59,6 @@ return [
             '1668x2388' => '/images/icons/splash-1668x2388.png',
             '2048x2732' => '/images/icons/splash-2048x2732.png',
         ],
-        'shortcuts' => [
-            [
-                'name' => 'Shortcut Link 1',
-                'description' => 'Shortcut Link 1 Description',
-                'url' => '/log-in',
-                'icons' => [
-                    "src" => "/images/icons/icon-72x72.png",
-                    "purpose" => "any"
-                ]
-            ],
-            [
-                'name' => 'Shortcut Link 2',
-                'description' => 'Shortcut Link 2 Description',
-                'url' => '/shortcutlink2'
-            ]
-        ],
-        'custom' => []
+        
     ]
 ];

@@ -1,11 +1,6 @@
-var cacheName = "pwa-v0";
-var filesToCache = [
-    '/inicio',
-    '/log-in',
-    '/static/css/css/all.css',
-    '/static/css/sweetalert/sweetalert2.all.min.js',
-    '/static/jquery/jquery-3.6.0.min.js',
-    '/static/css/login_style.css',
+const cacheName = "my-pwa-shell";
+const filesToCache = [
+
     '/images/icons/icon-72x72.png',
     '/images/icons/icon-96x96.png',
     '/images/icons/icon-128x128.png',
@@ -15,6 +10,7 @@ var filesToCache = [
     '/images/icons/icon-384x384.png',
     '/images/icons/icon-512x512.png',
 ];
+
 self.addEventListener("install", e => {
     console.log("[ServiceWorker**] - Install");
     e.waitUntil(

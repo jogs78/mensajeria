@@ -14,6 +14,7 @@
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
+    @laravelPWA
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,12 +124,40 @@
 
     @yield('mensajes-viejos')
     @yield('mensajes-nuevos')
+    @yield('content')
+
     <script src="{{ asset('static/js/dashboard.js') }}"></script>
+
+    <script type="text/javascript">
+        let notificacionBtn = document.getElementById('notificaciones')
+        notificacionBtn.addEventListener('click', function() {
+
+            if (!("Notification" in window)) {
+                console.log("Este navegador no es compatible con las notificaciones de escritorio");
+            } else if (Notification.permission === "granted") {
+                // Si es correcto, lanzamos una notificación
+                notification()
+            } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
+                Notification.requestPermission(function(permission) {
+                    // Si el usuario nos lo concede, creamos la notificación
+                    if (permission === "granted") {
+                        notification()
+                    }
+                });
+            }
+        })
+        function notification() {
+            const options = {
+                body: 'Testing Our Notification',
+                icon: './static/imagenes/mascota_ittg.png'
+            };
+            swRegistration.showNotification('PWA Notification!', options);
+        }
+    </script>
     <script>
         let btnVerMas = document.getElementsByClassName('ver-mas');
         let btnClose = document.getElementById('btnClose');
         let contendor = document.getElementById('contenedor');
-        let notificaciones = document.getElementById('notificaciones')
         let imageContainer = document.getElementById('imageContainer');
         let image = document.getElementById('image')
         let title = document.getElementById('title')
@@ -153,23 +182,7 @@
             contendor.style.left = "-200%";
 
         })
-        //esto es para activar las notificaciones
-        // notificaciones.addEventListener('click', function() {
-        //     alert(1)
-        //     if (!("Notification" in window)) {
-        //         console.log("Este navegador no es compatible con las notificaciones de escritorio");
-        //     } else if (Notification.permission === "granted") {
-        //         // Si es correcto, lanzamos una notificación
-        //         var notification = new Notification("Hola!");
-        //     } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
-        //         Notification.requestPermission(function(permission) {
-        //             // Si el usuario nos lo concede, creamos la notificación
-        //             if (permission === "granted") {
-        //                 var notification = new Notification("Hola!");
-        //             }
-        //         });
-        //     }
-        // })
+
 
         function consultarMensaje(id, id_notification) {
             $.ajax({
