@@ -314,7 +314,6 @@
     .login__form input:focus+.lbl_personal_information {
         top: -65px;
         font-size: 18px;
-        /* z-index: 10; */
     }
     .fijar {
         top: -65px;

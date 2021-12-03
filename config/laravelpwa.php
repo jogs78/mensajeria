@@ -6,13 +6,13 @@ return [
         'name' => 'Mensajería ITTG',
         'short_name' => 'Mensajería ITTG',
         'description'=> "Aplicacion de mensajería para la comunidad del ITTG",
-        'start_url' => '/inicio',
-        'scope' => '/inicio',
+        'start_url'=> '/',
+        'scope' => './',
         'background_color' => '#ffffff',
-        'theme_color' => '#000000',
+        'theme_color' => '#0d47a1',
         'display' => 'standalone',
-        'orientation'=> 'any',
-        'status_bar'=> 'black',
+        'orientation'=> 'portrait',
+        'status_bar'=> '#0d47a1',
         'icons' => [
             '72x72' => [
                 'path' => '/images/icons/icon-72x72.png',
@@ -62,3 +62,4 @@ return [
         
     ]
 ];
+
