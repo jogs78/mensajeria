@@ -82,7 +82,7 @@
                 <form class="resetPassword-form" id="updatePassword" method="POST">
                     @csrf
                     <label for="email">Correo electronico</label>
-                    <input type="email" name="email" id="email" placeholder="ejemplo@email.com">
+                    <input type="email" name="email" id="email" placeholder="alguien@email.com">
                     <label for="" id="vericaCorreo"></label>
                     
                     <button type="submit" class="login__form_btn" style="height: 30px">Enviar</button>
