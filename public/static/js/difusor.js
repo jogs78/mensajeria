@@ -112,6 +112,7 @@ window.addEventListener("load", function() {
                 contentType: false,
                 processData: false,
             }).done(function(res) {
+               
                 let carreras = [];
                 let valores = [];
                 let datos = res
@@ -119,6 +120,7 @@ window.addEventListener("load", function() {
                 let mensaje = []
                 mensaje = datos.mensaje
                 valores = []
+                console.log(datos.mensaje.carreras)
                 for (let i = 0; i < datos.alumnosCarreras.length; i++) {
                     listCarreras.innerHTML = "<ul><li>" + mensaje.carreras[i].name + "</li></ul>" + listCarreras
                         .innerHTML;

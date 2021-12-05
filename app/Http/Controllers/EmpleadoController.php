@@ -115,8 +115,9 @@ class EmpleadoController extends Controller
         //
     }
     public function verEstadisticas($id){
-        $mensaje = mensaje::with('carreras', 'semestres')->where('id', $id)->first();
+        $mensaje = mensaje::with('carreras', 'semestres')->get()->where('id', $id)->first();
         $alumnosMensajes = array();
+        
         $a1 = array(); $visitas = array(); $visitas2 = array(); $visitasContador = array(); $contador = 0;
         for($i = 0; $i < sizeof($mensaje->carreras); $i++){
             for($j = 0; $j < sizeof($mensaje->semestres); $j++){
@@ -157,7 +158,7 @@ class EmpleadoController extends Controller
                     }else{
                         if($mensaje->carreras[$i]->name == $visitas2[$j-1]['carrera']){
                             $visitas2[$j-1]['visitas'] = $visitas2[$j-1]['visitas'] + $contador;
-                            unset($mensaje->carreras[$i]->name);
+                            unset($visitas2[$j-1]['carrera']);
                         }  
                         array_push($visitas2, ['carrera' => $mensaje->carreras[$i]->name,
                         'visitas' => $contador,]);                
@@ -167,14 +168,14 @@ class EmpleadoController extends Controller
             }           
         }
         
-       for($i = 0; $i < sizeof($visitas2); $i++){
-           if(is_null($visitas2[$i]['carrera'])){
-            unset($visitas2[$i]);
-           }else{
-               array_push($visitasContador, $visitas2[$i]);
-           }
-       }
-        
+    //    for($i = 0; $i < sizeof($visitas2); $i++){
+    //        if(is_null($visitas2[$i]['carrera'])){
+    //         unset($visitas2[$i]);
+    //        }else{
+    //            array_push($visitasContador, $visitas2[$i]);
+    //        }
+    //    }
+    //    return $visitas2;
         return (object) $respuesta = array(
             'mensaje' => $mensaje, 
             'alumnosCarreras' => $alumnosMensajes, 
