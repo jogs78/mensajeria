@@ -49,7 +49,7 @@ color: rgb(0, 0, 0);
     <button type="submit" class="btn-sub fas fa-search"></button>
 </form>
 <form action="/mensajes" id="f2">
-    <label for="fechaPub">Fecha de publicación <input type="date" name="fechaPub"></label>
+    <label for="fechaPub" style="width: max-content">Fecha de publicación <input type="date" name="fechaPub"></label>
     <select name="carrera" id="" name="carreras" class="select">
         <option >Filtrar por carreras</option>
         @foreach ($carreras as $carrera)

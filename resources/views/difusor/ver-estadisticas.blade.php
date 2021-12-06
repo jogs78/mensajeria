@@ -8,6 +8,8 @@
         margin: 5px;
         cursor: pointer;
         transition: transform .5s ease;
+        position: relative;
+        z-index: 2;
     }
 
     #close:active {
@@ -17,12 +19,14 @@
     .estadisticas {
         opacity: 0;
         top: -200%;
-        position: absolute;
+        position: fixed;
         z-index: 4444;
         background: rgba(0, 0, 0, 0.425);
         width: 100%;
         height: 100vh;
         transition: all 1s ease;
+        backdrop-filter: blur(1px);
+        overflow: auto;
     }
 
     .dashboard-EmisorRevisror,
@@ -31,29 +35,25 @@
     }
 
     .lbl-container {
-        padding: 10px;
+        background: rgb(255, 255, 255);
         display: flex;
         flex-wrap: wrap;
-        gap: 2px;
         width: 80vw;
         margin: auto;
     }
 
     .lbls-inf {
         font-weight: 800;
-        border-radius: 5px
     }
 
     .lbls-inf:nth-child(1) {
         width: 100%;
         text-align: center;
         padding: 3px;
-        background: #1e88e5;
     }
 
     .lbls-inf:nth-child(2),
     .lbls-inf:nth-child(3) {
-        background: #1e88e5;
         flex-grow: 1;
         text-align: center;
         padding: 5px;
@@ -67,9 +67,11 @@
 
     #listCarreras::before {
         content: "Carreras seleccionadas: ";
+        display: block;
     }
 
     #listSemestres::before {
+        display: block;
         content: "Semestres seleccionados: ";
     }
 
@@ -78,13 +80,13 @@
 <section class="estadisticas" id="graficaContainer">
     <i class="fas fa-times-circle" id="close"></i>
     <div
-        style="position: relative; height:60vh; width:80vw; margin: auto;background: black;padding: 6px;margin: 10px auto;border-radius: 5px;">
+        style="position: relative; height:60vh; width:80vw; margin: auto;background: black;padding: 6px;margin: 10px auto;border-radius: 5px;z-index:1">
         <canvas id="myChart"></canvas>
     </div>
     <div class="lbl-container">
         <div class="lbls-inf" id="lbls-container">
             <label for="" class="" style="display:block;">Alumnos que han visto esta publicación</label>
-
+            <p id="visitas"></p>
         </div>
         <label for="" class="lbls-inf" id='listCarreras'> </label>
         <label for="" class="lbls-inf" id="listSemestres"></label>

@@ -156,26 +156,33 @@ class EmpleadoController extends Controller
                         array_push($visitas2, ['carrera' => $mensaje->carreras[$i]->name,
                         'visitas' => $contador,]);
                     }else{
+                        
                         if($mensaje->carreras[$i]->name == $visitas2[$j-1]['carrera']){
+                            
                             $visitas2[$j-1]['visitas'] = $visitas2[$j-1]['visitas'] + $contador;
-                            unset($visitas2[$j-1]['carrera']);
-                        }  
-                        array_push($visitas2, ['carrera' => $mensaje->carreras[$i]->name,
-                        'visitas' => $contador,]);                
+                            array_push($visitas2, ['carrera' => null,
+                        'visitas' => 0,]);
+                        
+                            
+                        }  else{
+                            array_push($visitas2, ['carrera' => $mensaje->carreras[$i]->name,
+                        'visitas' => $contador,]);
+                        }
+                        
+                                        
                     }   
                     $contador =0;                   
                 }
             }           
         }
         
-    //    for($i = 0; $i < sizeof($visitas2); $i++){
-    //        if(is_null($visitas2[$i]['carrera'])){
-    //         unset($visitas2[$i]);
-    //        }else{
-    //            array_push($visitasContador, $visitas2[$i]);
-    //        }
-    //    }
-    //    return $visitas2;
+       for($i = 0; $i < sizeof($visitas2); $i++){
+
+           if(!is_null($visitas2[$i]['carrera'])){
+            array_push($visitasContador, $visitas2[$i]);
+           }
+       }
+    // return $visitasContador;
         return (object) $respuesta = array(
             'mensaje' => $mensaje, 
             'alumnosCarreras' => $alumnosMensajes, 

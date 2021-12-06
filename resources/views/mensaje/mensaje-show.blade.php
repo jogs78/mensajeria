@@ -28,7 +28,8 @@
             <label for="" style="text-decoration: underline"><b><small>Publicado el: {{\Carbon\Carbon::parse($mensaje->fecha_publicacion)->format('d/m/Y')}}</small></b></label>
             </div>
             @can('aceptarRechazar', $mensaje)
-                <div class="div">
+                <div class="div" style="display: flex;
+                margin: auto;">
                     <form method="POST" action="/mensajes/{{ $mensaje->id }}" style="text-align: center">
                     @csrf
                     @method('PUT')

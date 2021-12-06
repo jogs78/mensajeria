@@ -77,11 +77,11 @@ window.addEventListener("load", function() {
         }
     }
     if (btnEstadisticas) {
+        let visitas = document.getElementById('visitas')
         let graficaContainer = document.getElementById('graficaContainer')
         let btnClose = document.getElementById('close')
         let myChart = null;
         let lblsContainer = document.getElementById('lbls-container')
-        let newLabel = document.createElement('label')
         let listCarreras = document.getElementById('listCarreras'),
             listSemestres = document.getElementById('listSemestres');
         for (let i = 0; i < btnEstadisticas.length; i++) {
@@ -99,6 +99,8 @@ window.addEventListener("load", function() {
             graficaContainer.style.top = "-200%";
             listCarreras.innerHTML = "";
             listSemestres.innerHTML = "";
+
+            visitas.innerHTML = ""
             if (myChart) {
                 myChart.destroy();
             }
@@ -112,7 +114,7 @@ window.addEventListener("load", function() {
                 contentType: false,
                 processData: false,
             }).done(function(res) {
-               
+
                 let carreras = [];
                 let valores = [];
                 let datos = res
@@ -120,14 +122,13 @@ window.addEventListener("load", function() {
                 let mensaje = []
                 mensaje = datos.mensaje
                 valores = []
-                console.log(datos.mensaje.carreras)
+                console.log(datos)
                 for (let i = 0; i < datos.alumnosCarreras.length; i++) {
-                    listCarreras.innerHTML = "<ul><li>" + mensaje.carreras[i].name + "</li></ul>" + listCarreras
-                        .innerHTML;
+
+                    listCarreras.innerHTML = listCarreras.innerHTML + mensaje.carreras[i].name + "<br>"
                 }
                 for (let i = 0; i < datos.alumnosCarreras.length; i++) {
-                    listSemestres.innerHTML = "<ul><li>Semestre:" + mensaje.semestres[i].semestre + "</li></ul>" +
-                        listSemestres.innerHTML;
+                    listSemestres.innerHTML = listSemestres.innerHTML + mensaje.semestres[i].semestre + " semestre <br>";
                 }
                 for (let i = 0; i < datos.alumnosCarreras.length; i++) {
                     valores.push(datos.alumnosCarreras[i].cantidadAlumnos);
@@ -135,16 +136,13 @@ window.addEventListener("load", function() {
                 }
                 generarGrafica(carreras, valores, tituloGrafica);
                 if (datos.visitas.length == 0) {
-                    newLabel.innerHTML = "Ningun alumno ha visto esta publicación"
-                    lblsContainer.appendChild(newLabel)
+                    visitas.innerHTML = "0 visitas para esta publicación"
                 } else {
                     for (let i = 0; i < datos.visitas.length; i++) {
-                        console.log(lblsContainer)
                         for (let j = 0; j < datos.alumnosCarreras.length; j++) {
-                            console.log(lblsContainer.childElementCount)
-                            newLabel.innerHTML = newLabel.innerText + datos.visitas[i].carrera + ":" + datos.visitas[i].visitas + "/" + datos.alumnosCarreras[j].cantidadAlumnos
-                            lblsContainer.insertAdjacentElement('beforeend', newLabel)
-
+                            if (datos.visitas[i].carrera == datos.alumnosCarreras[j].carrera) {
+                                visitas.innerHTML = visitas.innerText + "[ " + datos.visitas[i].carrera + ": " + datos.visitas[i].visitas + "/" + datos.alumnosCarreras[j].cantidadAlumnos + " ]"
+                            }
                         }
                     }
                 }
