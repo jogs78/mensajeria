@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Mail\TestMail;
 use App\Mail\restPasswordMail;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\Input;
-use Session;
-use Mai;
 use Illuminate\Support\Str;
 
 class AutenticarController extends Controller
@@ -30,18 +27,25 @@ class AutenticarController extends Controller
         ]);
         $email = $request->input('email');
         $password = $request->input('password');
-        $alumno = Alumno::where('correo', $email)->first();
+        $alumno = Alumno::where('correo', $email)->first();//buscamos el correo en la tabla alumnos
         $rememberMe = false;
         if (isset($request->rememberMe))
             $rememberMe = true;
-        if (is_null($alumno)) {
-            $credentials = ['correo' => $email, 'password' => $password];
-            if (Auth::guard('admin')->attempt($credentials)) {
-                $empleado = Empleado::where('correo', $email)->first();
-                Auth::login($empleado, $rememberMe);
-                return redirect('/inicio');
+        if (is_null($alumno)) {//validamos si encontramos correo en la tabla alumnos
+            $empleado = Empleado::where('correo', $email)->first();
+            if(is_null($empleado)){
+                return back()->withErrors('¡Error! El usuario no existe')->withInput();
+            }else{
+                if($empleado->confirmed==1){
+                    $credentials = ['correo' => $email, 'password' => $password];
+                    if (Auth::guard('admin')->attempt($credentials)) {
+                        Auth::login($empleado, $rememberMe);
+                        return redirect('/inicio');
+                    }
+               }else{
+                    return redirect()->back()->with('message', "¡El correo no ha sio confirmado!");
+               }
             }
-            return back()->withErrors('¡Error! El usuario no existe')->withInput();
         } elseif ($alumno->confirmed == 1) {
             if (Hash::check($password, $alumno->contraseña)) {
                 Auth::login($alumno, $rememberMe);

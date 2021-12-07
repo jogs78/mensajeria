@@ -7,10 +7,12 @@ use App\Models\Empleado;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 use App\Models\Semestre;
 use App\Models\Carrera;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class InformaticoController extends Controller
 {
@@ -60,6 +62,7 @@ class InformaticoController extends Controller
      */
     public function store(Request $request)
     {
+        $codigo = Str::random(25);//generamos un codigo de confirmacion aleatorio
         $informacion = $request->all();
         //return $informacion;
         request()->validate([
@@ -73,24 +76,58 @@ class InformaticoController extends Controller
             'puesto' => 'required',
             'quien_revisa' => 'required'
         ]);
-        if ($informacion['password'] != $informacion['password_confirm']) {
-            return back()->with('message', 'Las contraseñas no coinciden')->withInput();
+        // checamos si el correol ya existe en la base
+        $correo = Empleado::where('correo', $informacion['email'])->get();
+        // validamos si encontramos un registro
+        if(sizeof($correo) > 0){
+            return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
+        }else{
+            //validamos que las contraseñas coincidan
+            if ($informacion['password'] != $informacion['password_confirm']) {
+                return back()->with('message', 'Las contraseñas no coinciden')->withInput();
+            }elseif($informacion['password'] == $informacion['password_confirm']){//si son iguales, procedemos a guardar el registro en la base
+                $empleado = new Empleado();
+                $empleado->nombre = $informacion['name'];
+                $empleado->apellido_paterno = $informacion['a_paterno'];
+                $empleado->apellido_materno = $informacion['a_materno'];
+                $empleado->correo = $informacion['email'];
+                $empleado->password = Hash::make($informacion['password']);
+                $empleado->rol = $informacion['rol'];
+                $empleado->puesto = $informacion['puesto'];
+                $empleado->quien_revisa = $informacion['quien_revisa'];
+                $empleado->confirmation_code = $codigo;
+                //guardamos el nombre y el codigo para usarlos en la confirmacion de correo.
+                $data = [
+                    'name' => $informacion['name'],
+                    'confirmation_code' => $codigo
+                ];
+                //pasamos los datos al archivo TestMail
+                Mail::to($informacion['email'])->send(new TestMail($data));
+                $empleado->save();
+                return redirect()->back()->with('message', 'Revise su correo para terminar el registro.');
+            }
+            else {
+                return redirect()->back()->with('message', "¡Error de registro!");
+            }   
         }
-        $empleado = new Empleado();
-        // unset($informacion['numer_control']);
-        // unset($informacion['carrera']);
-        // unset($informacion['semestre']);
-        // unset($informacion['password_confirm']);
-        $empleado->nombre = $informacion['name'];
-        $empleado->apellido_paterno = $informacion['a_paterno'];
-        $empleado->apellido_materno = $informacion['a_materno'];
-        $empleado->correo = $informacion['email'];
-        $empleado->password = Hash::make($informacion['password']);
-        $empleado->rol = $informacion['rol'];
-        $empleado->puesto = $informacion['puesto'];
-        $empleado->quien_revisa = $informacion['quien_revisa'];
+        
+        
+    }
+
+    //Metodo para confirmar el correo.
+    public function verify($code)
+    {
+        $empleado = Empleado::where('confirmation_code', $code)->first();
+        if (!$empleado) {
+            return redirect('/log-in');
+        }
+
+        $empleado->confirmed = true;
+        $empleado->confirmation_code = null;
         $empleado->save();
-        return redirect()->back()->with('message', 'Registro existoso');
+        return redirect('/log-in');
+        
+       
     }
 
     /**

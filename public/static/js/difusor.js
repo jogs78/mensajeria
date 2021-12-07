@@ -127,8 +127,8 @@ window.addEventListener("load", function() {
 
                     listCarreras.innerHTML = listCarreras.innerHTML + mensaje.carreras[i].name + "<br>"
                 }
-                for (let i = 0; i < datos.alumnosCarreras.length; i++) {
-                    listSemestres.innerHTML = listSemestres.innerHTML + mensaje.semestres[i].semestre + " semestre <br>";
+                for (let j = 0; j < mensaje.semestres.length; j++) {
+                    listSemestres.innerHTML = listSemestres.innerHTML + mensaje.semestres[j].semestre + " semestre <br>";
                 }
                 for (let i = 0; i < datos.alumnosCarreras.length; i++) {
                     valores.push(datos.alumnosCarreras[i].cantidadAlumnos);

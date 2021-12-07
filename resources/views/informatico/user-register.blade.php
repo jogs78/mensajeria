@@ -29,10 +29,10 @@
                     });
                     Toast.fire({
                         type: 'success',
-                        title: 'Registro exitoso!'
+                        title: '{{sesion('message')}}'
                     })
                 </script>
-            @endif
+            @endif  
             <div class="user-select">
                 <button id="alumno" name="alumno" value="0">Alumno</button>
                 <button id="empleado" name="empleado" value="0">Empleado</button>
