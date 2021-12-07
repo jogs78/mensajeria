@@ -29,7 +29,7 @@
                     });
                     Toast.fire({
                         type: 'success',
-                        title: '{{sesion('message')}}'
+                        title: '{{session('message')}}'
                     })
                 </script>
             @endif  

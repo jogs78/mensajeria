@@ -66,6 +66,7 @@ class AutenticarController extends Controller
     }
     public function signUp(Request $request)
     {
+        //Metodo para registrate como alumno.
         $codigo = Str::random(25);//generamos un codigo de confirmacion aleatorio
         $personalInformation = $request->all();//obtenemos todos los datos puestos en el formulario
         request()->validate([//validamos que los campos no esten vacios
@@ -83,12 +84,13 @@ class AutenticarController extends Controller
         $users = Alumno::where('id', $personalInformation['num_control'])->get();
         // checamos si el correol ya existe en la base
         $correo = Alumno::where('correo', $personalInformation['correo'])->get();
+        $correo2 = Empleado::where('correo', $personalInformation['correo'])->get();
         // validamos si encontramos un registro
         if(sizeof($users) > 0){
             return redirect()->back()->with('message', "¡El número de control ya se encuentra registrado!");
         }else{
             //validamos si encontramos un correo existente
-            if(sizeof($correo) > 0){
+            if(sizeof($correo) > 0 or sizeof($correo2)>0){
                 return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
             }else{
                 //validamos que las contraseñas coincidan

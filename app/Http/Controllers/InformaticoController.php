@@ -76,10 +76,12 @@ class InformaticoController extends Controller
             'puesto' => 'required',
             'quien_revisa' => 'required'
         ]);
+        
         // checamos si el correol ya existe en la base
         $correo = Empleado::where('correo', $informacion['email'])->get();
+        $correo2 = Alumno::where('correo', $informacion['email'])->get();
         // validamos si encontramos un registro
-        if(sizeof($correo) > 0){
+        if(sizeof($correo) > 0 or sizeof($correo2)>0){
             return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
         }else{
             //validamos que las contraseñas coincidan
