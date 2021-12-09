@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MensajeEvent
+class MensajeEvent implements ShouldBroadcast
 {
     public $mensaje;
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -32,6 +32,7 @@ class MensajeEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        // return new PrivateChannel('channel-name');
+        return new Channel('mensajeriaITTG-home');
     }
 }

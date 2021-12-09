@@ -24,6 +24,7 @@ class AlumnoController extends Controller
        if($request->mensajes_nuevos == true){
         $mensajes = Auth::user()->unreadNotifications;
         // return $mensajes[0]->data;
+        return view('alumno.prueba', compact('mensajes'));
         return view('alumno.mensajes-nuevos', compact('mensajes'));
        }else{
         $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');

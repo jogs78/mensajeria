@@ -56,7 +56,7 @@ class MensajeNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'mensaje_id' => $this->mensaje->id,
+            
             'titulo' => $this->mensaje->titulo,
             'descripcion' => $this->mensaje->descripcion,
             'imagen' => $this->mensaje->imagen,
