@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Mail\TestMail;
 use App\Mail\restPasswordMail;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\Input;
-use Session;
-use Mai;
 use Illuminate\Support\Str;
 
 class AutenticarController extends Controller
@@ -30,18 +27,25 @@ class AutenticarController extends Controller
         ]);
         $email = $request->input('email');
         $password = $request->input('password');
-        $alumno = Alumno::where('correo', $email)->first();
+        $alumno = Alumno::where('correo', $email)->first();//buscamos el correo en la tabla alumnos
         $rememberMe = false;
         if (isset($request->rememberMe))
             $rememberMe = true;
-        if (is_null($alumno)) {
-            $credentials = ['correo' => $email, 'password' => $password];
-            if (Auth::guard('admin')->attempt($credentials)) {
-                $empleado = Empleado::where('correo', $email)->first();
-                Auth::login($empleado, $rememberMe);
-                return redirect('/inicio');
+        if (is_null($alumno)) {//validamos si encontramos correo en la tabla alumnos
+            $empleado = Empleado::where('correo', $email)->first();
+            if(is_null($empleado)){
+                return back()->withErrors('¡Error! El usuario no existe')->withInput();
+            }else{
+                if($empleado->confirmed==1){
+                    $credentials = ['correo' => $email, 'password' => $password];
+                    if (Auth::guard('admin')->attempt($credentials)) {
+                        Auth::login($empleado, $rememberMe);
+                        return redirect('/inicio');
+                    }
+               }else{
+                    return redirect()->back()->with('message', "¡El correo no ha sio confirmado!");
+               }
             }
-            return back()->withErrors('¡Error! El usuario no existe')->withInput();
         } elseif ($alumno->confirmed == 1) {
             if (Hash::check($password, $alumno->contraseña)) {
                 Auth::login($alumno, $rememberMe);
@@ -62,6 +66,7 @@ class AutenticarController extends Controller
     }
     public function signUp(Request $request)
     {
+        //Metodo para registrate como alumno.
         $codigo = Str::random(25);//generamos un codigo de confirmacion aleatorio
         $personalInformation = $request->all();//obtenemos todos los datos puestos en el formulario
         request()->validate([//validamos que los campos no esten vacios
@@ -79,12 +84,13 @@ class AutenticarController extends Controller
         $users = Alumno::where('id', $personalInformation['num_control'])->get();
         // checamos si el correol ya existe en la base
         $correo = Alumno::where('correo', $personalInformation['correo'])->get();
+        $correo2 = Empleado::where('correo', $personalInformation['correo'])->get();
         // validamos si encontramos un registro
         if(sizeof($users) > 0){
             return redirect()->back()->with('message', "¡El número de control ya se encuentra registrado!");
         }else{
             //validamos si encontramos un correo existente
-            if(sizeof($correo) > 0){
+            if(sizeof($correo) > 0 or sizeof($correo2)>0){
                 return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
             }else{
                 //validamos que las contraseñas coincidan
