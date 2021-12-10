@@ -2062,10 +2062,6 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-Echo.channel('mensajeriaITTG-home').listen('MensajeEvent', function (e) {
-  console.log(e);
-});
-
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2097,10 +2093,10 @@ window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/d
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "63d7bbd153665dfb1339",
-  wsHost: window.location.hostname,
-  disableStats: true,
   cluster: "mt1",
-  forceTLS: false
+  forceTLS: false,
+  wsHost: window.location.hostname,
+  wsPort: 6001
 });
 
 /***/ }),

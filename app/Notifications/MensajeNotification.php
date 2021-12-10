@@ -4,11 +4,14 @@ namespace App\Notifications;
 
 use App\Models\Mensaje;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Arr;
 
-class MensajeNotification extends Notification
+class MensajeNotification extends Notification implements ShouldBroadcast
+
 {
     use Queueable;
 
@@ -28,11 +31,12 @@ class MensajeNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable):array
     {
-        return ['database'];
+      
+        return ['broadcast', 'database'];
     }
-
+    
     /**
      * Get the mail representation of the notification.
      *
@@ -65,5 +69,14 @@ class MensajeNotification extends Notification
             'carreras' => $this->mensaje->carreras,
             'semestres' => $this->mensaje->semestres,
         ];
+    }
+    public function toBroadcast($notifiable): BroadcastMessage
+    {
+        // foreach( Alumno::getMensaje($event->mensaje) as $alumno){
+        //     Notification::send($alumno, new MensajeNotification($event->mensaje));
+        // }
+        return new BroadcastMessage([
+            'message' => "$this->mensaje (User $notifiable->id)"
+        ]);
     }
 }
