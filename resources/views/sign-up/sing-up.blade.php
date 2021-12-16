@@ -7,12 +7,81 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('static/css/signup_style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
     <title>BIENVENIDO</title>
 </head>
 
 <body>
+    <style>
+        small {
+            position: absolute;
+            bottom: -11px;
+        }
+
+        .span {
+            position: absolute;
+            z-index: 10;
+            display: block;
+            padding: 10px;
+            font-size: 1.5rem;
+            top: 0;
+            width: max-content;
+            font-weight: 800;
+            text-shadow: -4px 0px 7px #00000050;
+            width: 100%;
+            border-left: 10px solid #0d47a1;
+        }
+
+        .span::after,
+        .span::before {
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            content: "";
+            width: 25px;
+            height: 25px;
+            left: 5px;
+            box-shadow: 0px 0px 7px #0000004f;
+        }
+
+        .span::after {
+            transform: rotate(16deg);
+            border: 2px solid red;
+        }
+
+        .span::before {
+            transform: rotate(26deg);
+            border: 2px solid royalblue;
+            top: 18px;
+        }
+
+        .div1,
+        .div2,
+        .div3 {
+            width: 11px;
+            height: 100%;
+            background: aqua;
+            position: relative;
+            z-index: 11;
+        }
+
+        .div1 {
+            background: yellow;
+
+        }
+
+        .div2 {
+
+            background: black;
+        }
+
+        .div3 {
+
+            background: deeppink
+        }
+
+    </style>
     <section class="login">
         @if (session('message'))
             <div class="notification">
@@ -21,8 +90,12 @@
 
         @endif
         <div class="login__container">
-
-
+            <div class="c" style="height: 100%; position: absolute; z-index:11;right: 8%; width:30px; display:flex">
+                <div class="div1"></div>
+                <div class="div2"></div>
+                <div class="div3"></div>
+            </div>
+            <span class="span">Crear cuenta</span>
             <div class="login__img">
 
                 <div class="title_container">
@@ -40,64 +113,67 @@
                 <img src="{{ asset('static/imagenes/mascota_ittg.png') }}" alt="">
             </div>
             <div class="login__form">
-                <form action="/sign-up" method="POST">
+                <form action="/sign-up" method="POST" style="position: relative;  z-index: 100; background:white">
                     @csrf
                     <div class="login__personal_information">
                         {!! $errors->first('num_control', '<small>:message</small>') !!}
-                        <input type="text" name="num_control" class="input_personal_information" value="{{ old('num_control') }}"><br>
-                        <label for="" class="lbl_personal_information">Número de control</label>
-                        
+                        <input type="text" name="num_control" class="input_personal_information"
+                            value="{{ old('num_control') }}">
+                            <label for="" class="lbl_personal_information">Número de control</label>
                     </div>
                     <div class="login__personal_information">
-                        {!! $errors->first('name', '<small>:message</small><br>') !!}
+                        {!! $errors->first('name', '<small>:message</small>') !!}
                         <input type="text" name="name" class="input_personal_information" value="{{ old('name') }}">
                         <label for="" class="lbl_personal_information">Nombre</label>
-                        
+
                     </div>
                     <div class="login__personal_information">
-                        {!! $errors->first('a_paterno', '<small>:message</small><br>') !!}
+                        {!! $errors->first('a_paterno', '<small>:message</small>') !!}
                         <input type="text" name="a_paterno" class="input_personal_information"
                             value="{{ old('a_paterno') }}">
                         <label for="" class="lbl_personal_information">Apellido paterno</label>
                     </div>
                     <div class="login__personal_information">
-                        {!! $errors->first('a_materno', '<small>:message</small><br>') !!}
+                        {!! $errors->first('a_materno', '<small>:message</small>') !!}
                         <input type="text" name="a_materno" class="input_personal_information"
                             value="{{ old('a_materno') }}">
                         <label for="" class="lbl_personal_information">Apellido materno</label>
                     </div>
                     <div class="login__personal_information">
-                        {!! $errors->first('correo', '<small>:message</small><br>') !!}
-                        <input type="email" name="correo" class="input_personal_information" value="{{ old('correo') }}">
+                        {!! $errors->first('correo', '<small>:message</small>') !!}
+                        <input type="email" name="correo" class="input_personal_information"
+                            value="{{ old('correo') }}">
                         <label for="" class="lbl_personal_information">Correo electrónico</label>
                     </div>
                     <div class="login__personal_information">
-                        {!! $errors->first('password', '<small>:message</small><br>') !!}
+                        {!! $errors->first('password', '<small>:message</small>') !!}
                         <input type="password" name="password" class="input_personal_information"
                             value="{{ old('password') }}">
                         <label for="" class="lbl_personal_information">Contraseña</label>
                     </div>
                     <div class="login__personal_information">
-                        {!! $errors->first('confirmar_password', '<small>:message</small><br>') !!}
+                        {!! $errors->first('confirmar_password', '<small>:message</small>') !!}
                         <input type="password" name="confirmar_password" class="input_personal_information"
                             value="{{ old('confirmar_password') }}">
                         <label for="" class="lbl_personal_information">Confirmar contraseña</label>
                     </div>
-                    <div class="login__extra_information">
-                        {!! $errors->first('carrera', '<small>:message</small><br>') !!}
+                    <div class="login__extra_information" style="position: relative; margin-bottom:10px">
+                        
                         <select name="carrera" id="carrera">
                             <option>Seleccione una opcion</option>
                             @foreach ($carreras as $carrera)
                                 <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
                             @endforeach
                         </select>
-                        {!! $errors->first('semestre', '<small>:message</small><br>') !!}
+                        {!! $errors->first('carrera', '<small>:message</small>') !!}
+                        
                         <select name="semestre" id="semestre">
                             <option value="">Semestre</option>
                             @foreach ($semestres as $semestre)
                                 <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
                             @endforeach
                         </select>
+                        {!! $errors->first('semestre', '<small>:message</small>') !!}
                     </div>
 
                     <input class="login__form_btn" type="submit" value="Crear cuenta">

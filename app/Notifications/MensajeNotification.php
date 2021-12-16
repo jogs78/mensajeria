@@ -60,7 +60,7 @@ class MensajeNotification extends Notification implements ShouldBroadcast
     public function toArray($notifiable)
     {
         return [
-            
+            'id' => $this->mensaje->id,
             'titulo' => $this->mensaje->titulo,
             'descripcion' => $this->mensaje->descripcion,
             'imagen' => $this->mensaje->imagen,
@@ -76,7 +76,8 @@ class MensajeNotification extends Notification implements ShouldBroadcast
         //     Notification::send($alumno, new MensajeNotification($event->mensaje));
         // }
         return new BroadcastMessage([
-            'message' => "$this->mensaje (User $notifiable->id)"
+            'message' => "$this->mensaje (User $notifiable->id)",
+            'title'=>$this->mensaje->titulo
         ]);
     }
 }

@@ -9,7 +9,7 @@
                     </dt>
                     <dd><b>Fecha de publicacion:</b> {{ \Carbon\Carbon::parse($mensaje->created_at)->format('d/m/Y') }}
                     </dd>
-                    <dd title="ver mas" class="ver-mas" data-mensaje="{{ $mensaje->data['mensaje_id'] }}"
+                    <dd title="ver mas" class="ver-mas" data-mensaje="{{ $mensaje->data['id'] }}"
                         data-notificacion="{{ $mensaje->id }}"><b>ver más </b><i class="fas fa-plus-circle"></i></dd>
                 </div>
             @empty

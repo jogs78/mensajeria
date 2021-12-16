@@ -98,7 +98,10 @@ self.addEventListener('fetch', function(event) {
         })
     );
 });
-
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close();
+    clients.openWindow("/mensajes-alumnos?mensajes_nuevos=true");
+}, false);
 // self.addEventListener("fetch", event => {
 //     event.respondWith(
 //         caches.match(event.request, { ignoreSearch: true }).then(response => {

@@ -42,9 +42,14 @@
                             <form id="actualizarInfo" action="/empleado/{{ Auth::user()->id }}" style="display: flex; flex-direction:column;" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                <div class="container-input" style="width: 100%;">
-                                    <input type="file" id="userP" name="imagProfile" accept="image/*" style="width: 100%;">
+                                <div class="container-input">
+                                    <input type="file" name="imagProfile" id="userP" class="inputfile inputfile-1" accept="image/*">
+                                    <label for="userP">
+                                        <span class="iborrainputfile fas fa-upload"> Actualizar foto</span>
+                                    </label>
+                                    
                                 </div>
+                                
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nombre:</label>
                                 <div style="text-align: center;">
                                     <input class="input" id="nombre" type="text" name="nombre"

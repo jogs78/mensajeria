@@ -13,18 +13,5 @@
     
 
     {{-- <script src="https://unpkg.com/vue@next"></script> --}}
-    <script src="{{asset('/js/app.js')}}"></script>
-    <script>
-        // var userId = $('meta[name="userId"]').attr('content');
-        let id = document.querySelector("meta[name='user-id']").getAttribute('content');
-        console.log(id)
-    //     window.Echo.channel('events')
-    // .listen('MensajeEvent', (e) => {
-    //     console.log(e);
-    // });
-        Echo.private('App.Models.Alumno.'+id)
-        .notification((notification) => {
-            console.log(notification);
-        });
-    </script>
+    
 </body>

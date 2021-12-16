@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="user-id" content="{{ Auth::user()->id }}">
 
     <link rel="stylesheet" href="{{ asset('static/css/dashboard_style.css') }}">
 
@@ -127,8 +128,14 @@
     @yield('content')
 
     <script src="{{ asset('static/js/dashboard.js') }}"></script>
-
+    <script src="{{asset('/js/app.js')}}"></script>
+    <script>
+    
+       
+    </script>
     <script type="text/javascript">
+        let id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
         let notificacionBtn = document.getElementById('notificaciones')
         notificacionBtn.addEventListener('click', function() {
 
@@ -136,23 +143,38 @@
                 console.log("Este navegador no es compatible con las notificaciones de escritorio");
             } else if (Notification.permission === "granted") {
                 // Si es correcto, lanzamos una notificación
-                notification()
+                
             } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
                 Notification.requestPermission(function(permission) {
                     // Si el usuario nos lo concede, creamos la notificación
                     if (permission === "granted") {
-                        notification()
+                        
                     }
                 });
             }
         })
-        function notification() {
+        let mensajeTitle = "";
+                Echo.private('App.Models.Alumno.'+id)
+            .notification((notification) => {
+                
+                mensajeTitle = notification.title
+                notifica(mensajeTitle)
+            });
+            Echo.channelprivate('App.Models.Alumno.'+id)
+    .listen('MensajeEvent', (e) => {
+        console.log(e);
+    });
+        function notifica(mensajeTitle) {
+            
             const options = {
-                body: 'Testing Our Notification',
-                icon: './static/imagenes/mascota_ittg.png'
+                body: mensajeTitle,
+                icon: './static/imagenes/ittg_escudo.png',
+                
             };
-            swRegistration.showNotification('PWA Notification!', options);
+            swRegistration.showNotification('Mensajería ITTG', options);
+            
         }
+        
     </script>
     <script>
         let btnVerMas = document.getElementsByClassName('ver-mas');
