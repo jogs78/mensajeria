@@ -31,7 +31,7 @@
 
             </div>
             <i class="fas fa-arrow-circle-right carousel__siguiente"></i>
-            <div role="tablist" class="carousel__indicadores"></div>
+            
         </div>
     </div>
     <div class="dashboard-informatico__container">

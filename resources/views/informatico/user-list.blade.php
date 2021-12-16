@@ -27,7 +27,7 @@
                             <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
                     @endforeach
                 </select>
-                <button class="btn btn-dark" >Filtrar</button>
+                <button class="btn btn-dark btn-sm" >Filtrar</button>
             </form>
             <form class="form-search__numControl" method="GET">
                 <select name="tipo">
@@ -38,7 +38,7 @@
                     <option value="apellido_materno">Apellido Materno</option>
                     <option value="correo">Correo</option>
                 </select>
-                <input name="buscarpor" class="form-search__numControl" type="search" placeholder="Buscar Por">
+                <input name="buscarpor" class="" type="search" placeholder="Buscar Por">
                 <button class="btn-form__search fas fa-search btn-outline-primary" type="submit"></button>
             </form>
         </div>
