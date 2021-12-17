@@ -106,8 +106,8 @@
                 </div>
 
                 <div class="div-item_container">
-                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Rol*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
-                    <select name="rol" id="rol" class="input">
+                    <label for="" style="position: absolute;top: -20px; color:rgb(0, 0, 0)" >Rol*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
+                    <select name="rol" id="rol" class="">
                         <option value="">Elija una opción</option>
                         <option value="Informático">Informático</option>
                         <option value="Difusor">Difusor</option>
@@ -125,7 +125,7 @@
 
                 <div class="div-item_container">
                     <label for="" style="top: 0; color:rgb(0, 0, 0)" >Revisor*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
-                    <select name="quien_revisa" id="quien_revisa" class="input">
+                    <select name="quien_revisa" id="quien_revisa" class="">
                         <option>Elija una opción</option>
                         <option>Subdirección de Planeación y Vinculación</option>
                         <option>Subdirección Académica</option>

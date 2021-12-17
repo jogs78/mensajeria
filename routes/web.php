@@ -72,7 +72,7 @@ Route::get('/consultarEstadistica', 'EmpleadoController@consultarEstadistica')->
 Route::get('/mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
 Route::resource('/user', 'InformaticoController')->middleware('auth:admin');
 Route::resource('/empleado', 'EmpleadoController')->middleware('auth:admin');
-Route::resource('/alumno', 'AlumnoController')->middleware('auth:admin');
+Route::resource('/alumno', 'AlumnoController')->middleware('auth');
 Route::resource('/mensajes', 'MensajeController')->middleware('auth:admin');
 Route::resource('/carreras', 'CarrerasController')->middleware('auth:admin');
 
