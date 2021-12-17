@@ -193,7 +193,7 @@ input:checked+.slider:before {
     align-self: flex-start;
     text-align: center;
     padding: 10px;
-    border-radius: 0 15px 15px 0;
+    border-radius: 0;
 }
 
 .login__img img {
@@ -357,6 +357,7 @@ input:checked+.slider:before {
         width: 40%;
         height: 100%;
         padding: 0;
+        border-radius: 0 15px 15px 0;
     }
     .login__img img {
         width: 100%;
