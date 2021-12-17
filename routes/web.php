@@ -78,6 +78,4 @@ Route::resource('/carreras', 'CarrerasController')->middleware('auth:admin');
 
 
 //E-mail verification
-Route::get('register/verify{code}', 'AutenticarController@verify');
-Route::get('register/verify{code}', 'InformaticoController@verify');
-Route::get('register/verify{code}', 'AlumnoController@verify');
+Route::get('register/verify{code}', 'InformaticoController@verifyEmpleado');

@@ -27,8 +27,6 @@ class AlumnoController extends Controller
         
        if($request->mensajes_nuevos == true){
         $mensajes = Auth::user()->unreadNotifications;
-    
-        
         return view('alumno.mensajes-nuevos', compact('mensajes'));
        }else{
         $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');
@@ -56,6 +54,7 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         //Crear usuario alumno, desde la vista del informatico.
+       
         $codigo = Str::random(25);//generamos un codigo de confirmacion aleatorio.
         $informacion = $request ->all();
         request()->validate([
@@ -89,10 +88,10 @@ class AlumnoController extends Controller
                 //si son iguales, procedemos a guardar el registro en la base
                 elseif($informacion['password'] == $informacion['password_confirm']){
                     $alumno = new Alumno();
-                    unset($informacion['rol']);
-                    unset($informacion['puesto']);
-                    unset($informacion['quien_envia']);
-                    unset($informacion['password_confirm']);
+                    // unset($informacion['rol']);
+                    // unset($informacion['puesto']);
+                    // unset($informacion['quien_envia']);
+                    // unset($informacion['password_confirm']);
                     //$contents = Storage::get('file.jpg');
                     $alumno -> id = $informacion['numero_control'];
                     $alumno -> nombre = $informacion['name'];
@@ -121,23 +120,6 @@ class AlumnoController extends Controller
         
         
     }
-
-     //Metodo para confirmar el correo.
-     public function verify($code)
-     {
-         $alumno = Alumno::where('confirmation_code', $code)->first();
-         if (!$alumno) {
-             return redirect('/log-in');
-         }
- 
-         $alumno->confirmed = true;
-         $alumno->confirmation_code = null;
-         $alumno->save();
-         return redirect('/log-in');
-         
-        
-     }
-
     /**
      * Display the specified resource.
      *

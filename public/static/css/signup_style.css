@@ -187,6 +187,9 @@
 }
 
 @media screen and (min-width:650px) {
+    #a {
+        display: none;
+    }
     .span,
     .c {
         display: none !important;

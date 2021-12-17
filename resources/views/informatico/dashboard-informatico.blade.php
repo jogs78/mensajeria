@@ -26,7 +26,7 @@
                     @endforeach
                 @endif
                 <div style="display: flex" title="Añadir carrera" id="lastChild">
-                    <label class="fas fa-plus-circle add-career" id="addCareer"></label>
+                    <label style="text-align: center;" class="fas fa-plus-circle add-career" id="addCareer"></label>
                 </div>
 
             </div>

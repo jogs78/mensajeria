@@ -117,16 +117,22 @@ class InformaticoController extends Controller
     }
 
     //Metodo para confirmar el correo.
-    public function verify($code)
+    public function verifyEmpleado($codeEmpleado)
     {
-        $empleado = Empleado::where('confirmation_code', $code)->first();
-        if (!$empleado) {
-            return redirect('/log-in');
+        $alumno = Alumno::where('confirmation_code', $codeEmpleado)->first();
+        $empleado = Empleado::where('confirmation_code', $codeEmpleado)->first();
+        if(!$alumno){
+            if(!$empleado){
+                return redirect('/log-in');
+            }
+                $empleado->confirmed = true;
+                $empleado->confirmation_code = null;
+                $empleado->save();
+                return redirect('/log-in');
         }
-
-        $empleado->confirmed = true;
-        $empleado->confirmation_code = null;
-        $empleado->save();
+        $alumno->confirmed = true;
+        $alumno->confirmation_code = null;
+        $alumno->save();
         return redirect('/log-in');
         
        

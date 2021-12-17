@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('static/css/signup_style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
+
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
     <title>BIENVENIDO</title>
 </head>
@@ -89,6 +91,9 @@
             </div>
 
         @endif
+        <div style="background: var(--main-bg-color); height:max-content" id="a">
+            <a href="/log-in" class="fas fa-chevron-left" style="text-decoration: none;cursor: pointer;   width: 64px;display: block;color: rgb(255, 255, 255);height: 100%;z-index: 100;position: relative;padding: 5px 10px;font-size: 1.5rem;"></a>
+        </div>
         <div class="login__container">
             <div class="c" style="height: 100%; position: absolute; z-index:11;right: 8%; width:30px; display:flex">
                 <div class="div1"></div>
