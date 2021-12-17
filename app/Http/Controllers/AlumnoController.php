@@ -54,6 +54,7 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         //Crear usuario alumno, desde la vista del informatico.
+       
         $codigo = Str::random(25);//generamos un codigo de confirmacion aleatorio.
         $informacion = $request ->all();
         request()->validate([
@@ -119,23 +120,6 @@ class AlumnoController extends Controller
         
         
     }
-
-     //Metodo para confirmar el correo.
-     public function verify($code)
-     {
-         $alumno = Alumno::where('confirmation_code', $code)->first();
-         if (!$alumno) {
-             return redirect('/log-in');
-         }
- 
-         $alumno->confirmed = true;
-         $alumno->confirmation_code = null;
-         $alumno->save();
-         return redirect('/log-in');
-         
-        
-     }
-
     /**
      * Display the specified resource.
      *

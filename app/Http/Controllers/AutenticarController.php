@@ -130,21 +130,22 @@ class AutenticarController extends Controller
             }
         }
     }
-    //Metodo para confirmar el correo.
-    public function verify($code)
-    {
-        $alumno = Alumno::where('confirmation_code', $code)->first();
-        if (!$alumno) {
-            return redirect('/log-in');
-        }
+    // //Metodo para confirmar el correo.
+    // public function verify($code)
+    // {
+    //     return $code;
+    //     $alumno = Alumno::where('confirmation_code', $code)->first();
+    //     if (!$alumno) {
+    //         return redirect('/log-in');
+    //     }
 
-        $alumno->confirmed = true;
-        $alumno->confirmation_code = null;
-        $alumno->save();
-        return redirect('/log-in');
+    //     $alumno->confirmed = true;
+    //     $alumno->confirmation_code = null;
+    //     $alumno->save();
+    //     return redirect('/log-in');
         
        
-    }
+    // }
 
     public function sendMailReset(Request $request)
     {
