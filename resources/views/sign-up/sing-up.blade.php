@@ -122,8 +122,8 @@
                     @csrf
                     <div class="login__personal_information">
                         {!! $errors->first('num_control', '<small>:message</small>') !!}
-                        <input type="text" name="num_control" class="input_personal_information"
-                            value="{{ old('num_control') }}">
+                        <input type="text"  name="num_control" class="input_personal_information"
+                            value="{{ old('num_control') }}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
                             <label for="" class="lbl_personal_information">Número de control</label>
                     </div>
                     <div class="login__personal_information">
@@ -152,9 +152,10 @@
                     </div>
                     <div class="login__personal_information">
                         {!! $errors->first('password', '<small>:message</small>') !!}
-                        <input type="password" name="password" class="input_personal_information"
+                        <input type="password" name="password" class="input_personal_information" id="password"
                             value="{{ old('password') }}">
                         <label for="" class="lbl_personal_information">Contraseña</label>
+                        <i style="position: absolute;right: 0;padding: 5px;font-size: 1.5rem;" id="vp" class="show-pass fas fa-eye"></i>
                     </div>
                     <div class="login__personal_information">
                         {!! $errors->first('confirmar_password', '<small>:message</small>') !!}
@@ -165,17 +166,19 @@
                     <div class="login__extra_information" style="position: relative; margin-bottom:10px">
                         
                         <select name="carrera" id="carrera">
-                            <option>Seleccione una opcion</option>
+                            <option value="">Seleccione una opcion</option>
                             @foreach ($carreras as $carrera)
-                                <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
+                                <option value="{{ $carrera->id }}"
+                                    {{ old('carrera') == $carrera->id ? 'selected' : '' }} >{{ $carrera->name }}</option>
                             @endforeach
                         </select>
                         {!! $errors->first('carrera', '<small>:message</small>') !!}
                         
                         <select name="semestre" id="semestre">
-                            <option value="">Semestre</option>
+                            <option value="" >Semestre</option>
                             @foreach ($semestres as $semestre)
-                                <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
+                                <option value="{{ $semestre->id }}"
+                                    {{ old('carrera') == $semestre->id ? 'selected' : '' }} >{{ $semestre->semestre }}</option>
                             @endforeach
                         </select>
                         {!! $errors->first('semestre', '<small>:message</small>') !!}
@@ -189,6 +192,8 @@
     <script>
         let label = document.getElementsByClassName("lbl_personal_information");
         let input = document.getElementsByClassName("input_personal_information");
+        let vp = document.getElementById('vp')
+        let bandera = false;
         window.addEventListener('load', function() {
             for (let i = 0; i < input.length; i++) {
                 if (input[i].value != "") {
@@ -197,6 +202,20 @@
                 }
             }
         });
+        vp.addEventListener('click', function() {
+            pass = document.getElementById('password')
+            if (bandera == false) {
+                pass.setAttribute('type', "text")
+                vp.classList.remove('fa-eye')
+                vp.classList.add('fa-eye-slash')
+                bandera = true
+            } else {
+                pass.setAttribute('type', "password")
+                vp.classList.add('fa-eye')
+                vp.classList.remove('fa-eye-slash')
+                bandera = false
+            }
+        })
         for (let i = 0; i < input.length; i++) {
 
             input[i].addEventListener("keyup", function() {

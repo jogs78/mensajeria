@@ -27,34 +27,35 @@ class AutenticarController extends Controller
         ]);
         $email = $request->input('email');
         $password = $request->input('password');
-        $alumno = Alumno::where('correo', $email)->first();//buscamos el correo en la tabla alumnos
+        $alumno = Alumno::where('correo', $email)->first(); //buscamos el correo en la tabla alumnos
         $rememberMe = false;
         if (isset($request->rememberMe))
             $rememberMe = true;
-        if (is_null($alumno)) {//validamos si encontramos correo en la tabla alumnos
+        if (is_null($alumno)) { //validamos si encontramos correo en la tabla alumnos
             $empleado = Empleado::where('correo', $email)->first();
-            if(is_null($empleado)){
+            if (is_null($empleado)) {
                 return back()->withErrors('¡Error! El usuario no existe')->withInput();
-            }else{
-                if($empleado->confirmed==1){
+            } else {
+                if ($empleado->confirmed == 1) {
                     $credentials = ['correo' => $email, 'password' => $password];
                     if (Auth::guard('admin')->attempt($credentials)) {
                         Auth::login($empleado, $rememberMe);
                         return redirect('/inicio');
                     }
-               }else{
-                    return redirect()->back()->with('message', "¡El correo no ha sio confirmado!");
-               }
+                } else {
+                    return redirect()->back()->with('message', "¡El correo no ha sido confirmado!")->withInput();
+                }
             }
         } elseif ($alumno->confirmed == 1) {
             if (Hash::check($password, $alumno->contraseña)) {
                 Auth::login($alumno, $rememberMe);
                 return redirect('/mensajes-alumnos');
             } else {
-                return back()->withErrors('¡Error! Datos incorrectos (alumno)')->withInput();
+
+                return back()->withErrors('¡Error! Datos incorrectos')->withInput();
             }
         } else {
-            return redirect()->back()->with('message', "¡El correo no ha sio confirmado!");
+            return redirect()->back()->with('message', "¡El correo no ha sido confirmado!")->withInput();
         }
     }
     public function logOut()
@@ -67,9 +68,9 @@ class AutenticarController extends Controller
     public function signUp(Request $request)
     {
         //Metodo para registrate como alumno.
-        $codigo = Str::random(25);//generamos un codigo de confirmacion aleatorio
-        $personalInformation = $request->all();//obtenemos todos los datos puestos en el formulario
-        request()->validate([//validamos que los campos no esten vacios
+        $codigo = Str::random(25); //generamos un codigo de confirmacion aleatorio
+        $personalInformation = $request->all(); //obtenemos todos los datos puestos en el formulario
+        request()->validate([ //validamos que los campos no esten vacios
             'num_control' => 'required',
             'name' => 'required',
             'a_paterno' => 'required',
@@ -86,20 +87,20 @@ class AutenticarController extends Controller
         $correo = Alumno::where('correo', $personalInformation['correo'])->get();
         $correo2 = Empleado::where('correo', $personalInformation['correo'])->get();
         // validamos si encontramos un registro
-        if(sizeof($users) > 0){
-            return redirect()->back()->with('message', "¡El número de control ya se encuentra registrado!");
-        }else{
+        if (sizeof($users) > 0) {
+            return redirect()->back()->with('message', "¡El número de control ya se encuentra registrado!")->withInput();
+        } else {
             //validamos si encontramos un correo existente
-            if(sizeof($correo) > 0 or sizeof($correo2)>0){
-                return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
-            }else{
+            if (sizeof($correo) > 0 or sizeof($correo2) > 0) {
+                return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!")->withInput();
+            } else {
                 //validamos que las contraseñas coincidan
                 if ($personalInformation['password'] != $personalInformation['confirmar_password']) {
                     return back()->with('message', 'Las contraseñas no coinciden')->withInput();
                 }
                 //si son iguales, procedemos a guardar el registro en la base
                 elseif ($personalInformation['password'] == $personalInformation['confirmar_password']) {
-                    unset($personalInformation['confirmar_password']);
+
                     $alumno = new Alumno();
                     $personalInformation['num_control'] = intval($personalInformation['num_control']);
                     $alumno->id = $personalInformation['num_control'];
@@ -120,12 +121,11 @@ class AutenticarController extends Controller
                     //pasamos los datos al archivo TestMail
                     Mail::to($personalInformation['correo'])->send(new TestMail($data));
                     $alumno->save();
-                    return redirect()->back()->with('message', 'Revise su correo para terminar el registro.');
-                    return redirect('/Usuarios');
+                    return redirect('log-in')->with('message', 'Revise su correo para terminar el registro.');
                 }
                 //error de conexion
                 else {
-                    return redirect()->back()->with('message', "¡Error de registro!");
+                    return redirect()->back()->with('message', "¡Error de registro!")->withInput();
                 }
             }
         }
@@ -143,8 +143,8 @@ class AutenticarController extends Controller
     //     $alumno->confirmation_code = null;
     //     $alumno->save();
     //     return redirect('/log-in');
-        
-       
+
+
     // }
 
     public function sendMailReset(Request $request)
@@ -154,16 +154,30 @@ class AutenticarController extends Controller
         $empleado = Empleado::where('correo', $request->email)->first();
 
         if ($alumno) {
-            $data = ['name' => $alumno->nombre,
-            'email' => $alumno->correo];
-            Mail::to($email)->send(new restPasswordMail($data));
-            return "Se a enviado un email al correo proporcionado";
+            if ($alumno->confirmed == 1) {
+                $data = [
+                    'name' => $alumno->nombre,
+                    'email' => $alumno->correo
+                ];
+                Mail::to($email)->send(new restPasswordMail($data));
+                return "Se a enviado un email al correo proporcionado";
+            } else {
+                return "¡Error! Debe de confirmar su correo para continuar";
+            }
         } elseif ($empleado) {
-            $data = ['name' => $empleado->nombre,
-            'email' => $empleado->correo];
-            Mail::to($email)->send(new restPasswordMail($data));
-            return "Se a enviado un email al correo proporcionado xd";
-        } 
+            if ($empleado->confirmed == 1) {
+                $data = [
+                    'name' => $empleado->nombre,
+                    'email' => $empleado->correo
+                ];
+                Mail::to($email)->send(new restPasswordMail($data));
+                return "Se a enviado un email al correo proporcionado xd";
+            } else {
+                return "¡Error! Debe de confirmar su correo para continuar";
+            }
+        } else {
+            return "¡Error! El correo ingresado no existe";
+        }
     }
     public function resetPasswordView($email)
     {
@@ -176,7 +190,7 @@ class AutenticarController extends Controller
         } elseif ($empleado) {
             $user = $empleado;
             return view('reset-password.reset-password', compact('user'));
-        } 
+        }
     }
     public function resetPassword(Request $request)
     {
@@ -184,14 +198,14 @@ class AutenticarController extends Controller
         $empleado = Empleado::where('correo', $request->correo)->first();
 
         if ($alumno) {
-          
-           $alumno->contraseña = Hash::make($request->p1);
-           $alumno->save(); 
-           return redirect('/log-in')->withErrors('Contraseña actualizada');
+
+            $alumno->contraseña = Hash::make($request->p1);
+            $alumno->save();
+            return redirect('/log-in')->withErrors('Contraseña actualizada');
         } elseif ($empleado) {
-           $empleado->password = Hash::make($request->p1);
-           $empleado->save(); 
-           return redirect('/log-in')->withErrors('Contraseña actualizada');
-        } 
+            $empleado->password = Hash::make($request->p1);
+            $empleado->save();
+            return redirect('/log-in')->withErrors('Contraseña actualizada');
+        }
     }
 }

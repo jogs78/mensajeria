@@ -22,7 +22,6 @@
 }
 
 .div-item_container {
-    height: min-content;
     position: relative;
     z-index: 1;
     flex-grow: 1;
@@ -221,6 +220,11 @@
     /* .user-register__form input {
         width: 300px;
     } */
+    .div-item_container small {
+        position: absolute;
+        left: 0;
+        bottom: -7px;
+    }
     #carrera,
     #semestre,
     #rol,
