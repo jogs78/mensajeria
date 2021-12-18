@@ -82,7 +82,7 @@ class InformaticoController extends Controller
         $correo2 = Alumno::where('correo', $informacion['email'])->get();
         // validamos si encontramos un registro
         if(sizeof($correo) > 0 or sizeof($correo2)>0){
-            return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
+            return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!")->withInput();
         }else{
             //validamos que las contraseñas coincidan
             if ($informacion['password'] != $informacion['password_confirm']) {
@@ -109,7 +109,7 @@ class InformaticoController extends Controller
                 return redirect()->back()->with('message', 'Revise su correo para terminar el registro.');
             }
             else {
-                return redirect()->back()->with('message', "¡Error de registro!");
+                return redirect()->back()->with('message', "¡Error de registro!")->withInput();
             }   
         }
         

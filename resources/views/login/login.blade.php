@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     @laravelPWA
     <title>BIENVENIDO</title>
@@ -56,13 +56,14 @@
                             <input class="password" type="password" name="password" id="password"
                                 value="{{ old('password') }}">
                             <label for="" class="lbl_contraseña">Contraseña</label>
+                            <i style="position: absolute;right: 0;padding: 5px;font-size: 1.5rem;" id="vp" class="show-pass fas fa-eye"></i>
                         </div>
                         <label class="switch">
-                            <input type="checkbox" name="rememberMe" checked value ="true">
+                            <input type="checkbox" name="rememberMe" checked value="true">
                             <span class="slider round"></span>
-                           
+
                         </label>
-                    <input class="login__form_btn" type="submit" value="Iniciar">
+                        <input class="login__form_btn" type="submit" value="Iniciar">
                     </form>
                     <div class="login__links">
                         <a href="/sign-up">Registrate aquí</a>
@@ -84,7 +85,7 @@
                     <label for="email">Correo electronico</label>
                     <input type="email" name="email" id="email" placeholder="alguien@email.com">
                     <label for="" id="vericaCorreo"></label>
-                    
+
                     <button type="submit" class="login__form_btn" style="height: 30px">Enviar</button>
                 </form>
             </div>
@@ -97,6 +98,8 @@
         let rpContainer = document.getElementById('resetPassword-container');
         let btnClose = document.getElementById('close')
         let btnSave = document.getElementById('updatePassword')
+        let vp = document.getElementById('vp')
+        let bandera = false;
         window.addEventListener('load', function() {
             if (name.value != "") {
                 name.nextElementSibling.classList.add("fijar");
@@ -107,6 +110,20 @@
                 password.nextElementSibling.classList.add("fijar");
             }
         });
+        vp.addEventListener('click', function() {
+            pass = document.getElementById('password')
+            if (bandera == false) {
+                pass.setAttribute('type', "text")
+                vp.classList.remove('fa-eye')
+                vp.classList.add('fa-eye-slash')
+                bandera = true
+            } else {
+                pass.setAttribute('type', "password")
+                vp.classList.add('fa-eye')
+                vp.classList.remove('fa-eye-slash')
+                bandera = false
+            }
+        })
         name.addEventListener("change", function(e) {
             if (e.target.value.length >= 1) {
                 name.classList.add('bordes');
@@ -157,6 +174,9 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
+                btnSave.reset();
+                rpContainer.style.opacity = '0'
+                rpContainer.classList.remove('resetPasswordShow');
             });
             event.preventDefault();
         });

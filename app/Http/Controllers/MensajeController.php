@@ -217,7 +217,7 @@ class MensajeController extends Controller
             $mensaje -> save();
         }
         if(Auth::user()->rol=='Revisor'){
-            //return $request->estado;
+            return $request->estado;
             if($request->estado=='Aceptar')
                 $mensaje->estado=1;
             elseif($request->estado=='Rechazar')

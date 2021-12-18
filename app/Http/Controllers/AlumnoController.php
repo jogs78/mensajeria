@@ -70,20 +70,21 @@ class AlumnoController extends Controller
         ]);
         // checamos si el número de control ya existe en la base
         $users = Alumno::where('id', $informacion['numero_control'])->get();
+  
         // checamos si el correol ya existe en la base
         $correo = Alumno::where('correo', $informacion['email'])->get();
         $correo2 = Empleado::where('correo', $informacion['email'])->get();
         // validamos si encontramos un registro
         if(sizeof($users) > 0){
-            return redirect()->back()->with('message', "¡El número de control ya se encuentra registrado!");
+            return redirect()->back()->with('message', "¡El número de control ya se encuentra registrado!")->withInput();
         }else{
             //validamos si encontramos un correo existente
             if(sizeof($correo) > 0 or sizeof($correo2)>0){
-                return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!");
+                return redirect()->back()->with('message', "¡Este correo ya esta en uso, por favor utilice otro!")->withInput();
             }else{
                 //validamos que las contraseñas coincidan
                 if($informacion['password'] != $informacion['password_confirm']){
-                    return back() -> with('message', 'Las contraseñas no coinciden xdd')->withInput();
+                    return redirect()-> back() -> with('message', 'Las contraseñas no coinciden')->withInput();
                 }
                 //si son iguales, procedemos a guardar el registro en la base
                 elseif($informacion['password'] == $informacion['password_confirm']){
@@ -110,7 +111,7 @@ class AlumnoController extends Controller
                     //pasamos los datos al archivo TestMail
                     Mail::to($informacion['email'])->send(new TestMail($data));
                     $alumno -> save();
-                    return redirect() -> back() -> with('message', 'Revise su correo para terminar el registro. Alumno Inf');
+                    return redirect() -> back() -> with('message', 'Revise su correo para terminar el registro');
                 }
             }
         }

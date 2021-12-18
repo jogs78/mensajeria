@@ -43,66 +43,73 @@
                 <div class="div-item_container">
                     <input class="input" type="text" name="numero_control" value="{{ old('numero_control') }}">
                     <label class="lbls" for="">Número de control</label><br>
-                    {!! $errors->first('numero_control', '<small>:message</small><br>') !!}
+                    {!! $errors->first('numero_control', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
                     <input class="input" type="text" name="name" value="{{ old('name') }}">
                     <label class="lbls" for="">Nombre</label><br>
-                    {!! $errors->first('name', '<small>:message</small><br>') !!}
+                    {!! $errors->first('name', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
                     <input class="input" type="text" name="a_paterno" value="{{ old('a_paterno') }}">
                     <label class="lbls" for="">Apellido paterno</label><br>
-                    {!! $errors->first('a_paterno', '<small>:message</small><br>') !!}
+                    {!! $errors->first('a_paterno', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
+
                     <input class="input" type="text" name="a_materno" value="{{ old('a_materno') }}">
                     <label class="lbls" for="">Apellido materno</label><br>
-                    {!! $errors->first('a_materno', '<small>:message</small><br>') !!}
+                    {!! $errors->first('a_materno', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
                     <label for="" style="top: 0; color:rgb(0, 0, 0)" >Semestre*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
-                    <select name="carrera" id="carrera" class="input">
+                    <select name="carrera" id="carrera" class="">
                         <option value="">Seleccione una opción</option>
                         @foreach ($carreras as $carrera)
-                            <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
+                            <option value="{{ $carrera->id }}"
+                                {{ old('carrera') == $carrera->id ? 'selected' : '' }}>{{ $carrera->name }}</option>
                         @endforeach
                     </select>
-                    {!! $errors->first('carrera', '<small>:message</small><br>') !!}
+                    {!! $errors->first('carrera', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
                     <label for="" style="top: 0; color:rgb(0, 0, 0)" >Carrera*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
-                    <select name="semestre" id="semestre" class="input">
+                    <select name="semestre" id="semestre" class="">
                         <option value="">Semestre</option>
                         @foreach ($semestres as $semestre)
-                            <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
+                            <option value="{{ $semestre->id }}"
+                                {{ old('carrera') == $semestre->id ? 'selected' : '' }}>{{ $semestre->semestre }}</option>
                         @endforeach
                     </select>
-                    {!! $errors->first('semestre', '<small>:message</small><br>') !!}
+                    {!! $errors->first('semestre', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
                     <input class="input" type="text" name="email" value="{{ old('email') }}">
                     <label class="lbls" for="">Correo</label><br>
-                    {!! $errors->first('email', '<small>:message</small><br>') !!}
+                    {!! $errors->first('email', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
-                    <input class="input" type="password" name="password" value="{{ old('password') }}">
+                    
+                    <input class="input pw1" type="password" name="password"
+                        value="{{ old('password') }}">
                     <label class="lbls" for="">Contraseña</label><br>
-                    {!! $errors->first('password', '<small>:message</small><br>') !!}
+                    <i style="position: absolute;right: 0; top:0;padding: 5px;font-size: 1.5rem;"  class="show-pass fas fa-eye vp"></i>
+                    {!! $errors->first('password', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
-                    <input class="input" type="password" name="password_confirm"
+                    <input class="input pw1" type="password" name="password_confirm"
                         value="{{ old('password_confirm') }}">
-                    <label class="lbls" for="">Contraseña</label><br>
-                    {!! $errors->first('password_confirm', '<small>:message</small><br>') !!}
+                    <label class="lbls " for="">Confirmar contraseña</label><br>
+                    <i style="position: absolute;right: 0; top:0;padding: 5px;font-size: 1.5rem;"  class="show-pass fas fa-eye vp"></i>
+                    {!! $errors->first('password_confirm', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
@@ -114,13 +121,13 @@
                         <option value="Revisor">Revisor</option>
                         <option value="Emisor">Emisor</option>
                     </select>
-                    {!! $errors->first('rol', '<small>:message</small><br>') !!}
+                    {!! $errors->first('rol', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
                     <input class="input" type="text" name="puesto" value="{{ old('puesto') }}">
                     <label class="lbls" for="">Departamento</label><br>
-                    {!! $errors->first('puesto', '<small>:message</small><br>') !!}
+                    {!! $errors->first('puesto', '<small>:message</small>') !!}
                 </div>
 
                 <div class="div-item_container">
@@ -132,7 +139,7 @@
                         <option>Subdirección de Servicios Administrativos</option>
                     </select>
                     
-                    {!! $errors->first('quien_revisa', '<small>:message</small><br>') !!}
+                    {!! $errors->first('quien_revisa', '<small>:message</small>') !!}
                 </div>
 
                 <input id="btn_enviar" class="btn" type="submit" value="Enviar">
@@ -151,7 +158,27 @@
         let bandera = 0;
         let alum = 0;
         let enviar_btn = document.getElementById("btn_enviar");
-        console.log(opcContainer.length)
+
+        let vp = document.getElementsByClassName('vp')
+        let bandera1 = false;
+       
+       for(let i = 0; i < vp.length; i++){
+        vp[i].addEventListener('click', function() {
+            pass = document.getElementsByClassName('pw1')
+            if (bandera1 == false) {
+                console.log(bandera1)
+                pass[i].setAttribute('type', "text")
+                vp[i].classList.remove('fa-eye')
+                vp[i].classList.add('fa-eye-slash')
+                bandera1 = true
+            } else if(bandera1 == true) {
+                pass[i].setAttribute('type', "password")
+                vp[i].classList.add('fa-eye')
+                vp[i].classList.remove('fa-eye-slash')
+                bandera1 = false
+            }
+        })
+       }
         window.addEventListener('load', function() {
             //alumnos.classList.add("btn__selected");
             //empleados.disabled=true;
@@ -184,7 +211,7 @@
         })
         for (let i = 0; i < input.length; i++) {
 
-            input[i].addEventListener("keyup", function() {
+            input[i].addEventListener("change", function() {
                 if (this.value.length >= 1) {
                     this.nextElementSibling.classList.add("fijar");
                 } else {
