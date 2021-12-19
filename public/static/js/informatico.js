@@ -8,6 +8,7 @@ window.addEventListener('load', function() {
     let _token = document.querySelector('input[name="_token"]').value
     let items = document.getElementsByClassName('carousel__elemento')
     let carreraId = document.getElementsByClassName('carreraId')
+    let btnEditCareer = document.getElementsByClassName('editCareer')
     addCareer.addEventListener('click', function() {
         addCareerContainer.style.opacity = '1'
         addCareerContainer.classList.add('addCareer__show');
@@ -105,7 +106,7 @@ window.addEventListener('load', function() {
     new Glider(document.querySelector('.carousel__lista'), {
         slidesToShow: 1,
         slidesToScroll: 1,
-        draggable: true,
+        draggable: false,
 
         arrows: {
             prev: '.carousel__anterior',
@@ -128,7 +129,57 @@ window.addEventListener('load', function() {
             }
         }]
     });
+    if (btnEditCareer) {
+        let enviar = false
+        let btnEnviarC = document.getElementsByClassName('btnEnviarC')
+        let renameCareer = document.getElementsByClassName('renameCareer')
+        let cancel = document.getElementsByClassName('cancelC')
+        for (let i = 0; i < btnEditCareer.length; i++) {
+            btnEditCareer[i].addEventListener('click', function() {
+                btnEditCareer[i].style.border = "2px solid #0407fb"
+                renameCareer[i].removeAttribute('disabled');
+                renameCareer[i].focus();
+                btnEnviarC[i].style.display = "block"
+                cancel[i].style.display = "block"
+                console.log(btnEnviarC[i].dataset.idcarrera)
+                btnEnviarC[i].addEventListener('click', function() {
+                    btnEditCareer[i].style.border = "0"
+                    renameCareer[i].setAttribute('disabled', true);
+                    renameCareer[i].blur();
+                    btnEnviarC[i].style.display = "none"
+                    cancel[i].style.display = "none"
+                    $.ajax({
+                        url: '/carreras/' + btnEnviarC[i].dataset.idcarrera,
+                        method: 'PUT',
+                        data: {
+                            newName: renameCareer[i].value,
+                            _token: _token,
+                        }
+                    }).done(function(res) {
+                        console.log(res)
+                        Swal.fire({
+                            toast: true,
+                            position: 'top',
+                            icon: 'info',
+                            title: res,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
 
+                    });
+
+
+                })
+                cancel[i].addEventListener('click', function() {
+                    btnEditCareer[i].style.border = "0"
+                    renameCareer[i].setAttribute('disabled', true);
+                    renameCareer[i].blur();
+                    btnEnviarC[i].style.display = "none"
+                    cancel[i].style.display = "none"
+                })
+            })
+        }
+    }
 
 
 

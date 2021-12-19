@@ -14,9 +14,12 @@
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" value="{{ $carrera->id }}" class="carreraId">
-                                <button type="submit" class="fas fa-minus-circle delete-career"></button>
+                                <button style="background: white; position: relative; z-index:150" type="submit" class="fas fa-minus-square delete-career"></button>
                             </form>
-                            <label>{{ $carrera->name }}</label>
+                            <button style="background: white; position: relative; z-index:150" type="submit" class="fas fa-pen-square delete-career editCareer"></button>
+                            <textarea name="renameCareer" class="renameCareer" id="" disabled>{{ $carrera->name }}</textarea>
+                            <button style="display: none; " type="submit" class="fas fa-check btnEnviarC" data-idCarrera="{{$carrera->id}}"></button>
+                            <button style="display: none; " type="submit" class="fas fa-times cancelC" data-idCarrera="{{$carrera->id}}"></button>
                             <img class="img-logoCarrera" src="{{ $carrera->logo }}">
                             @if ($c_total != null)
                                 <label>Alumnos Registrados: {{ $c_total[$i] }}</label>

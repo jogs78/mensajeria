@@ -82,7 +82,10 @@ class CarrerasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $carrera = Carrera::find($id);
+        $carrera -> name = $request['newName'];
+        $carrera->save();
+        return "Cambios guardados";
     }
 
     /**
