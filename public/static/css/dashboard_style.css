@@ -312,7 +312,7 @@
 .carousel__siguiente {
     position: absolute;
     display: block;
-    top: calc(50% - 20px);
+    top: calc(50% - 15px);
     cursor: pointer;
     line-height: 30px;
     text-align: center;
@@ -343,8 +343,58 @@
 
 .carousel__elemento {
     position: relative;
-    height: 80px !important;
     padding: 2px;
+}
+
+.carousel__elemento textarea {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: block;
+    text-align: center;
+    resize: none;
+    background: transparent;
+    border: 0;
+}
+
+.carousel__elemento textarea:disabled {
+    color: black;
+}
+
+.carousel__elemento textarea:focus {
+    background: white;
+    font-weight: 800;
+    width: 95%;
+    height: 95%;
+    position: absolute;
+    z-index: 100;
+    margin: 0;
+    outline: none;
+    border: 1px solid;
+}
+
+.btnEnviarC,
+.cancelC {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    border: 0;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10000;
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    padding: 1px;
+    box-shadow: 0 0 3px black;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.cancelC {
+    left: 15%;
 }
 
 .carousel__elemento label {
@@ -361,7 +411,7 @@
     object-fit: cover;
     object-position: center;
     z-index: 1;
-    width: 15%;
+    /* width: 15%; */
     display: block;
     top: 0;
 }
