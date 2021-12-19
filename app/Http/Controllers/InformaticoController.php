@@ -193,22 +193,23 @@ class InformaticoController extends Controller
                 $alumno->nombre = $request->name;
                 $alumno->apellido_paterno = $request->a_paterno;
                 $alumno->apellido_materno = $request->a_materno;
-                $alumno->carrera = $request->carrera;
-                $alumno->semestre = $request->semestre;
+                $alumno->carrera_id = $request->carrera;
+                $alumno->semestre_id = $request->semestre;
                 $alumno->correo = $request->correo;
-                
                 $alumno->save();
                 return redirect('user')->with('message', 'registro');
-            } elseif ($request->contraseña = !"") {
+            } elseif ($request->contraseña = !"" & $request->contraseña === $request->contraseña_confirm ) {
+               
+                $alumno->contraseña = Hash::make($request['contraseña']);
                 
-                $alumno->contraseña = Hash::make($request->contraseña);
                 $alumno->save();
                 return redirect('user')->with('message', 'registro');
             }
         } elseif ($empleado) {
             $datosEmpleado =  $request->all();
+            
             if ($request->contraseña != $request->contraseña_confirm) {
-                return back()->with('message', 'Las contraseñas no coinciden');
+                return back()->with('message', 'Las contraseñas no coinciden')->withInput();
             } elseif ($request->contraseña == "" && $request->contraseña_confirm == "") {
                 $empleado->nombre = $request->name;
                 $empleado->apellido_paterno = $request->a_paterno;
@@ -220,6 +221,7 @@ class InformaticoController extends Controller
                 $empleado->save();
                 return redirect('user')->with('message', 'registro');
             } elseif ($request->contraseña = !"") {
+                
                     $empleado -> password = Hash::make($datosEmpleado['contraseña']);
                     $empleado->save();
                 return redirect('user')->with('message', 'registro');
