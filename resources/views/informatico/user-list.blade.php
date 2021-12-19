@@ -146,6 +146,15 @@
         )
     </script>
 @endif
+@if (session('message') == 'registro')
+<script>
+    Swal.fire(
+        'Actualizado!',
+        'Usuario ha sido actualizado con éxito',
+        'success'
+    )
+</script>
+@endif
     <script>
         let alumnos = document.getElementById("tabla_alumnos")
         let empleados = document.getElementById("tabla_empleados")

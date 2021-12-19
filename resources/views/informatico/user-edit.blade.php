@@ -1,21 +1,33 @@
 @extends('dashboard')
 @php
-    $c_total=null;
-    $c_alumnos =null;
-    $c_empleados = null;
-    $c_carreras = null;
+$c_total = null;
+$c_alumnos = null;
+$c_empleados = null;
+$c_carreras = null;
 @endphp
 @section('informatico.user-edit')
-<style>
-    .dashboard-informatico {
-        display: none;
-    }
+    <style>
+        .dashboard-informatico {
+            display: none;
+        }
 
-</style>
+    </style>
     @if (session('message'))
-        {{ session('message') }}
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
 
+                animation: true,
+                position: 'top-left',
+                showConfirmButton: false,
+                timer: 2000
 
+            });
+            Toast.fire({
+                type: 'success',
+                title: '{{ session('message') }}'
+            })
+        </script>
     @endif
 
     @if ($alumno != '')
@@ -25,7 +37,7 @@
 
             <div class="form-edit__item">
                 <label for="">Numero de control</label>
-                <input type="text" name="numero_control" id="" value="{{ $alumno->id}}">
+                <input type="text" name="numero_control" id="" value="{{ $alumno->id }}">
             </div>
             <div class="form-edit__item">
                 <label for="">Nombre</label>
@@ -41,17 +53,17 @@
             </div>
             <div class="form-edit__item">
                 <label for="">Carrera</label>
-                <select name="semestre" id="semestre" class="input">
-                    <option value="{{ $alumno->carrera->id}}">{{$alumno->carrera->name}}</option>
+                <select name="carrera" id="carrera1" class="input">
+                    <option value="{{ $alumno->carrera->id }}">{{ $alumno->carrera->name }}</option>
                     @foreach ($carreras as $carrera)
-                            <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
+                        <option value="{{ $carrera->id }}">{{ $carrera->name }}</option>
                     @endforeach
                 </select>
-            
+
             </div>
             <div class="form-edit__item">
                 <label for="">Semestre</label>
-                <select name="semestre" id="semestre" class="input">
+                <select name="semestre" id="semestre1" class="input">
                     <option value="{{ $alumno->semestre_id }}">Semestre {{ $alumno->semestre_id }}</option>
                     @foreach ($semestres as $semestre)
                         <option value="{{ $semestre->id }}">Semestre {{ $semestre->semestre }}</option>
@@ -63,15 +75,24 @@
                 <input type="text" name="correo" id="" value="{{ $alumno->correo }}">
             </div>
             <div class="form-edit__item">
-                <label for="">Contraseña</label>
-                <input type="password" name="contraseña" id=""">
+                <label for="">Contraseña nueva</label>
+                <div style="display: flex">
+                    <input type="password" name="contraseña" id="" class="pw1">
+                    <i style="position: relative;right: 0;border-bottom: 1px solid; bottom:0;padding: 5px;font-size: 1.5rem;"
+                        class="show-pass fas fa-eye vp"></i>
+                </div>
             </div>
-            <div class="form-edit__item">
+            <div class="  form-edit__item">
                 <label for="">Confirmar contraseña</label>
-                <input type="password" name="contraseña_confirm" id="">
+               
+                <div style="display: flex">
+                    <input type="password" name="contraseña_confirm" id="" class="pw1">
+                    <i style="position: relative;right: 0;border-bottom: 1px solid; bottom:0;padding: 5px;font-size: 1.5rem;"
+                        class="show-pass fas fa-eye vp"></i>
+                </div>
             </div>
             <div class="form-edit__item">
-                
+
                 <input type="submit" name="enviar" id="" value="Guardar" class="enviar">
             </div>
         </form>
@@ -97,30 +118,73 @@
             </div>
             <div class="form-edit__item">
                 <label for="">Contraseña</label>
-                <input type="password" name="contraseña" id="">
+                <div style="display: flex">
+                    <input type="password" name="contraseña" id="" class="pw1">
+                    <i style="position: relative;right: 0;border-bottom: 1px solid; bottom:0;padding: 5px;font-size: 1.5rem;"
+                        class="show-pass fas fa-eye vp"></i>
+                </div>
             </div>
             <div class="form-edit__item">
                 <label for="">Confirmar contraseña</label>
-                <input type="password" name="contraseña_confirm" id="">
+                <div style="display: flex">
+                    <input type="password" name="contraseña_confirm" id="" class="pw1">
+                    <i style="position: relative;right: 0;border-bottom: 1px solid; bottom:0;padding: 5px;font-size: 1.5rem;"
+                        class="show-pass fas fa-eye vp"></i>
+                </div>
+
             </div>
             <div class="form-edit__item">
-                <label for="">Rol</label>
-                <input type="text" name="rol" id="" value="{{ $empleado->rol }}">
+               
+                <label for="" style="position: relative;top: -20px; color:rgb(0, 0, 0)" >Rol:</label>
+                    <select name="rol" id="rol" class="">
+                        <option value="{{ $empleado->rol }}">{{ $empleado->rol }}</option>
+                        <option value="Informático">Informático</option>
+                        <option value="Difusor">Difusor</option>
+                        <option value="Revisor">Revisor</option>
+                        <option value="Emisor">Emisor</option>
+                    </select>
             </div>
             <div class="form-edit__item">
                 <label for="">Puesto</label>
                 <input type="text" name="puesto" id="" value="{{ $empleado->puesto }}">
             </div>
             <div class="form-edit__item">
-                <label for="">Revisor</label>
-                <input type="text" name="quien_revisa" id="" value="{{ $empleado->quien_revisa }}">
+                
+
+                <label for="" style="top: 0; color:rgb(0, 0, 0)" >Revisor: </label>
+                    <select name="quien_revisa" id="quien_revisa" class="">
+                        <option value="{{ $empleado->quien_revisa }}">{{ $empleado->quien_revisa }}</option>
+                        <option>Subdirección de Planeación y Vinculación</option>
+                        <option>Subdirección Académica</option>
+                        <option>Subdirección de Servicios Administrativos</option>
+                    </select>
             </div>
             <div class="form-edit__item">
-                <input type="submit" name="enviar" id="" value="Guardar" class="enviar">
+                <input type="submit" name="enviar" id="" value="Guardar" class="enviar btn">
             </div>
         </form>
     @endif
-
+    <script>
+        let vp = document.getElementsByClassName('vp')
+        let bandera1 = false;
+        for (let i = 0; i < vp.length; i++) {
+            vp[i].addEventListener('click', function() {
+                pass = document.getElementsByClassName('pw1')
+                if (bandera1 == false) {
+                    console.log(bandera1)
+                    pass[i].setAttribute('type', "text")
+                    vp[i].classList.remove('fa-eye')
+                    vp[i].classList.add('fa-eye-slash')
+                    bandera1 = true
+                } else if (bandera1 == true) {
+                    pass[i].setAttribute('type', "password")
+                    vp[i].classList.add('fa-eye')
+                    vp[i].classList.remove('fa-eye-slash')
+                    bandera1 = false
+                }
+            })
+        }
+    </script>
 
 
 

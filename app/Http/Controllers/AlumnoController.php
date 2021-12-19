@@ -161,7 +161,7 @@ class AlumnoController extends Controller
             $alumno -> foto_perfil = $url;
         }
         if($request->newPass != null){
-            $alumno->password =  Hash::make($request->newPass); 
+            $alumno->contraseña =  Hash::make($request->newPass); 
         }
         $alumno->nombre = $request->nombre;
         $alumno->apellido_paterno = $request->a_paterno;

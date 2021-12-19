@@ -41,6 +41,8 @@ class AutenticarController extends Controller
                     if (Auth::guard('admin')->attempt($credentials)) {
                         Auth::login($empleado, $rememberMe);
                         return redirect('/inicio');
+                    }else{
+                        return redirect()->back()->with('message', "¡Error! Usuario/Contraseña erroneos")->withInput();
                     }
                 } else {
                     return redirect()->back()->with('message', "¡El correo no ha sido confirmado!")->withInput();
