@@ -81,12 +81,15 @@
                 </div>
 
                 <div>
-                    <span><input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social"
+                    <span>
+                        <input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social"
                         value="0"> Servicio social</span>
-                <span><input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1">
-                    Residencia</span>
-                <span><input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3">
-                    General</span>
+                    <span>
+                        <input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1">
+                        Residencia</span>
+                    <span>
+                        <input class="mensaje-create__form_check" type="checkbox" name="general" id="general" value="3">
+                        General</span>
                 </div>
             </div>
             <input  class="btn_en" type="submit" value="Enviar">

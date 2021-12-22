@@ -23,11 +23,12 @@
     <title>Bienvenido</title>
 </head>
 
+
+
 <body>
 
     <header class="header">
         <div class="header_container">
-
             <nav class="nav1">
                 <i class="fas fa-bars" id="navigation_btn"></i>
                 <div class="menu-container" id="menu">
@@ -116,7 +117,22 @@
                             </li>
                             <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
                                     href="/log-out">Salir </a></li>
+                            <li class="menu-list__item fas fa-bell " id="notificaciones" style="cursor: pointer">
+                                <span class="text">Segmentacion</span>
+                            <div>
+                                <span>
+                                    <input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social"
+                                        value="0"> Servicio social</span>
+                                <span>
+                                    <input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1">
+                                        Residencia</span>
+                            </div>
+                            
                         </ul>
+                        
+                        <div>
+        
+    </div>
                     </div>
                 </div>
             </nav>
@@ -134,7 +150,36 @@
        
     </script>
     <script type="text/javascript">
-        let id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+        var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+
+        let servicioSocial=document.getElementById('servicio_social');
+        let residencia=document.getElementById('residencia');
+
+        servicioSocial.addEventListener('change', function(e){
+            if(servicioSocial.checked){
+                $.ajax({
+                    url: '/segmentacion/'+id,
+                    method: 'GET',
+                    data:{
+                        id: 1,
+                        servicioSocial: 1, 
+                    }
+                }).done(function(res) {
+                        alert(res);
+                    })
+            }else{
+
+            }
+                
+        })
+
+        residencia.addEventListener('change', function(e){
+            if(residencia.checked){
+                
+            }
+        })
 
         let notificacionBtn = document.getElementById('notificaciones')
         notificacionBtn.addEventListener('click', function() {

@@ -181,6 +181,11 @@ class AlumnoController extends Controller
     {
         
     }
+
+    public function segmentacion(Request $request,$id){
+        return $id;
+    }
+
     public function verMensaje(Request $request,$id){
         $mensaje = Mensaje::with('empleado')->get()->find($id);
         if( $request->id_notification){
