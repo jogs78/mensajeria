@@ -56,7 +56,7 @@ class MensajePolicy
     }
     public function delete(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($empleado->rol == "Emisor" & $mensaje->empleado_id == $empleado->id & $mensaje->estado == 0) {
+        if ($empleado->rol == "Emisor" || $empleado->rol == "Difusor" || $empleado->rol == "Revisor" & $mensaje->empleado_id == $empleado->id & $mensaje->estado == 0) {
             return true;
         }
     }
