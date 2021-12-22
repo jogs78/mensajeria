@@ -26,7 +26,7 @@ class MensajeController extends Controller
 
     public function index(Request $request)
     {
-        $this->authorize('viewMensajes', App\Models\Mensaje::class);
+        //$this->authorize('viewMensajes', App\Models\Mensaje::class);
         $titulo = $request->titulo;
         $fechaPublicacion = $request->fechaPub;
         $carrera = $request->carrera;
@@ -134,21 +134,20 @@ class MensajeController extends Controller
         }
         
         
-        // //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
-        // if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
-        //     //return 'servicio y residencia';
-        //     $mensaje -> otros = 3;
-        // }elseif(isset($_POST["servicio"])){
-        //     //return 'solo servicio';
-        //     $mensaje -> otros = 2;
-        // }elseif(isset($_POST["residencia"])){
-        //     //return 'solo residencia';
-        //     $mensaje -> otros = 1;
-        // }elseif(isset($_POST["general"])){
-        //     //return 'todos';
-        //     $mensaje -> otros = 0;
-        // }
-        $mensaje->otros=0;
+        //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
+        if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+            //return 'servicio y residencia';
+            $mensaje -> otros = 3;
+        }elseif(isset($_POST["servicio"])){
+            //return 'solo servicio';
+            $mensaje -> otros = 2;
+        }elseif(isset($_POST["residencia"])){
+            //return 'solo residencia';
+            $mensaje -> otros = 1;
+        }elseif(isset($_POST["general"])){
+            //return 'todos';
+            $mensaje -> otros = 0;
+        }
         $mensaje -> empleado_id= Auth::user()->id;
         
         $mensaje -> save();
