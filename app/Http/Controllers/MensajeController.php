@@ -231,9 +231,9 @@ class MensajeController extends Controller
 
 
             if (event(new MensajeEvent($mensaje))) {
-                // $mensaje->estado=$request->estado;
-                // $mensaje->fecha_publicacion = Carbon::now();
-                // $mensaje -> save();
+                $mensaje->estado=$request->estado;
+                $mensaje->fecha_publicacion = Carbon::now();
+                $mensaje -> save();
                 return 'Mensaje difundido';
             }
         }

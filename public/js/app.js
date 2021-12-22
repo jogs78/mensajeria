@@ -2094,10 +2094,17 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "63d7bbd153665dfb1339",
   cluster: "mt1",
+<<<<<<< Updated upstream
   forceTLS: true,
   wsHost: window.location.hostname,
   wsPort: 6001,
   disableStats: true
+=======
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  disableStats: true,
+  forceTLS: false
+>>>>>>> Stashed changes
 });
 
 /***/ }),
