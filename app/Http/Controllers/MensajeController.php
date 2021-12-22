@@ -229,7 +229,7 @@ class MensajeController extends Controller
         }
         if (Auth::user()->rol == 'Difusor') {
 
-
+            
             if (event(new MensajeEvent($mensaje))) {
                 $mensaje->estado=$request->estado;
                 $mensaje->fecha_publicacion = Carbon::now();
