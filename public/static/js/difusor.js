@@ -32,12 +32,11 @@ window.addEventListener("load", function() {
                 let url = difundir[j].getAttribute('action')
                 let estado = document.getElementById('updateEstado').value;
                 let mensajeContainer = document.getElementsByClassName('new-messages__container');
-                console.log("anterior actual" + mensajeContainer.length)
                 $.ajax({
                     url: url,
                     method: 'PUT',
                     data: {
-                        estado: estado,
+                        estado: 3,
                         _token: $("input[name='_token']").val()
                     },
                     dataType: 'html',
