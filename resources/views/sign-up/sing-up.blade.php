@@ -159,12 +159,12 @@
                     </div>
                     <div class="login__personal_information">
                         {!! $errors->first('confirmar_password', '<small>:message</small>') !!}
-                        <input type="password" name="confirmar_password" class="input_personal_information"
+                        <input type="password" name="confirmar_password" class="input_personal_information" id="confirmar_password"
                             value="{{ old('confirmar_password') }}">
                         <label for="" class="lbl_personal_information">Confirmar contraseña</label>
+                        <i style="position: absolute;right: 0;padding: 5px;font-size: 1.5rem;" id="vp" class="show-pass fas fa-eye"></i>
                     </div>
                     <div class="login__extra_information" style="position: relative; margin-bottom:10px">
-                        
                         <select name="carrera" id="carrera">
                             <option value="">Seleccione una opcion</option>
                             @foreach ($carreras as $carrera)
@@ -173,12 +173,13 @@
                             @endforeach
                         </select>
                         {!! $errors->first('carrera', '<small>:message</small>') !!}
-                        
+                    </div>    
+                    <div class="login__extra_information" style="position: relative; margin-bottom:10px">
                         <select name="semestre" id="semestre">
                             <option value="" >Semestre</option>
                             @foreach ($semestres as $semestre)
                                 <option value="{{ $semestre->id }}"
-                                    {{ old('carrera') == $semestre->id ? 'selected' : '' }} >{{ $semestre->semestre }}</option>
+                                    {{ old('semestre') == $semestre->id ? 'selected' : '' }} >{{ $semestre->semestre }}</option>
                             @endforeach
                         </select>
                         {!! $errors->first('semestre', '<small>:message</small>') !!}
@@ -202,6 +203,7 @@
                 }
             }
         });
+        //Visualizar cotraseña.
         vp.addEventListener('click', function() {
             pass = document.getElementById('password')
             if (bandera == false) {
@@ -216,6 +218,23 @@
                 bandera = false
             }
         })
+
+        //Visualizar confirmar cotraseña.
+        vp2.addEventListener('click', function() {
+            pass = document.getElementById('confirmar_password')
+            if (bandera == false) {
+                pass.setAttribute('type', "text")
+                vp.classList.remove('fa-eye')
+                vp.classList.add('fa-eye-slash')
+                bandera = true
+            } else {
+                pass.setAttribute('type', "confirmar_password")
+                vp.classList.add('fa-eye')
+                vp.classList.remove('fa-eye-slash')
+                bandera = false
+            }
+        })
+
         for (let i = 0; i < input.length; i++) {
 
             input[i].addEventListener("keyup", function() {

@@ -100,6 +100,7 @@ class MensajeController extends Controller
      */
     public function store(Request $request)
     {
+        
         request()->validate([
             'titulo' => 'required',
             'descripcion' => 'required',
@@ -131,10 +132,33 @@ class MensajeController extends Controller
         for ($i = 0; $i < sizeof($datos['car']); $i++) {
             $mensaje->carreras()->attach(($datos['car'])[$i]);
         }
+        
+        
+        // //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
+        // if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+        //     //return 'servicio y residencia';
+        //     $mensaje -> otros = 3;
+        // }elseif(isset($_POST["servicio"])){
+        //     //return 'solo servicio';
+        //     $mensaje -> otros = 2;
+        // }elseif(isset($_POST["residencia"])){
+        //     //return 'solo residencia';
+        //     $mensaje -> otros = 1;
+        // }elseif(isset($_POST["general"])){
+        //     //return 'todos';
+        //     $mensaje -> otros = 0;
+        // }
+        $mensaje->otros=0;
+        $mensaje -> empleado_id= Auth::user()->id;
+        
+        $mensaje -> save();
+        for ($i=0; $i<sizeof($datos['car']); $i++){
+            $mensaje ->carreras()->attach(($datos['car'])[$i]);
+        }
         for ($i = 0; $i < sizeof($datos['sem']); $i++) {
             $mensaje->semestres()->attach(($datos['sem'])[$i]);
         }
-        // Servicio social (0), Residencia (1), ambos seleccionados (2), General (3)
+        
         return redirect('/mensajes');
     }
 
@@ -218,6 +242,8 @@ class MensajeController extends Controller
             //     $mensaje -> otros = 3;
             // }
             $mensaje->save();
+            
+            $mensaje -> save();
         }
         if (Auth::user()->rol == 'Revisor') {
             

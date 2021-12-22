@@ -18,6 +18,7 @@ class CreateMensajesTable extends Migration
             $table->string('titulo');
             $table->text('descripcion');
             $table->integer('estado');
+            $table->integer('otros');
             $table->string('imagen',600);
             $table->text('documento');
             //llave foranea

@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
         $semestre7->save();
 
         $semestre8 = new Semestre();
-        $semestre8->semestre="Optavo";
+        $semestre8->semestre="Octavo";
         $semestre8->save();
 
         $semestre9 = new Semestre();
