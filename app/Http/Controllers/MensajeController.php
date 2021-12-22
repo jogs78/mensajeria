@@ -31,44 +31,47 @@ class MensajeController extends Controller
         $fechaPublicacion = $request->fechaPub;
         $carrera = $request->carrera;
         $carreras = Carrera::all();
-        if(Auth::user()->rol=='Emisor'){
+        if (Auth::user()->rol == 'Emisor') {
             $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->paginate(50);
-            if($request->general){
+            if ($request->general) {
                 $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->paginate(50);
-            }elseif($request->estado){
+            } elseif ($request->estado) {
                 $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 0)->paginate(50);
-            }elseif($request->difundido){
+            } elseif ($request->difundido) {
                 $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 3)->paginate(50);
-            }elseif($request->titulo || $request->fechaPub || $request->carrera){
+            } elseif ($request->titulo || $request->fechaPub || $request->carrera) {
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->where('empleado_id', Auth::user()->id)->paginate(50);
             }
-        }
-        elseif(Auth::user()->rol=='Revisor'){
-            $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
-                         $query->where('quien_revisa', Auth::user()->puesto);})->paginate(50);
-            if($request->general){
-                $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
-                    $query->where('quien_revisa', Auth::user()->puesto);})->paginate(50);
-            }elseif($request->estado){
-                $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
-                     $query->where('quien_revisa', Auth::user()->puesto);})->where('estado', 0)->paginate(50);
-            }elseif($request->difundido){
-                $mensajes = Mensaje::whereHas('empleado', function(Builder $query){
-                    $query->where('quien_revisa', Auth::user()->puesto);})->where('estado', 3)->paginate(50);
-            }elseif($request->titulo || $request->fechaPub || $request->carrera){
-                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->whereHas('empleado', function(Builder $query){
-                     $query->where('quien_revisa', Auth::user()->puesto);})->paginate(50);
+        } elseif (Auth::user()->rol == 'Revisor') {
+            $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
+                $query->where('quien_revisa', Auth::user()->puesto);
+            })->paginate(50);
+            if ($request->general) {
+                $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                })->paginate(50);
+            } elseif ($request->estado) {
+                $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                })->where('estado', 0)->paginate(50);
+            } elseif ($request->difundido) {
+                $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                })->where('estado', 3)->paginate(50);
+            } elseif ($request->titulo || $request->fechaPub || $request->carrera) {
+                $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->whereHas('empleado', function (Builder $query) {
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                })->paginate(50);
             }
-        }
-        elseif(Auth::user()->rol=='Difusor'){
-            $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
-            if($request->general){
-                $mensajes = Mensaje::where('estado', 1)->orwhere('estado',3)->paginate(50);
-            }elseif($request->estado){
+        } elseif (Auth::user()->rol == 'Difusor') {
+            $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->paginate(50);
+            if ($request->general) {
+                $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->paginate(50);
+            } elseif ($request->estado) {
                 $mensajes = Mensaje::where('estado', 1)->paginate(50);
-            }elseif($request->difundido){
+            } elseif ($request->difundido) {
                 $mensajes = Mensaje::where('estado', 3)->paginate(50);
-            }elseif($request->titulo || $request->fechaPub || $request->carrera){
+            } elseif ($request->titulo || $request->fechaPub || $request->carrera) {
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
             }
         }
@@ -108,28 +111,28 @@ class MensajeController extends Controller
         $datos = $request->all();
         $mensaje = new mensaje();
 
-        if($request->hasFile('file-1')){
+        if ($request->hasFile('file-1')) {
             $img = $datos['file-1']->store('public/imagenes_mensajes');
             $url = Storage::url($img);
-            $mensaje -> imagen = $url;
+            $mensaje->imagen = $url;
         }
-        if($request->hasFile('file-2')){
+        if ($request->hasFile('file-2')) {
             $img = $datos['file-2']->store('public/documentos_mensajes');
             $urlDoc = Storage::url($img);
-            $mensaje -> documento = $urlDoc;
+            $mensaje->documento = $urlDoc;
         }
 
-        $mensaje -> titulo = $datos['titulo'];
-        $mensaje -> descripcion = $datos['descripcion'];
+        $mensaje->titulo = $datos['titulo'];
+        $mensaje->descripcion = $datos['descripcion'];
         //Estados... 0-Pendiente, 1-Aceptado, 2-Rechazado
-        $mensaje -> estado = 0;
-        $mensaje -> empleado_id= Auth::user()->id;
-        $mensaje -> save();
-        for ($i=0; $i<sizeof($datos['car']); $i++){
-            $mensaje ->carreras()->attach(($datos['car'])[$i]);
+        $mensaje->estado = 0;
+        $mensaje->empleado_id = Auth::user()->id;
+        $mensaje->save();
+        for ($i = 0; $i < sizeof($datos['car']); $i++) {
+            $mensaje->carreras()->attach(($datos['car'])[$i]);
         }
-        for ($i=0; $i<sizeof($datos['sem']); $i++){
-            $mensaje ->semestres()->attach(($datos['sem'])[$i]);
+        for ($i = 0; $i < sizeof($datos['sem']); $i++) {
+            $mensaje->semestres()->attach(($datos['sem'])[$i]);
         }
         // Servicio social (0), Residencia (1), ambos seleccionados (2), General (3)
         return redirect('/mensajes');
@@ -172,12 +175,12 @@ class MensajeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $datos = $request -> all();
+
+        $datos = $request->all();
         $mensaje = Mensaje::with('carreras', 'semestres', 'empleado')->get()->find($id);
-        if(Auth::user()->rol=='Emisor'){
-            $mensaje -> titulo = $request->titulo;
-            $mensaje -> descripcion = $request->descripcion;
+        if (Auth::user()->rol == 'Emisor') {
+            $mensaje->titulo = $request->titulo;
+            $mensaje->descripcion = $request->descripcion;
             request()->validate([
                 'titulo' => 'required',
                 'descripcion' => 'required',
@@ -187,22 +190,22 @@ class MensajeController extends Controller
                 'sem' => 'required',
             ]);
 
-            if($request->hasFile('file-1')){
+            if ($request->hasFile('file-1')) {
                 $url = str_replace('storage', 'public', $mensaje->imagen);
                 Storage::delete($url);
                 $img = $request->file('file-1')->store('public/imagenes_mensajes');
                 $url = Storage::url($img);
-                $mensaje -> imagen = $url;
+                $mensaje->imagen = $url;
             }
-            if($request->hasFile('file-2')){
+            if ($request->hasFile('file-2')) {
                 $url = str_replace('storage', 'public', $mensaje->imagen);
                 Storage::delete($url);
                 $img = $datos['file-2']->store('public/documentos_mensajes');
                 $urlDoc = Storage::url($img);
-                $mensaje -> documento = $urlDoc;
+                $mensaje->documento = $urlDoc;
             }
-            $mensaje ->carreras()->sync(($datos['car']));
-            $mensaje ->semestres()->sync(($datos['sem']));
+            $mensaje->carreras()->sync(($datos['car']));
+            $mensaje->semestres()->sync(($datos['sem']));
             // $mensaje -> carrera = $request->carrera;
             // $mensaje -> semestre = $request->semestre;
             // if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
@@ -214,25 +217,25 @@ class MensajeController extends Controller
             // }elseif(isset($_POST["general"])){
             //     $mensaje -> otros = 3;
             // }
-            $mensaje -> save();
+            $mensaje->save();
         }
-        if(Auth::user()->rol=='Revisor'){
-            return $request->estado;
-            if($request->estado=='Aceptar')
-                $mensaje->estado=1;
-            elseif($request->estado=='Rechazar')
-                $mensaje->estado=2;
-            $mensaje -> save();
-        }
-        if(Auth::user()->rol=='Difusor'){
+        if (Auth::user()->rol == 'Revisor') {
             
-           
-            if(event(new MensajeEvent($mensaje))){
+            if ($request->estado == 'Aceptar')
+                $mensaje->estado = 1;
+            elseif ($request->estado == 'Rechazar')
+                $mensaje->estado = 2;
+            $mensaje->save();
+        }
+        if (Auth::user()->rol == 'Difusor') {
+
+
+            if (event(new MensajeEvent($mensaje))) {
                 // $mensaje->estado=$request->estado;
                 // $mensaje->fecha_publicacion = Carbon::now();
                 // $mensaje -> save();
                 return 'Mensaje difundido';
-            }          
+            }
         }
         return redirect('/mensajes');
     }
@@ -246,15 +249,17 @@ class MensajeController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete', Mensaje::find($id));
-        if(Mensaje::destroy($id)){
-            return redirect()->back()->with('message','ok');
+        if (Mensaje::destroy($id)) {
+            return redirect()->back()->with('message', 'ok');
         }
     }
-    public function panelDifusor(){
-        Mensaje::whereHas('empleado', function(Builder $query){
-            $query->where('quien_revisa', Auth::user()->puesto);})->paginate(50);
+    public function panelDifusor()
+    {
+        Mensaje::whereHas('empleado', function (Builder $query) {
+            $query->where('quien_revisa', Auth::user()->puesto);
+        })->paginate(50);
         $carreras = Carrera::all();
-        $totalMensajes = Mensaje::where('estado','=', 3)->count();
+        $totalMensajes = Mensaje::where('estado', '=', 3)->count();
         $totalAlumnos = Alumno::all()->count();
         $mensajesByCarrera = array();
         $mensaje = Mensaje::with('carreras')->where('estado', 3)->get();
@@ -264,24 +269,82 @@ class MensajeController extends Controller
         //     $total = DB::select('SELECT * FROM carrera_mensaje WHERE carrera_id='.($i+1));
         //     $mensajesByCarrera[$i]=sizeof($total);
         // }
-        for($i = 0; $i<sizeof($carreras); $i++){
-            $total = Mensaje::whereHas('carreras', function(Builder $query) use ($carreras, $i){
-                $query->where('carrera_id', $carreras[$i]->id);})->where('estado', 3)->count();
-            if($total >0){
+        for ($i = 0; $i < sizeof($carreras); $i++) {
+            $total = Mensaje::whereHas('carreras', function (Builder $query) use ($carreras, $i) {
+                $query->where('carrera_id', $carreras[$i]->id);
+            })->where('estado', 3)->count();
+            if ($total > 0) {
                 array_push($mensajesByCarrera, [
                     'carrera' => $carreras[$i]->name,
                     'total' => $total
-            ]);
-            }else{
+                ]);
+            } else {
                 array_push($mensajesByCarrera, [
                     'carrera' => $carreras[$i]->name,
                     'total' => 0
-                            ]);
+                ]);
+            }
+        }
+        // return $mensajesByCarrera;
+        $valores = ['carreras' => $carreras, 'mensajesTotales' => $totalMensajes, 'alumnosTotales' => $totalAlumnos, 'MensajesByCarrera' => $mensajesByCarrera];
+        return response()->json($valores);
+    }
+    public function panelEmisor()
+    {
+        
+        $Totalmensaje = null;
+        $mensajesAceptados = null;
+        $mensajesPendientes = null;
+        $carreras = Carrera::all();
+        $mensajesByCarrera = array();
+        if (Auth::user()->rol == "Emisor") {
+            $Totalmensaje = Mensaje::where('empleado_id', Auth::user()->id)->count();
+            $mensajesAceptados = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 1)->count();
+            $mensajesPendientes = Mensaje::where('empleado_id', Auth::user()->id)->where('estado', 0)->count();
+            for ($i = 0; $i < sizeof($carreras); $i++) {
+                $sql = Mensaje::whereHas('carreras', function (Builder $query) use ($carreras, $i) {
+                    $query->where('carrera_id', $carreras[$i]->id);
+                })->where('empleado_id', Auth::user()->id)->count();
+                if ($sql >= 1) {
+                    array_push($mensajesByCarrera, [
+                        'carrera' => $carreras[$i]->name,
+                        'total' => $sql
+                    ]);
+                }
+            }
+        } elseif (Auth::user()->rol == "Revisor") {
+            
+            $Totalmensaje = Mensaje::wherehas('empleado', function(Builder $query){
+                $query->where('quien_revisa', Auth::user()->puesto);
+            })->count();
+            
+            $mensajesAceptados = Mensaje::wherehas('empleado', function(Builder $query){
+                $query->where('quien_revisa', Auth::user()->puesto);
+            })->where('estado', 1)->count();
+            $mensajesPendientes = Mensaje::wherehas('empleado', function(Builder $query){
+                $query->where('quien_revisa', Auth::user()->puesto);
+            })->where('estado', 0)->count();
+            for ($i = 0; $i < sizeof($carreras); $i++) {
+                $sql = Mensaje::whereHas('carreras', function (Builder $query) use ($carreras, $i) {
+                    $query->where('carrera_id', $carreras[$i]->id);
+                })->wherehas('empleado', function(Builder $query){
+                    $query->where('quien_revisa', Auth::user()->puesto);
+                })->count();
+                if ($sql >= 1) {
+                    array_push($mensajesByCarrera, [
+                        'carrera' => $carreras[$i]->name,
+                        'total' => $sql
+                    ]);
+                }
             }
             
         }
-// return $mensajesByCarrera;
-        $valores=['carreras'=> $carreras,'mensajesTotales'=> $totalMensajes,'alumnosTotales'=> $totalAlumnos,'MensajesByCarrera'=> $mensajesByCarrera];
-        return response()->json($valores);
+        $valores = [
+            'Totalmensaje' => $Totalmensaje,
+            'mensajesAceptados' => $mensajesAceptados,
+            'mensajesPendientes' => $mensajesPendientes,
+            'mensajesCarreras' => $mensajesByCarrera,
+        ];
+        return $valores;
     }
 }

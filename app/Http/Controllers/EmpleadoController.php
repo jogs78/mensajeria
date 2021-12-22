@@ -24,7 +24,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -73,7 +73,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        //
+       
     }
 
     /**
