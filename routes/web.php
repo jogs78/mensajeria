@@ -67,6 +67,7 @@ Route::get('/', function () {
 });
 Route::get('/ver-mensaje/{id}', 'AlumnoController@verMensaje')->middleware('auth');
 Route::get('/panel-difusor', 'MensajeController@panelDifusor')->middleware('auth:admin');
+Route::get('/panel-emisor', 'MensajeController@panelEmisor')->middleware('auth:admin');
 Route::get('/ver-estadisticas/{id}', 'EmpleadoController@verEstadisticas')->middleware('auth:admin');
 Route::get('/consultarEstadistica', 'EmpleadoController@consultarEstadistica')->middleware('auth:admin');
 Route::get('/mensajes-alumnos', 'AlumnoController@index')->middleware('auth');
