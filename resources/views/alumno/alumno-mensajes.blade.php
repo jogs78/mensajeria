@@ -112,27 +112,33 @@
                                         <span id="notificationMarker"></span>
                                     @endif
                                 </a></li>
+                            <li class="menu-list__item fas fa-exclamation-circle " id="" style="cursor: pointer"
+                                title="Marca alguna de las casillas si deseas recibir mensajes relacionados con algunas las siguientes opciones">
+                                Desea recibir mensajes de:
+                                <div style="margin-left: 10%;">
+                                    <label style="cursor: pointer">
+                                        <input class="servicioResidencia" type="checkbox" name="servicio"
+                                            id="servicio_social" value="0"> Servicio
+                                        social</span>
+                                    </label>
+                                    <label style="cursor: pointer">
+                                        <input class="servicioResidencia" type="checkbox" name="residencia"
+                                            id="residencia" value="1">
+                                        Residencia
+                                    </label>
+                                </div>
+                            </li>
                             <li class="menu-list__item fas fa-bell " id="notificaciones" style="cursor: pointer">
                                 <span class="text">Activar notificaciones</span>
                             </li>
                             <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
                                     href="/log-out">Salir </a></li>
-                            <li class="menu-list__item fas fa-bell " id="notificaciones" style="cursor: pointer">
-                                <span class="text">Segmentacion</span>
-                            <div>
-                                <span>
-                                    <input class="mensaje-create__form_check" type="checkbox" name="servicio" id="servicio_social"
-                                        value="0"> Servicio social</span>
-                                <span>
-                                    <input class="mensaje-create__form_check" type="checkbox" name="residencia" id="residencia" value="1">
-                                        Residencia</span>
-                            </div>
-                            
+
                         </ul>
-                        
+
                         <div>
-        
-    </div>
+
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -144,43 +150,52 @@
     @yield('content')
 
     <script src="{{ asset('static/js/dashboard.js') }}"></script>
-    <script src="{{asset('/js/app.js')}}"></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
     <script>
-    
-       
+
+
     </script>
     <script type="text/javascript">
-
         var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+        let servicioResidencia = document.getElementsByClassName('servicioResidencia')
 
+        //estadoServicioResidencia recibe un parametro que corresponde a: 1 para servicio, 2 for residencia, 3 para ambos y 0 para ninguno
+        //estadoServicioResidencia(1);
+        for (let i = 0; i < 2; i++) {
+            servicioResidencia[i].addEventListener('change', function() {
+                if (servicioResidencia[0].checked & servicioResidencia[1].checked) {
+                    console.log('Servicio social y residencia')
 
-        let servicioSocial=document.getElementById('servicio_social');
-        let residencia=document.getElementById('residencia');
+                } else {
+                    console.log('no seleccionado Servicio social y residencia')
+                    if (servicioResidencia[0].checked) {
+                        console.log('ha seleccionado servicio')
 
-        servicioSocial.addEventListener('change', function(e){
-            if(servicioSocial.checked){
-                $.ajax({
-                    url: '/segmentacion/'+id,
-                    method: 'GET',
-                    data:{
-                        id: 1,
-                        servicioSocial: 1, 
+                    } else {
+                        console.log('servicio social no seleccionado')
+                        if (servicioResidencia[1].checked) {
+                            console.log('ha seleccionado residencia')
+                        } else {
+                            console.log('residencia no seleccionada')
+                        }
                     }
-                }).done(function(res) {
-                        alert(res);
-                    })
-            }else{
 
-            }
-                
-        })
+                }
+            })
+        }
 
-        residencia.addEventListener('change', function(e){
-            if(residencia.checked){
-                
-            }
-        })
+        function estadoServicioResidencia(estado) {
+            $.ajax({
+                url: '/segmentacion/' + id,
+                method: 'GET',
+                data: {
 
+                    estado: estado,
+                }
+            }).done(function(res) {
+                alert(res);
+            })
+        }
         let notificacionBtn = document.getElementById('notificaciones')
         notificacionBtn.addEventListener('click', function() {
 
@@ -188,38 +203,38 @@
                 console.log("Este navegador no es compatible con las notificaciones de escritorio");
             } else if (Notification.permission === "granted") {
                 // Si es correcto, lanzamos una notificación
-                
+
             } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
                 Notification.requestPermission(function(permission) {
                     // Si el usuario nos lo concede, creamos la notificación
                     if (permission === "granted") {
-                        
+
                     }
                 });
             }
         })
         let mensajeTitle = "";
-                Echo.private('App.Models.Alumno.'+id)
+        Echo.private('App.Models.Alumno.' + id)
             .notification((notification) => {
-                
+
                 mensajeTitle = notification.title
                 notifica(mensajeTitle)
             });
-            Echo.channelprivate('App.Models.Alumno.'+id)
-    .listen('MensajeEvent', (e) => {
-        console.log(e);
-    });
+        Echo.channelprivate('App.Models.Alumno.' + id)
+            .listen('MensajeEvent', (e) => {
+                console.log(e);
+            });
+
         function notifica(mensajeTitle) {
-            
+
             const options = {
                 body: mensajeTitle,
                 icon: './static/imagenes/ittg_escudo.png',
-                
+
             };
             swRegistration.showNotification('Mensajería ITTG', options);
-            
+
         }
-        
     </script>
     <script>
         let btnVerMas = document.getElementsByClassName('ver-mas');
