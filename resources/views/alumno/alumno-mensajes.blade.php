@@ -74,8 +74,9 @@
                                         value="{{ Auth::user()->apellido_materno }}" disabled><i
                                         class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Correo
-                                    electrónico:</label>
+
+                                
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Correo electrónico:</label>
                                 <div style="text-align: center;">
                                     <input class="input" id="correo" type="text" name="correo"
                                         value="{{ Auth::user()->correo }}" disabled><i class="edit fas fa-edit"
@@ -112,22 +113,26 @@
                                         <span id="notificationMarker"></span>
                                     @endif
                                 </a></li>
-                            <li class="menu-list__item fas fa-exclamation-circle " id="" style="cursor: pointer"
-                                title="Marca alguna de las casillas si deseas recibir mensajes relacionados con algunas las siguientes opciones">
-                                Desea recibir mensajes de:
-                                <div style="margin-left: 10%;">
-                                    <label style="cursor: pointer">
-                                        <input class="servicioResidencia" type="checkbox" name="servicio"
-                                            id="servicio_social" value="0"> Servicio
-                                        social</span>
-                                    </label>
-                                    <label style="cursor: pointer">
-                                        <input class="servicioResidencia" type="checkbox" name="residencia"
-                                            id="residencia" value="1">
-                                        Residencia
-                                    </label>
-                                </div>
-                            </li>
+
+                            @if (Auth::user()->semestre_id>=7)
+                                <li class="menu-list__item fas fa-exclamation-circle " id="" style="cursor: pointer"
+                                    title="Marca alguna de las casillas si deseas recibir mensajes relacionados con algunas las siguientes opciones">
+                                    Desea recibir mensajes de:
+                                    <div style="margin-left: 10%;">
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                id="servicio_social" value="0"> Servicio
+                                            social</span>
+                                        </label>
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                id="residencia" value="1">
+                                            Residencia
+                                        </label>
+                                    </div>
+                                </li>
+                            @endif    
+                            
                             <li class="menu-list__item fas fa-bell " id="notificaciones" style="cursor: pointer">
                                 <span class="text">Activar notificaciones</span>
                             </li>
@@ -164,36 +169,39 @@
         for (let i = 0; i < 2; i++) {
             servicioResidencia[i].addEventListener('change', function() {
                 if (servicioResidencia[0].checked & servicioResidencia[1].checked) {
-                    console.log('Servicio social y residencia')
-
+                    console.log('Servicio social y residencia seleccionado')
+                    estadoServicioResidencia(3)
                 } else {
-                    console.log('no seleccionado Servicio social y residencia')
+                    //console.log('no seleccionado Servicio social y residencia')
                     if (servicioResidencia[0].checked) {
-                        console.log('ha seleccionado servicio')
-
+                        console.log('ha seleccionado solo servicio')
+                        estadoServicioResidencia(1)
                     } else {
-                        console.log('servicio social no seleccionado')
+                        //console.log('servicio social no seleccionado')
                         if (servicioResidencia[1].checked) {
-                            console.log('ha seleccionado residencia')
+                            console.log('ha seleccionado solo residencia')
+                            estadoServicioResidencia(2)
                         } else {
-                            console.log('residencia no seleccionada')
+                            console.log('residencia y servicio no seleccionada')
+                            estadoServicioResidencia(0)
                         }
                     }
 
-                }
+                } 
             })
         }
+
+        
 
         function estadoServicioResidencia(estado) {
             $.ajax({
                 url: '/segmentacion/' + id,
                 method: 'GET',
                 data: {
-
                     estado: estado,
                 }
             }).done(function(res) {
-                alert(res);
+                //alert(res);
             })
         }
         let notificacionBtn = document.getElementById('notificaciones')

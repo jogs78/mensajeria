@@ -32,7 +32,8 @@ class CreateAlumnosTable extends Migration
 
             $table->string('remember_token',1000)->nullable();
             $table->boolean('confirmed')->nullable()->default(0);
-            $table->string('confirmation_code')->nullable();        
+            $table->string('confirmation_code')->nullable();
+            $table->integer('segmentacion')->nullable();        
             $table->timestamps();//created_up updated_up
         });
     }

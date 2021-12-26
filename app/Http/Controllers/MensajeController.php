@@ -100,15 +100,25 @@ class MensajeController extends Controller
      */
     public function store(Request $request)
     {
-        
-        request()->validate([
-            'titulo' => 'required',
-            'descripcion' => 'required',
-            'file-1' => 'required| dimensions:max_width=1500,max_height=1280',
-            'file-2' => 'required| mimetypes:application/pdf',
-            'car' => 'required',
-            'sem' => 'required',
-        ]);
+        //Si se selecciona general
+        if(isset($_POST["general"])){
+            request()->validate([
+                'titulo' => 'required',
+                'descripcion' => 'required',
+                'file-1' => 'required| dimensions:max_width=1500,max_height=1280',
+                'file-2' => 'required| mimetypes:application/pdf',
+            ]);
+        }else{//si no se selecciona general
+            request()->validate([
+                'titulo' => 'required',
+                'descripcion' => 'required',
+                'file-1' => 'required| dimensions:max_width=1500,max_height=1280',
+                'file-2' => 'required| mimetypes:application/pdf',
+                'car' => 'required',
+                'sem' => 'required',
+            ]);
+        }
+        $general=0;
         $datos = $request->all();
         $mensaje = new mensaje();
 
@@ -128,12 +138,7 @@ class MensajeController extends Controller
         //Estados... 0-Pendiente, 1-Aceptado, 2-Rechazado
         $mensaje->estado = 0;
         $mensaje->empleado_id = Auth::user()->id;
-        $mensaje->save();
-        for ($i = 0; $i < sizeof($datos['car']); $i++) {
-            $mensaje->carreras()->attach(($datos['car'])[$i]);
-        }
-        
-        
+    
         //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
         if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
             //return 'servicio y residencia';
@@ -147,15 +152,20 @@ class MensajeController extends Controller
         }elseif(isset($_POST["general"])){
             //return 'todos';
             $mensaje -> otros = 0;
+            $general=1;
         }
-        $mensaje -> empleado_id= Auth::user()->id;
+        
+        
         
         $mensaje -> save();
-        for ($i=0; $i<sizeof($datos['car']); $i++){
-            $mensaje ->carreras()->attach(($datos['car'])[$i]);
-        }
-        for ($i = 0; $i < sizeof($datos['sem']); $i++) {
-            $mensaje->semestres()->attach(($datos['sem'])[$i]);
+        
+        if($general==0){
+            for ($i=0; $i<sizeof($datos['car']); $i++){
+                $mensaje ->carreras()->attach(($datos['car'])[$i]);
+            }
+            for ($i = 0; $i < sizeof($datos['sem']); $i++) {
+                $mensaje->semestres()->attach(($datos['sem'])[$i]);
+            }
         }
         
         return redirect('/mensajes');

@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use App\Models\Empleado;
+use App\Models\Semestre;
 
 class AlumnoController extends Controller
 {
@@ -24,13 +25,14 @@ class AlumnoController extends Controller
     
     public function index(Request $request)
     {
-        
+       $semestres = Semestre::all(); 
+       
        if($request->mensajes_nuevos == true){
         $mensajes = Auth::user()->unreadNotifications;
-        return view('alumno.mensajes-nuevos', compact('mensajes'));
+        return view('alumno.mensajes-nuevos', compact('mensajes', 'semestres'));
        }else{
         $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');
-        return view('alumno.mensajes-viejos', compact('mensajes'));
+        return view('alumno.mensajes-viejos', compact('mensajes','semestres'));
        }
         
     }
@@ -152,7 +154,9 @@ class AlumnoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $alumno = Alumno::find($id);
+        
         if ($request->hasFile('file-1')) {
             $url = str_replace('storage', 'public', $alumno->foto_perfil);
             Storage::delete($url);
@@ -167,6 +171,7 @@ class AlumnoController extends Controller
         $alumno->apellido_paterno = $request->a_paterno;
         $alumno->apellido_materno = $request->a_materno;
         $alumno->correo = $request->correo;
+        
         $alumno->save();
         return "¡Datos actualizado!";
     }
@@ -183,7 +188,9 @@ class AlumnoController extends Controller
     }
 
     public function segmentacion(Request $request,$id){
-        return $id;
+        $alumno = Alumno::find($id);
+        $alumno->segmentacion=$request->estado;
+        $alumno->save();
     }
 
     public function verMensaje(Request $request,$id){
