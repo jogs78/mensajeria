@@ -17,14 +17,14 @@
                 {!! $errors->first('titulo', '<small>:message</small><br>') !!}
                 <span><b>Descripción:</b></span>
                 <textarea placeholder="Descripción..." class="mensaje-create__form_body" name="descripcion" id="" cols="30"
-                    rows="10">{{old('titulo')}}</textarea>
+                    rows="10">{{old('descripcion')}}</textarea>
                 {!! $errors->first('descripcion', '<small>:message</small><br>') !!}
                 <label class="mensaje-create__form_lbl_adjuntar" for="">Adjuntar archivo</label>
                 <span><b><small>** Nota: la dimension maxima de la imagen debe de ser: 700x1280 px ó 1500x500 px **</small></b></span>
                 <div class="container-input">
                     <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1" accept="image/*">
                     <label for="file-1">
-                        <span class="iborrainputfile fas fa-upload"> Seleccionar imagen</span>
+                        <span class="iborrainputfile fas fa-upload" > Seleccionar imagen</span>
                     </label>
                     {!! $errors->first('file-1', '<small>:message</small><br>') !!}
                 </div>
@@ -70,7 +70,8 @@
                     </div>
                     
                     <div class="checkboxes" style="width: max-content">
-                        
+                        <label><input class="s" type="checkbox" name="sem[]" > Todos
+                        </label>
                         @foreach ($semestres as $semestre)
                             <label><input class="s" type="checkbox" name="sem[]" value="{{ $semestre->id }}"
                                 {{ (is_array(old('sem')) and in_array($semestre->id, old('sem'))) ? ' checked' : '' }}> {{ $semestre->semestre }}

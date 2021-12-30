@@ -100,13 +100,21 @@ class MensajeController extends Controller
      */
     public function store(Request $request)
     {
-        //Si se selecciona general
+        //Si el mensaje es para general.
         if(isset($_POST["general"])){
             request()->validate([
                 'titulo' => 'required',
                 'descripcion' => 'required',
                 'file-1' => 'required| dimensions:max_width=1500,max_height=1280',
                 'file-2' => 'required| mimetypes:application/pdf',
+            ]);
+        }elseif(isset($_POST["servicio"]) or isset($_POST["residencia" ])){//Si es para residencia o servicio
+            request()->validate([
+                'titulo' => 'required',
+                'descripcion' => 'required',
+                'file-1' => 'required| dimensions:max_width=1500,max_height=1280',
+                'file-2' => 'required| mimetypes:application/pdf',
+                'car' => 'required',
             ]);
         }else{//si no se selecciona general
             request()->validate([
@@ -118,7 +126,7 @@ class MensajeController extends Controller
                 'sem' => 'required',
             ]);
         }
-        $general=0;
+        
         $datos = $request->all();
         $mensaje = new mensaje();
 
@@ -138,33 +146,45 @@ class MensajeController extends Controller
         //Estados... 0-Pendiente, 1-Aceptado, 2-Rechazado
         $mensaje->estado = 0;
         $mensaje->empleado_id = Auth::user()->id;
-    
+
+        //0 - Mensaje con semestre y carrera./ 1- Mensaje para residencia de x carrera 
+        //2 - Mensaje para servicio x carrera/3- Mensaje para resi y serv x carrera
+        $segmentacion=0;
         //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
         if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
             //return 'servicio y residencia';
             $mensaje -> otros = 3;
+            $segmentacion=3;
         }elseif(isset($_POST["servicio"])){
             //return 'solo servicio';
             $mensaje -> otros = 2;
+            $segmentacion=2;
         }elseif(isset($_POST["residencia"])){
             //return 'solo residencia';
             $mensaje -> otros = 1;
+            $segmentacion=1;
         }elseif(isset($_POST["general"])){
             //return 'todos';
             $mensaje -> otros = 0;
-            $general=1;
         }
-        
-        
-        
         $mensaje -> save();
-        
-        if($general==0){
+        if($segmentacion==0){
+            if($request->sem[0]=='on'){
+                for ($i=0; $i<sizeof($datos['car']); $i++){
+                    $mensaje ->carreras()->attach(($datos['car'])[$i]);
+                }
+            }else{
+                for ($i=0; $i<sizeof($datos['car']); $i++){
+                    $mensaje ->carreras()->attach(($datos['car'])[$i]);
+                }
+                for ($i = 0; $i < sizeof($datos['sem']); $i++) {
+                    $mensaje->semestres()->attach(($datos['sem'])[$i]);
+                }
+            }
+            
+        }elseif($segmentacion==1 or $segmentacion==2 or $segmentacion==3){
             for ($i=0; $i<sizeof($datos['car']); $i++){
                 $mensaje ->carreras()->attach(($datos['car'])[$i]);
-            }
-            for ($i = 0; $i < sizeof($datos['sem']); $i++) {
-                $mensaje->semestres()->attach(($datos['sem'])[$i]);
             }
         }
         
@@ -181,6 +201,7 @@ class MensajeController extends Controller
     {
         $mensaje = Mensaje::with('carreras', 'semestres')->get()->find($id);
         $this->authorize('show', $mensaje);
+        
         return view('mensaje.mensaje-show', compact('mensaje'));
     }
 
