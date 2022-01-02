@@ -1,25 +1,50 @@
 @extends('alumno.alumno-mensajes')
 @section('mensajes-viejos')
-<div class="user-select">
-    <form action="/mensajes" style="flex-grow:1; height:40px">
-        <button id="btn3" name="general" value="all">Ver todos los mensajes</button>
+<style>
+        .image-title {
+            margin: 20px auto;
+            font-size: 25px;
+            display: block;
+            text-align: center;
+            position: relative;
+            padding: 4px;
+
+        }
+
+        .dashboard-EmisorRevisror,
+        .dashboard-difusor {
+            display: none;
+        }
+
+        #btn1,
+        #btn2, #btn3 {
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 4px;
+            background: transparent;
+        }
+
+    </style>
+<div class="user-select" style="margin-top:42px">
+    <form action="/mensajes-alumnos" style="flex-grow:1; height:40px">
+        <button id="btn1" name="all" value="0">Mensajes en general</button>
     </form>
     
     
-    @if (Auth::user()->rol == "Revisor")
+    {{-- 0 n inguno 3 ambos 1 servicio 2 residencia --}}
+        {{-- @if (Auth::user()->segmentacion == )
         <form action="/mensajes" style="flex-grow:1; height:40px">
-            <button id="btn1" name="estado" value="1">Mensajes por revisar</button>
+            <button id="btn1" name="estado" value="1">Mensajes de residencia</button>
         </form>
-    @else
-       <form action="/mensajes" style="flex-grow:1; height:40px">
-        <button id="btn1" name="estado" value="1">Mensajes pendientes</button>
+        @endif --}}
+        <form action="/mensajes-alumnos" style="flex-grow:1; height:40px">
+            <button id="btn2" name="residencia" value="2">Mensajes de residencia</button>
+        </form>
+       <form action="/mensajes-alumnos" style="flex-grow:1; height:40px">
+        <button id="btn3" name="sericioSocial" value="2">Mensajes de servicio social</button>
     </form>  
-    @endif
-   
-    
-    <form action="/mensajes" style="flex-grow:1; height:40px">
-        <button id="btn2" name="difundido" value="3">Mensajes difundidos</button>
-    </form>
 </div>
 <section class="lista-mensajes">
     <dl>

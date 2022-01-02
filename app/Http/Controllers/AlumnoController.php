@@ -26,14 +26,30 @@ class AlumnoController extends Controller
     public function index(Request $request)
     {
        $semestres = Semestre::all(); 
-    
+        $mensajes = "";
        if($request->mensajes_nuevos == true){
         $mensajes = Auth::user()->unreadNotifications;
         return view('alumno.mensajes-nuevos', compact('mensajes', 'semestres'));
        }else{
+        if($request->all){
+
         $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');
+
+        }elseif($request->residencia){
+$mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre INNER JOIN alumnos WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id= '.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3 AND mensajes.otros=1 AND alumnos.segmentacion=2');
+return $mensajes;        
+}elseif($request->servicioSocial){
+
+        }else{
+        $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id='.Auth::user()->carrera_id.' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id='.Auth::user()->semestre_id.' AND mensajes.estado=3');
+return $mensajes;
+        }
         return view('alumno.mensajes-viejos', compact('mensajes','semestres'));
-       }
+
+    }
+
+
+    
         
     }
 

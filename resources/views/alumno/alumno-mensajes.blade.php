@@ -9,11 +9,13 @@
     <meta name="user-id" content="{{ Auth::user()->id }}">
 
     <link rel="stylesheet" href="{{ asset('static/css/dashboard_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/css/mensaje_list_style.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('static/css/user_register_style.css') }}">
+    
 
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
-    <link rel="stylesheet" href="{{ asset('static/css/mensaje_list_style.css') }}">
-
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
@@ -78,19 +80,11 @@
                                 </div>
 
                                 
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Semestre:</label>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Correo electrónico:</label>
                                 <div style="text-align: center;">
-                                   <select name="semestre" id="semestre" style="width: 80%; text-aling:center">
-                                    <option value="" >{{Auth::user()->semestre->semestre}}</option>
-                                       @foreach ($semestres as $semestre)
-                                           <option value="{{$semestre->id}}">{{$semestre->semestre}}</option>
-                                       @endforeach
-                                   </select>
-                                </div>
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña actual:</label>
-                                <div style="text-align: center;">
-                                    <input class="input" id="passwordActual" type="password" name="passwordActual"
-                                        disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
+                                    <input class="input" id="correo" type="text" name="correo"
+                                        value="{{ Auth::user()->correo }}" disabled><i class="edit fas fa-edit"
+                                        style="font-size: 20px;"></i>
                                 </div>
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nueva
                                     contraseña:</label>
@@ -129,16 +123,55 @@
                                     title="Marca alguna de las casillas si deseas recibir mensajes relacionados con algunas las siguientes opciones">
                                     Desea recibir mensajes de:
                                     <div style="margin-left: 10%;">
+                                        @if (Auth::user()->segmentacion == 1)
                                         <label style="cursor: pointer">
                                             <input class="servicioResidencia" type="checkbox" name="servicio"
-                                                id="servicio_social" value="0"> Servicio
+                                                id="servicio_social" value="0" checked> Servicio
+                                            social</span>
+                                            
+                                        </label>
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                id="residencia" value="1" >
+                                            Residencia
+                                        </label>
+                                        
+                                        @elseif (Auth::user()->segmentacion == 2)
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                id="servicio_social" value="0" > Servicio
+                                            social</span>
+                                            
+                                        </label>
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                id="residencia" value="1" checked>
+                                            Residencia
+                                        </label>
+                                        @elseif (Auth::user()->segmentacion == 3)
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                id="servicio_social" value="0" checked> Servicio
                                             social</span>
                                         </label>
                                         <label style="cursor: pointer">
                                             <input class="servicioResidencia" type="checkbox" name="residencia"
-                                                id="residencia" value="1">
+                                                id="residencia" value="1" checked>
                                             Residencia
                                         </label>
+                                        @else 
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                id="servicio_social" value="0" > Servicio
+                                            social</span>
+                                        </label>
+                                        <label style="cursor: pointer">
+                                            <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                id="residencia" value="1" >
+                                            Residencia
+                                        </label>
+                                        @endif
+                                        
                                     </div>
                                 </li>
                             @endif    
@@ -170,7 +203,7 @@
 
 
     </script>
-    <script >
+    <script type="text/javascript">
         var id = document.querySelector("meta[name='user-id']").getAttribute('content');
         let servicioResidencia = document.getElementsByClassName('servicioResidencia')
 
