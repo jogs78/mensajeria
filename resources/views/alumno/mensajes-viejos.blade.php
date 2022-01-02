@@ -43,7 +43,7 @@
             <button id="btn2" name="residencia" value="2">Mensajes de residencia</button>
         </form>
        <form action="/mensajes-alumnos" style="flex-grow:1; height:40px">
-        <button id="btn3" name="sericioSocial" value="2">Mensajes de servicio social</button>
+        <button id="btn3" name="servicioSocial" value="2">Mensajes de servicio social</button>
     </form>  
 </div>
 <section class="lista-mensajes">

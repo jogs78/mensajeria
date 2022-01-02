@@ -150,6 +150,7 @@ class MensajeController extends Controller
         //0 - Mensaje con semestre y carrera./ 1- Mensaje para residencia de x carrera 
         //2 - Mensaje para servicio x carrera/3- Mensaje para resi y serv x carrera
         $segmentacion = 5;
+        $mensaje->otros=4;
         //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
         if (isset($_POST["servicio"]) and isset($_POST["residencia"])) {
             //return 'servicio y residencia';
