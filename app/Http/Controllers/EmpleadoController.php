@@ -93,13 +93,16 @@ class EmpleadoController extends Controller
             $url = Storage::url($img);
             $empleado -> foto_perfil = $url;
         }
-        if($request->newPass != null){
+        if($request->newPass != null &&  Hash::check($request->PassActual, Auth::user()->contraseña)){
             $empleado->password =  Hash::make($request->newPass); 
+        }else{
+            return "¡Contraseña actual erronea!";
+
         }
         $empleado->nombre = $request->nombre;
         $empleado->apellido_paterno = $request->a_paterno;
         $empleado->apellido_materno = $request->a_materno;
-        $empleado->correo = $request->correo;
+        
         $empleado->save();
         return "¡Datos actualizado!";
     }

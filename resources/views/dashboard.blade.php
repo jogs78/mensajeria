@@ -70,18 +70,16 @@
                                         value="{{ Auth::user()->apellido_materno }}" disabled><i
                                         class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Correo
-                                    electrónico:</label>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña actual:</label>
                                 <div style="text-align: center;">
-                                    <input class="input" id="correo" type="text" name="correo"
-                                        value="{{ Auth::user()->correo }}" disabled><i class="edit fas fa-edit"
-                                        style="font-size: 20px;"></i>
+                                    <input class="input" id="passwordActual" type="password" name="passwordActual"
+                                        disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nueva
                                     contraseña:</label>
                                 <div style="text-align: center;">
-                                    <input class="input" id="password" type="password" name="password" disabled><i
-                                        class="edit fas fa-edit" style="font-size: 20px;"></i>
+                                    <input class="input" id="password" type="password" name="password"
+                                        disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
                                 <button id="btnA">Guardar</button>
                             </form>

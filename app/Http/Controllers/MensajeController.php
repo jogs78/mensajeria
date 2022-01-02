@@ -101,14 +101,14 @@ class MensajeController extends Controller
     public function store(Request $request)
     {
         //Si el mensaje es para general.
-        if(isset($_POST["general"])){
+        if (isset($_POST["general"])) {
             request()->validate([
                 'titulo' => 'required',
                 'descripcion' => 'required',
                 'file-1' => 'required| dimensions:max_width=1500,max_height=1280',
                 'file-2' => 'required| mimetypes:application/pdf',
             ]);
-        }elseif(isset($_POST["servicio"]) or isset($_POST["residencia" ])){//Si es para residencia o servicio
+        } elseif (isset($_POST["servicio"]) or isset($_POST["residencia"])) { //Si es para residencia o servicio
             request()->validate([
                 'titulo' => 'required',
                 'descripcion' => 'required',
@@ -116,7 +116,7 @@ class MensajeController extends Controller
                 'file-2' => 'required| mimetypes:application/pdf',
                 'car' => 'required',
             ]);
-        }else{//si no se selecciona general
+        } else { //si no se selecciona general
             request()->validate([
                 'titulo' => 'required',
                 'descripcion' => 'required',
@@ -126,7 +126,7 @@ class MensajeController extends Controller
                 'sem' => 'required',
             ]);
         }
-        
+
         $datos = $request->all();
         $mensaje = new mensaje();
 
@@ -149,45 +149,96 @@ class MensajeController extends Controller
 
         //0 - Mensaje con semestre y carrera./ 1- Mensaje para residencia de x carrera 
         //2 - Mensaje para servicio x carrera/3- Mensaje para resi y serv x carrera
-        $segmentacion=0;
+        $segmentacion = 5;
         //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
-        if(isset($_POST["servicio"]) and isset($_POST["residencia"])){
+        if (isset($_POST["servicio"]) and isset($_POST["residencia"])) {
             //return 'servicio y residencia';
-            $mensaje -> otros = 3;
-            $segmentacion=3;
-        }elseif(isset($_POST["servicio"])){
+            $mensaje->otros = 3;
+            $segmentacion = 3;
+        } elseif (isset($_POST["servicio"])) {
             //return 'solo servicio';
-            $mensaje -> otros = 2;
-            $segmentacion=2;
-        }elseif(isset($_POST["residencia"])){
+            $mensaje->otros = 2;
+            $segmentacion = 2;
+        } elseif (isset($_POST["residencia"])) {
             //return 'solo residencia';
-            $mensaje -> otros = 1;
-            $segmentacion=1;
-        }elseif(isset($_POST["general"])){
+            $mensaje->otros = 1;
+            $segmentacion = 1;
+        } elseif (isset($_POST["general"])) {
             //return 'todos';
-            $mensaje -> otros = 0;
+            $mensaje->otros = 0;
+            $segmentacion = 0;
         }
-        $mensaje -> save();
-        if($segmentacion==0){
-            if($request->sem[0]=='on'){
-                for ($i=0; $i<sizeof($datos['car']); $i++){
-                    $mensaje ->carreras()->attach(($datos['car'])[$i]);
-                }
-            }else{
-                for ($i=0; $i<sizeof($datos['car']); $i++){
-                    $mensaje ->carreras()->attach(($datos['car'])[$i]);
-                }
-                for ($i = 0; $i < sizeof($datos['sem']); $i++) {
-                    $mensaje->semestres()->attach(($datos['sem'])[$i]);
-                }
+        $mensaje->save();
+
+        // if ($segmentacion == 0) {
+
+        //     if ($request->sem) {
+        //         if ($request->sem[0] == 'on') {
+        //             for ($i = 0; $i < sizeof($datos['car']); $i++) {
+        //                 $mensaje->carreras()->attach(($datos['car'])[$i]);
+        //             }
+        //             $semestres = Semestre::all();
+        //             for ($i = 0; $i < sizeof($semestres); $i++) {
+        //                 $mensaje->semestres()->attach($semestres[$i]->id);
+        //             }
+        //         }else {
+        //             for ($i = 0; $i < sizeof($datos['car']); $i++) {
+        //                 $mensaje->carreras()->attach(($datos['car'])[$i]);
+        //             }
+        //             for ($i = 0; $i < sizeof($datos['sem']); $i++) {
+        //                 $mensaje->semestres()->attach(($datos['sem'])[$i]);
+        //             }
+        //         }
+        //     } else {
+        //         for ($i = 0; $i < sizeof($datos['car']); $i++) {
+        //             $mensaje->carreras()->attach(($datos['car'])[$i]);
+        //         }
+        //         for ($i = 0; $i < sizeof($datos['sem']); $i++) {
+        //             $mensaje->semestres()->attach(($datos['sem'])[$i]);
+        //         }
+        //     }
+        // } elseif ($segmentacion == 1 or $segmentacion == 2 or $segmentacion == 3) {
+        //     for ($i = 0; $i < sizeof($datos['car']); $i++) {
+        //         $mensaje->carreras()->attach(($datos['car'])[$i]);
+        //     }
+        // }
+        $semestres = Semestre::all();
+        $carreras = Carrera::all();
+        if ($segmentacion == 0) {
+
+            for ($i = 0; $i < sizeof($carreras); $i++) {
+
+                $mensaje->carreras()->attach($carreras[$i]->id);
             }
-            
-        }elseif($segmentacion==1 or $segmentacion==2 or $segmentacion==3){
-            for ($i=0; $i<sizeof($datos['car']); $i++){
-                $mensaje ->carreras()->attach(($datos['car'])[$i]);
+
+            for ($i = 0; $i < sizeof($semestres); $i++) {
+
+                $mensaje->semestres()->attach($semestres[$i]->id);
             }
+        } elseif ($segmentacion == 5) {
+
+            for ($i = 0; $i < sizeof($datos['car']); $i++) {
+
+                $mensaje->carreras()->attach(($datos['car'])[$i]);
+            }
+
+            for ($i = 0; $i < sizeof($semestres); $i++) {
+
+                $mensaje->semestres()->attach($semestres[$i]->id);
+            }
+        } elseif (  $segmentacion == 2 || $segmentacion == 3) {
+
+            for ($i = 0; $i < sizeof($datos['car']); $i++) {
+                $mensaje->carreras()->attach(($datos['car'])[$i]);
+            }
+            $mensaje->semestres()->attach([7,8,9]);
+        }elseif (  $segmentacion == 1) {
+
+            for ($i = 0; $i < sizeof($datos['car']); $i++) {
+                $mensaje->carreras()->attach(($datos['car'])[$i]);
+            }
+            $mensaje->semestres()->attach(9);
         }
-        
         return redirect('/mensajes');
     }
 
@@ -201,7 +252,7 @@ class MensajeController extends Controller
     {
         $mensaje = Mensaje::with('carreras', 'semestres')->get()->find($id);
         $this->authorize('show', $mensaje);
-        
+
         return view('mensaje.mensaje-show', compact('mensaje'));
     }
 
@@ -272,11 +323,11 @@ class MensajeController extends Controller
             //     $mensaje -> otros = 3;
             // }
             $mensaje->save();
-            
-            $mensaje -> save();
+
+            $mensaje->save();
         }
         if (Auth::user()->rol == 'Revisor') {
-            
+
             if ($request->estado == 'Aceptar')
                 $mensaje->estado = 1;
             elseif ($request->estado == 'Rechazar')
@@ -285,11 +336,11 @@ class MensajeController extends Controller
         }
         if (Auth::user()->rol == 'Difusor') {
 
-            
+
             if (event(new MensajeEvent($mensaje))) {
-                $mensaje->estado=$request->estado;
+                $mensaje->estado = $request->estado;
                 $mensaje->fecha_publicacion = Carbon::now();
-                $mensaje -> save();
+                $mensaje->save();
                 return 'Mensaje difundido';
             }
         }
@@ -347,7 +398,7 @@ class MensajeController extends Controller
     }
     public function panelEmisor()
     {
-        
+
         $Totalmensaje = null;
         $mensajesAceptados = null;
         $mensajesPendientes = null;
@@ -369,21 +420,21 @@ class MensajeController extends Controller
                 }
             }
         } elseif (Auth::user()->rol == "Revisor") {
-            
-            $Totalmensaje = Mensaje::wherehas('empleado', function(Builder $query){
+
+            $Totalmensaje = Mensaje::wherehas('empleado', function (Builder $query) {
                 $query->where('quien_revisa', Auth::user()->puesto);
             })->count();
-            
-            $mensajesAceptados = Mensaje::wherehas('empleado', function(Builder $query){
+
+            $mensajesAceptados = Mensaje::wherehas('empleado', function (Builder $query) {
                 $query->where('quien_revisa', Auth::user()->puesto);
             })->where('estado', 1)->count();
-            $mensajesPendientes = Mensaje::wherehas('empleado', function(Builder $query){
+            $mensajesPendientes = Mensaje::wherehas('empleado', function (Builder $query) {
                 $query->where('quien_revisa', Auth::user()->puesto);
             })->where('estado', 0)->count();
             for ($i = 0; $i < sizeof($carreras); $i++) {
                 $sql = Mensaje::whereHas('carreras', function (Builder $query) use ($carreras, $i) {
                     $query->where('carrera_id', $carreras[$i]->id);
-                })->wherehas('empleado', function(Builder $query){
+                })->wherehas('empleado', function (Builder $query) {
                     $query->where('quien_revisa', Auth::user()->puesto);
                 })->count();
                 if ($sql >= 1) {
@@ -393,7 +444,6 @@ class MensajeController extends Controller
                     ]);
                 }
             }
-            
         }
         $valores = [
             'Totalmensaje' => $Totalmensaje,

@@ -57,8 +57,9 @@ window.addEventListener('load', function() {
         formData.append("nombre", document.getElementById('nombre').value);
         formData.append("a_paterno", document.getElementById('a_paterno').value);
         formData.append("a_materno", document.getElementById('a_materno').value);
-        formData.append("correo", document.getElementById('correo').value);
+        formData.append("semestre", document.getElementById('semestre').value);
         formData.append("newPass", document.getElementById('password').value);
+        formData.append("PassActual", document.getElementById('passwordActual').value);
         $.ajax({
             url: actualizarInfo.action,
             method: 'POST',
@@ -76,7 +77,9 @@ window.addEventListener('load', function() {
                 showConfirmButton: false,
                 timer: 1500
             })
-
+            for (let i = 0; i < inputInfo.length; i++) {
+                inputInfo[i].disabled = true;
+            }
         });
         e.preventDefault();
     });

@@ -26,7 +26,7 @@ class AlumnoController extends Controller
     public function index(Request $request)
     {
        $semestres = Semestre::all(); 
-       
+    
        if($request->mensajes_nuevos == true){
         $mensajes = Auth::user()->unreadNotifications;
         return view('alumno.mensajes-nuevos', compact('mensajes', 'semestres'));
@@ -164,14 +164,17 @@ class AlumnoController extends Controller
             $url = Storage::url($img);
             $alumno -> foto_perfil = $url;
         }
-        if($request->newPass != null){
+        if($request->newPass != null &&  Hash::check($request->PassActual, Auth::user()->contraseña)){
             $alumno->contraseña =  Hash::make($request->newPass); 
+        }else{
+            return "¡Contraseña actual erronea!";
         }
+
         $alumno->nombre = $request->nombre;
         $alumno->apellido_paterno = $request->a_paterno;
         $alumno->apellido_materno = $request->a_materno;
-        $alumno->correo = $request->correo;
-        
+        $alumno->semestre_id = $request->semestre;
+        // return $request;
         $alumno->save();
         return "¡Datos actualizado!";
     }

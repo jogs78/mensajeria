@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/css/mensaje_list_style.css') }}">
+
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
@@ -76,11 +78,19 @@
                                 </div>
 
                                 
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Correo electrónico:</label>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Semestre:</label>
                                 <div style="text-align: center;">
-                                    <input class="input" id="correo" type="text" name="correo"
-                                        value="{{ Auth::user()->correo }}" disabled><i class="edit fas fa-edit"
-                                        style="font-size: 20px;"></i>
+                                   <select name="semestre" id="semestre" style="width: 80%; text-aling:center">
+                                    <option value="" >{{Auth::user()->semestre->semestre}}</option>
+                                       @foreach ($semestres as $semestre)
+                                           <option value="{{$semestre->id}}">{{$semestre->semestre}}</option>
+                                       @endforeach
+                                   </select>
+                                </div>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña actual:</label>
+                                <div style="text-align: center;">
+                                    <input class="input" id="passwordActual" type="password" name="passwordActual"
+                                        disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nueva
                                     contraseña:</label>
@@ -160,7 +170,7 @@
 
 
     </script>
-    <script type="text/javascript">
+    <script >
         var id = document.querySelector("meta[name='user-id']").getAttribute('content');
         let servicioResidencia = document.getElementsByClassName('servicioResidencia')
 
