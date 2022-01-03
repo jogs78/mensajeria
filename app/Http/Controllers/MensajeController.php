@@ -64,13 +64,13 @@ class MensajeController extends Controller
                 })->paginate(50);
             }
         } elseif (Auth::user()->rol == 'Difusor') {
-            $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->paginate(50);
+            $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->orwhere('empleado_id', Auth::user()->id)->paginate(50);
             if ($request->general) {
-                $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->paginate(50);
+                $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->orwhere('empleado_id', Auth::user()->id)->paginate(50);
             } elseif ($request->estado) {
-                $mensajes = Mensaje::where('estado', 1)->paginate(50);
+                $mensajes = Mensaje::where('estado', 1)->orwhere('empleado_id', Auth::user()->id)->paginate(50);
             } elseif ($request->difundido) {
-                $mensajes = Mensaje::where('estado', 3)->paginate(50);
+                $mensajes = Mensaje::where('estado', 3)->orwhere('empleado_id', Auth::user()->id)->paginate(50);
             } elseif ($request->titulo || $request->fechaPub || $request->carrera) {
                 $mensajes = Mensaje::filtro($titulo, $fechaPublicacion, $carrera)->with('carreras')->paginate(50);
             }

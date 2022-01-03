@@ -42,7 +42,9 @@ class MensajePolicy
     }
     public function edit(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($mensaje->empleado_id == $empleado->id & $mensaje->estado == 0) {
+        if ($mensaje->empleado_id == $empleado->id & $mensaje->estado == 1 ) {
+            return true;
+        }elseif($empleado->rol == "Difusor" && $mensaje->estado == 1){
             return true;
         }
     }
@@ -56,7 +58,7 @@ class MensajePolicy
     }
     public function delete(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($empleado->rol == "Emisor" || $empleado->rol == "Difusor" || $empleado->rol == "Revisor" & $mensaje->empleado_id == $empleado->id & $mensaje->estado == 0) {
+        if ($mensaje->empleado_id == $empleado->id & $mensaje->estado === 0) {
             return true;
         }
     }
