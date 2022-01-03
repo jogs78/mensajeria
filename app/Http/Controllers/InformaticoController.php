@@ -95,6 +95,7 @@ class InformaticoController extends Controller
                 $empleado->correo = $informacion['email'];
                 $empleado->password = Hash::make($informacion['password']);
                 $empleado->rol = $informacion['rol'];
+                $empleado->foto_perfil = "static/imagenes/ittg_escudo.png";
                 $empleado->puesto = $informacion['puesto'];
                 $empleado->quien_revisa = $informacion['quien_revisa'];
                 $empleado->confirmation_code = $codigo;

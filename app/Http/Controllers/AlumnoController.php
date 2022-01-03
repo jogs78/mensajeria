@@ -105,6 +105,7 @@ class AlumnoController extends Controller
                     //$contents = Storage::get('file.jpg');
                     $alumno->id = $informacion['numero_control'];
                     $alumno->nombre = $informacion['name'];
+                    $alumno->foto_perfil = "static/imagenes/ittg_escudo.png";
                     $alumno->apellido_paterno = $informacion['a_paterno'];
                     $alumno->apellido_materno = $informacion['a_materno'];
                     $alumno->carrera_id = $informacion['carrera'];

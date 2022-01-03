@@ -42,9 +42,7 @@ class MensajePolicy
     }
     public function edit(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($mensaje->empleado_id == $empleado->id & $mensaje->estado == 1 ) {
-            return true;
-        }elseif($empleado->rol == "Difusor" && $mensaje->estado == 1){
+        if ($mensaje->empleado_id == $empleado->id & $mensaje->estado == 1 || $empleado->rol == "Difusor") {
             return true;
         }
     }

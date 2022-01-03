@@ -30,7 +30,106 @@
 
 
 <body>
+    <style>
+        .loader_container{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--main-bg-color);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 700ms ease-in-out;
+}
+.loader{
+    height: 250px;
+    display: flex;
+    align-items: center;
+}
+.line{
+    width: 6px;
+    height: 95px;
+    background-color: white;
+    margin: 0 7px;
+    border-radius: 4px;
+    animation: line_loader 800ms infinite normal forwards;
+}
+.line:nth-child(1){
+    background-color: rgb(255, 251, 0);
+    box-shadow: 0px 0.5px 5px rgb(255 251 0);
+}
+.line:nth-child(2){
+    animation-delay: 100ms;
+    background-color: rgb(17, 0, 250);
+    box-shadow: 0px 0.5px 5px rgb(17, 0, 250);
+}
+.line:nth-child(3){
+    animation-delay: 200ms;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0.5px 5px rgb(255, 255, 255);
+}
+.line:nth-child(4){
+    animation-delay: 300ms;
+    background-color: rgb(255, 0, 255);
+    box-shadow: 0px 0.5px 5px rgb(255, 0, 255);
+}
+.line:nth-child(5){
+    animation-delay: 400ms;
+    background-color: rgb(250, 0, 62);
+    box-shadow: 0px 0.5px 5px rgb(250, 0, 62);
+}
+.line:nth-child(6){
+    animation-delay: 500ms;
+    background-color: rgb(247, 70, 0);
+    box-shadow: 0px 0.5px 5px rgb(247, 70, 0);
+}
+.line:nth-child(7){
+    animation-delay: 600ms;
+    background-color: rgb(0, 149, 248);
+    box-shadow: 0px 0.5px 5px rgb(0, 149, 248);
+}
+.line:nth-child(8){
+    animation-delay: 700ms;
+    background-color: rgb(0, 140, 255);
+    box-shadow: 0px 0.5px 5px rgb(0, 140, 255);
+}
 
+
+@keyframes line_loader {
+    0%{
+        height: 0;
+    }
+    50%{
+        height: 95%;
+    }
+    100%{
+        height: 0%;
+    }
+}
+    </style>
+    <div class="loader_container">
+        <div class="loader">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function(){
+    const loader_container = this.document.querySelector('.loader_container')
+    setTimeout(() => {
+        loader_container.style.opacity = 0
+    loader_container.style.visibility = 'hidden'
+    }, 500);
+    
+})
+    </script>
     <header class="header">
         <div class="header_container">
             <nav class="nav1">

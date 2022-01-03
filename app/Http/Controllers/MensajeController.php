@@ -284,7 +284,7 @@ class MensajeController extends Controller
 
         $datos = $request->all();
         $mensaje = Mensaje::with('carreras', 'semestres', 'empleado')->get()->find($id);
-        if (Auth::user()->rol == 'Emisor') {
+        if ($mensaje->empleado->id == Auth::user()->id || Auth::user()->rol = "Difusor") {
             $mensaje->titulo = $request->titulo;
             $mensaje->descripcion = $request->descripcion;
             request()->validate([
@@ -326,18 +326,14 @@ class MensajeController extends Controller
             $mensaje->save();
 
             $mensaje->save();
-        }
-        if (Auth::user()->rol == 'Revisor') {
+        }elseif (Auth::user()->rol == 'Revisor') {
 
             if ($request->estado == 'Aceptar')
                 $mensaje->estado = 1;
             elseif ($request->estado == 'Rechazar')
                 $mensaje->estado = 2;
             $mensaje->save();
-        }
-        if (Auth::user()->rol == 'Difusor') {
-
-
+        }elseif (Auth::user()->rol == 'Difusor' & $mensaje->estado == 1) {
             if (event(new MensajeEvent($mensaje))) {
                 $mensaje->estado = $request->estado;
                 $mensaje->fecha_publicacion = Carbon::now();

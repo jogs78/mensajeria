@@ -46,7 +46,7 @@
             @method('PUT')
             <div class="container">
                 <label for="">Título</label>
-                <input class="messages-edit__form_input" type="text" value="{{ $mensaje->titulo }}" name="titulo">
+                <textarea class="messages-edit__form_input" cols="30" rows="5"  name="titulo">{{ $mensaje->titulo }}</textarea>
                 {!! $errors->first('titulo', '<small>:message</small><br>') !!}
             </div>
 
