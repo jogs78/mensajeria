@@ -162,7 +162,7 @@
                         <input type="password" name="confirmar_password" class="input_personal_information" id="confirmar_password"
                             value="{{ old('confirmar_password') }}">
                         <label for="" class="lbl_personal_information">Confirmar contraseña</label>
-                        <i style="position: absolute;right: 0;padding: 5px;font-size: 1.5rem;" id="vp" class="show-pass fas fa-eye"></i>
+                        <i style="position: absolute;right: 0;padding: 5px;font-size: 1.5rem;" id="vp2" class="show-pass fas fa-eye"></i>
                     </div>
                     <div class="login__extra_information" style="position: relative; margin-bottom:10px">
                         <select name="carrera" id="carrera">
@@ -194,6 +194,7 @@
         let label = document.getElementsByClassName("lbl_personal_information");
         let input = document.getElementsByClassName("input_personal_information");
         let vp = document.getElementById('vp')
+        let vp2 = document.getElementById('vp2')
         let bandera = false;
         window.addEventListener('load', function() {
             for (let i = 0; i < input.length; i++) {
@@ -224,13 +225,13 @@
             pass = document.getElementById('confirmar_password')
             if (bandera == false) {
                 pass.setAttribute('type', "text")
-                vp.classList.remove('fa-eye')
-                vp.classList.add('fa-eye-slash')
+                vp2.classList.remove('fa-eye')
+                vp2.classList.add('fa-eye-slash')
                 bandera = true
             } else {
-                pass.setAttribute('type', "confirmar_password")
-                vp.classList.add('fa-eye')
-                vp.classList.remove('fa-eye-slash')
+                pass.setAttribute('type', "password")
+                vp2.classList.add('fa-eye')
+                vp2.classList.remove('fa-eye-slash')
                 bandera = false
             }
         })

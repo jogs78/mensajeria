@@ -113,7 +113,7 @@ class AutenticarController extends Controller
                     $alumno->contraseña = Hash::make($personalInformation['password']);
                     $alumno->carrera_id = $personalInformation['carrera'];
                     $alumno->semestre_id = $personalInformation['semestre'];
-                    $alumno->foto_perfil = Storage::url('user-profile-icon.jpg');
+                    $alumno->foto_perfil = 'static/imagenes/ittg_escudo.png';
                     $alumno->confirmation_code = $codigo;
                     //guardamos el nombre y el codigo para usarlos en la confirmacion de correo.
                     $data = [

@@ -10,6 +10,9 @@ window.addEventListener('load', function() {
     let userP = document.getElementById('userP');
     let userName = document.getElementById('userName')
     let bandera = false;
+    let vp = document.getElementById('vp')
+    let vp2 = document.getElementById('vp2')
+    let banderas = false;
     let img = null;
     let menuContainer = document.getElementById('menuContainer')
     btnMenu.addEventListener('click', function() {
@@ -57,7 +60,9 @@ window.addEventListener('load', function() {
         formData.append("nombre", document.getElementById('nombre').value);
         formData.append("a_paterno", document.getElementById('a_paterno').value);
         formData.append("a_materno", document.getElementById('a_materno').value);
-        formData.append("semestre", document.getElementById('semestre').value);
+        if (document.getElementById('semestre')) {
+            formData.append("semestre", document.getElementById('semestre').value);
+        }
         formData.append("newPass", document.getElementById('password').value);
         formData.append("PassActual", document.getElementById('passwordActual').value);
         $.ajax({
@@ -80,7 +85,39 @@ window.addEventListener('load', function() {
             for (let i = 0; i < inputInfo.length; i++) {
                 inputInfo[i].disabled = true;
             }
+            document.getElementById('password').value = ""
+            document.getElementById('passwordActual').value = ""
         });
         e.preventDefault();
     });
+    vp.addEventListener('click', function() {
+        pass = document.getElementById('passwordActual')
+        if (banderas == false) {
+            pass.setAttribute('type', "text")
+            vp.classList.remove('fa-eye')
+            vp.classList.add('fa-eye-slash')
+            banderas = true
+        } else {
+            pass.setAttribute('type', "password")
+            vp.classList.add('fa-eye')
+            vp.classList.remove('fa-eye-slash')
+            banderas = false
+        }
+    })
+
+    //Visualizar confirmar cotraseña.
+    vp2.addEventListener('click', function() {
+        pass = document.getElementById('password')
+        if (banderas == false) {
+            pass.setAttribute('type', "text")
+            vp2.classList.remove('fa-eye')
+            vp2.classList.add('fa-eye-slash')
+            banderas = true
+        } else {
+            pass.setAttribute('type', "password")
+            vp2.classList.add('fa-eye')
+            vp2.classList.remove('fa-eye-slash')
+            banderas = false
+        }
+    })
 })

@@ -93,7 +93,7 @@ class EmpleadoController extends Controller
             $url = Storage::url($img);
             $empleado -> foto_perfil = $url;
         }
-        if($request->newPass != null &&  Hash::check($request->PassActual, Auth::user()->contraseña)){
+        if($request->newPass != null &&  Hash::check($request->PassActual, Auth::user()->password)){
             $empleado->password =  Hash::make($request->newPass); 
         }else{
             return "¡Contraseña actual erronea!";

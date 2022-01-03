@@ -71,15 +71,19 @@
                                         class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña actual:</label>
-                                <div style="text-align: center;">
+                                <div style="text-align: center;position: relative" >
                                     <input class="input" id="passwordActual" type="password" name="passwordActual"
                                         disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
+                        <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black" id="vp" class="show-pass fas fa-eye"></i>
+
                                 </div>
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nueva
                                     contraseña:</label>
-                                <div style="text-align: center;">
+                                <div style="text-align: center; position: relative" >
                                     <input class="input" id="password" type="password" name="password"
                                         disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
+                        <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black" id="vp2" class="show-pass fas fa-eye"></i>
+                                    
                                 </div>
                                 <button id="btnA">Guardar</button>
                             </form>
