@@ -13,6 +13,7 @@
         }
 
     </style>
+    
     <section class="user-list">
         <div class="user-register__container">
 
@@ -125,7 +126,7 @@
                 </div>
 
                 <div class="div-item_container">
-                    <input class="input" type="text" name="puesto" value="{{ old('puesto') }}">
+                    <input id="departamento" class="input" type="text" name="puesto" value="{{ old('puesto') }}">
                     <label class="lbls" for="">Departamento</label><br>
                     {!! $errors->first('puesto', '<small>:message</small>') !!}
                 </div>
@@ -161,7 +162,13 @@
 
         let vp = document.getElementsByClassName('vp')
         let bandera1 = false;
-       
+        let subdirecciones = ['Subdirección de Planeación y Vinculación', 'Subdirección Académica', 'Subdirección de Servicios Administrativos']
+        $(function(){
+            $('#departamento').autocomplete({
+                source: subdirecciones,
+                minLength: 1
+            })
+        })
        for(let i = 0; i < vp.length; i++){
         vp[i].addEventListener('click', function() {
             pass = document.getElementsByClassName('pw1')
