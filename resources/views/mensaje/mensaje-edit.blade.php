@@ -164,11 +164,11 @@
                         {!! $errors->first('sem', '<small>:message</small><br>') !!}
                     </div>
                     @if ($mensaje->otros == 0)
-                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio"
+                        <span><input  class="mensaje-edit__form_check" type="checkbox" name="servicio"
                                 id="servicio_social" value="0"> Servicio social</span>
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="residencia" id="residencia"
                                 value="1"> Residencia</span>
-                        <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
+                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
                             General</span>
                     @elseif($mensaje->otros==1)
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="servicio" id="servicio_social"
@@ -178,18 +178,18 @@
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
                             General</span>
                     @elseif($mensaje->otros==2)
-                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="residencia"
+                        <span><input class="mensaje-edit__form_check" type="checkbox" name="residencia"
                                 id="residencia" value="1"> Residencia</span>
                         <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio"
                                 id="servicio_social" value="0"> Servicio social</span>
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
                             General</span>
                     @else
-                        <span><input class="mensaje-edit__form_check" type="checkbox" name="servicio" id="servicio_social"
+                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio" id="servicio_social"
                                 value="0"> Servicio social</span>
-                        <span><input class="mensaje-edit__form_check" type="checkbox" name="residencia" id="residencia"
+                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="residencia" id="residencia"
                                 value="1"> Residencia</span>
-                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="general" id="general"
+                        <span><input  class="mensaje-edit__form_check" type="checkbox" name="general" id="general"
                                 value="3"> General</span>
                     @endif
                 </div>
