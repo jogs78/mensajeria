@@ -167,10 +167,12 @@ class AlumnoController extends Controller
             $url = Storage::url($img);
             $alumno->foto_perfil = $url;
         }
-        if ($request->newPass != null &&  Hash::check($request->PassActual, Auth::user()->contraseña)) {
-            $alumno->contraseña =  Hash::make($request->newPass);
-        } else {
-            return "¡Contraseña actual erronea!";
+        if($request->newPass){
+            if ($request->newPass != null &&  Hash::check($request->PassActual, Auth::user()->contraseña)) {
+                $alumno->contraseña =  Hash::make($request->newPass);
+            } else {
+                return "¡Contraseña actual erronea!";
+            }
         }
 
         $alumno->nombre = $request->nombre;
