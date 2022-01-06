@@ -25,6 +25,7 @@ class AlumnoController extends Controller
 
     public function index(Request $request)
     {
+        ///
         $semestres = Semestre::all();
         $mensajes = "";
         if ($request->mensajes_nuevos == true) {
