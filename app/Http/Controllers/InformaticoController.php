@@ -70,7 +70,12 @@ class InformaticoController extends Controller
             'a_paterno' => 'required',
             'a_materno' => 'required',
             'email' => 'required | email',
-            'password' => 'required',
+            'password' => ['required',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()],
             'password_confirm' => 'required',
             'rol' => 'required',
             'puesto' => 'required',

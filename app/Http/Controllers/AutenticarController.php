@@ -12,6 +12,7 @@ use App\Mail\TestMail;
 use App\Mail\restPasswordMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 
 class AutenticarController extends Controller
 {
@@ -78,7 +79,12 @@ class AutenticarController extends Controller
             'a_paterno' => 'required',
             'a_materno' => 'required',
             'correo' => 'required | email',
-            'password' => 'required',
+            'password' => ['required',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()],
             'confirmar_password' => 'required',
             'carrera' => 'required',
             'semestre' => 'required'
