@@ -365,7 +365,7 @@ class MensajeController extends Controller
 
                         $mensaje->carreras()->attach(($datos['car'])[$i]);
                     }
-
+//
                     for ($i = 0; $i < sizeof($semestres); $i++) {
 
                         $mensaje->semestres()->attach($semestres[$i]->id);

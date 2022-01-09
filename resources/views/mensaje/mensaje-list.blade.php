@@ -155,6 +155,7 @@
                     <label for="" class="new-messages__fecha-publicacion" style="">Fecha de publicación: {{\Carbon\Carbon::parse($mensaje->fecha_publicacion)->format('d/m/Y')}}</label>
                     @endif
                 </div>
+                
                 <div class="new-messages_actions">
                     @can('edit', $mensaje)
                         <div class="new-messages_edit">
