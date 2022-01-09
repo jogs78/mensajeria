@@ -44,16 +44,16 @@ class MensajeController extends Controller
             }
         } elseif (Auth::user()->rol == 'Revisor') {
             $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
-                $query->where('quien_revisa', Auth::user()->puesto);
+                $query->where('quien_revisa', Auth::user()->puesto)->orwhere('empleado_id', Auth::user()->id);
             })->paginate(50);
             if ($request->general) {
                 $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
-                    $query->where('quien_revisa', Auth::user()->puesto);
+                    $query->where('quien_revisa', Auth::user()->puesto)->orwhere('empleado_id', Auth::user()->id);
                 })->paginate(50);
             } elseif ($request->estado) {
                 $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
                     $query->where('quien_revisa', Auth::user()->puesto);
-                })->where('estado', 0)->paginate(50);
+                })->where('estado', 0)->orwhere('empleado_id', Auth::user()->id)->paginate(50);
             } elseif ($request->difundido) {
                 $mensajes = Mensaje::whereHas('empleado', function (Builder $query) {
                     $query->where('quien_revisa', Auth::user()->puesto);
@@ -365,7 +365,7 @@ class MensajeController extends Controller
 
                         $mensaje->carreras()->attach(($datos['car'])[$i]);
                     }
-
+//
                     for ($i = 0; $i < sizeof($semestres); $i++) {
 
                         $mensaje->semestres()->attach($semestres[$i]->id);
@@ -389,6 +389,13 @@ class MensajeController extends Controller
             elseif ($request->estado == 'Rechazar')
                 $mensaje->estado = 2;
             $mensaje->save();
+            }elseif(Auth::user()->rol == "Difusor"){
+                if (event(new MensajeEvent($mensaje))) {
+                    $mensaje->estado = $request->estado;
+                    $mensaje->fecha_publicacion = Carbon::now();
+                    $mensaje->save();
+                    return 'Mensaje difundido';
+                }
             }
         } elseif (Auth::user()->rol == 'Revisor') {
             if ($request->estado == 'Aceptar')
@@ -397,6 +404,7 @@ class MensajeController extends Controller
                 $mensaje->estado = 2;
             $mensaje->save();
         } elseif (Auth::user()->rol == 'Difusor' & $mensaje->estado == 1) {
+
             if (event(new MensajeEvent($mensaje))) {
                 $mensaje->estado = $request->estado;
                 $mensaje->fecha_publicacion = Carbon::now();
