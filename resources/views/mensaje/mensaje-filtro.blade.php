@@ -85,8 +85,7 @@
     <button type="submit" class="btn-sub fas fa-search"></button>
 </form>
 <form action="/mensajes" id="f2">
-    <label class="ass" for="fechaPub" style="text-align:center">Fecha de publicación <input type="date"
-            name="fechaPub"></label>
+    
     <select name="carrera" id="" name="carreras" class="select">
         <option>Filtrar por carreras</option>
         @foreach ($carreras as $carrera)

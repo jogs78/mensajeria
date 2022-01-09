@@ -23,7 +23,7 @@ class Mensaje extends Model
     public function empleado(){
         return $this -> belongsTo('App\Models\Empleado');
     }
-    public function scopeFiltro($query, $titulo, $fechaPublicacion, $carrera){
+    public function scopeFiltro($query, $titulo, $carrera){
         if($titulo){
             return $query->where('titulo', $titulo);
         }
