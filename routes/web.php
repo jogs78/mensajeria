@@ -5,6 +5,7 @@ use App\Models\Semestre;
 use App\Models\Carrera;
 use App\Models\Alumno;
 use App\Models\Empleado;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 /*
@@ -20,13 +21,12 @@ use Illuminate\Support\Facades\DB;
 /*rutas login alumnos*/
 
 Route::get('Storage-link', function(){
-    if(file_exists(public_path('storage'))){
-        return $this->error('The "public/storage" directory already exist');
-    }
-    $this->laravel->make('files')->link(
-        storage_path('app/public'), public_path('storage')
-    );
-    $this->info('The [public/storage] directory has been linked');
+    Artisan::call('storage:link');
+    return "Almacenamiento activado";
+});
+Route::get('sockets/serve', function(){
+    \Illuminate\Support\Facades\Artisan::call('websockets:serve');
+    return 1;
 });
 Route::get('/log-in', function () {
     return view('login.login');
