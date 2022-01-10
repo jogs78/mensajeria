@@ -19,6 +19,15 @@ use Illuminate\Support\Facades\DB;
 */
 /*rutas login alumnos*/
 
+Route::get('Storage-link', function(){
+    if(file_exists(public_path('storage'))){
+        return $this->error('The "public/storage" directory already exist');
+    }
+    $this->laravel->make('files')->link(
+        storage_path('app/public'), public_path('storage')
+    );
+    $this->info('The [public/storage] directory has been linked');
+});
 Route::get('/log-in', function () {
     return view('login.login');
 })->name('login')->middleware('guest');

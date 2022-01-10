@@ -49,6 +49,8 @@ const filesToCache = [
     '/static/js/difusor.js',
     '/static/jquery/jquery-3.6.0.min.js',
     '/static/jquery/jquery.zoom.min.js',
+    '/static/jquery/jquery-ui.js',
+    '/static/jquery/jquery-ui.css',
     '/static/imagenes/ittg_escudo.svg',
     '/static/imagenes/mascota_ittg.png',
     '/images/icons/icon-72x72.png',

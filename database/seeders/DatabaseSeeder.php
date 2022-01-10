@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $empleado->nombre = "Informatico";
         $empleado->apellido_paterno = "Apellido";
         $empleado->apellido_materno= "Apellido";
+        $empleado->foto_perfil= 'static/imagenes/ittg_escudo.png';
         $empleado->correo="vlc960157@gmail.com";
         $empleado->password="1234";
         $empleado->rol="Informático";
@@ -32,67 +33,67 @@ class DatabaseSeeder extends Seeder
 
         $carrera = new Carrera();
         $carrera->name="Ingen. Mecánica";
-        $carrera->logo="storage/logos/ing_mecanica.png";
+        $carrera->logo="static/imagenes/logos/ing_mecanica.png";
         $carrera->save();
 
         $carrera2 = new Carrera();
         $carrera2->name="Ingen. Sistemas Computacionales";
-        $carrera2->logo="storage/logos/ing_sistemas.png";
+        $carrera2->logo="static/imagenes/logos/ing_sistemas.png";
         $carrera2->save();
 
         $carrera3 = new Carrera();
         $carrera3->name="Ingen. Industrial";
-        $carrera3->logo="storage/logos/ing_industrial.png";
+        $carrera3->logo="static/imagenes/logos/ing_industrial.png";
         $carrera3->save();
 
         $carrera4 = new Carrera();
         $carrera4->name="Ingen. Electrónica";
-        $carrera4->logo="storage/logos/ing_electronica.png";
+        $carrera4->logo="static/imagenes/logos/ing_electronica.png";
         $carrera4->save();
         
         $carrera5 = new Carrera();
         $carrera5->name="Ingen. Eléctrica";
-        $carrera5->logo="storage/logos/ing_Electrica.png";
+        $carrera5->logo="static/imagenes/logos/ing_Electrica.png";
         $carrera5->save();
 
         $carrera6 = new Carrera();
         $carrera6->name="Ingen. Bioquímica";
-        $carrera6->logo="storage/logos/ing_Bioquimica.png";
+        $carrera6->logo="static/imagenes/logos/ing_Bioquimica.png";
         $carrera6->save();
 
         $carrera7 = new Carrera();
         $carrera7->name="Ingen. Química";
-        $carrera7->logo="storage/logos/ing_quimica.png";
+        $carrera7->logo="static/imagenes/logos/ing_quimica.png";
         $carrera7->save();
 
         $carrera8 = new Carrera();
         $carrera8->name="Ingen. Gestión empresarial";
-        $carrera8->logo="storage/logos/ing_gestion.png";
+        $carrera8->logo="static/imagenes/logos/ing_gestion.png";
         $carrera8->save();
 
         $carrera9 = new Carrera();
         $carrera9->name="Ingen. Logística";
-        $carrera9->logo="storage/logos/ing_logistica.png";
+        $carrera9->logo="static/imagenes/logos/ing_logistica.png";
         $carrera9->save();
 
         $carrera10 = new Carrera();
         $carrera10->name="Maestría en Ciencias en Ingeniería Bioquímica";
-        $carrera10->logo="storage/logos/maestria1.jpg";
+        $carrera10->logo="static/imagenes/logos/maestria1.jpg";
         $carrera10->save();
 
         $carrera11 = new Carrera();
         $carrera11->name="Maestría en Ciencias en Ingeniería Mecatrónica";
-        $carrera11->logo="storage/logos/ing_maestria2.jpg";
+        $carrera11->logo="static/imagenes/logos/ing_maestria2.jpg";
         $carrera11->save();
 
         $carrera12 = new Carrera();
         $carrera12->name="Doctorado en Ciencias de los Alimentos y Biotecnología";
-        $carrera12->logo="storage/logos/doctorado1.jpg";
+        $carrera12->logo="static/imagenes/logos/doctorado1.jpg";
         $carrera12->save();
 
         $carrera13 = new Carrera();
         $carrera13->name="Doctorado en Ciencias de la Ingeniería";
-        $carrera13->logo="storage/logos/doctorado2.jpg";
+        $carrera13->logo="static/imagenes/logos/doctorado2.jpg";
         $carrera13->save();
 
         $semestre = new Semestre();

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('static/glider/glider.min.css') }}">
 
-    
+
 
     <link rel="manifest" href="{{ route('laravelpwa.manifest') }}">
     <script src="{{ asset('static/glider/glider.min.js') }}"></script>
@@ -36,24 +36,28 @@
                 <div class="menu-container" id="menu">
 
                     <div class="menu-content" id="menuContainer">
-                        <div class="menu-content" id="personalInformation" >
+                        <div class="menu-content" id="personalInformation">
                             <i class="fas fa-chevron-left" id="btnback" style="font-size:22px;"></i>
                             <center>
                                 <figure class="img1">
-                                <img class="imgP" src="{{ Auth::user()->foto_perfil }}" id="imgProfileNew" title="foto">
-                            </figure>
-                                </center>
-                            <form id="actualizarInfo" action="/empleado/{{ Auth::user()->id }}" style="display: flex; flex-direction:column;" method="POST" enctype="multipart/form-data">
+                                    <img class="imgP" src="{{ Auth::user()->foto_perfil }}"
+                                        id="imgProfileNew" title="foto">
+                                </figure>
+                            </center>
+                            <form id="actualizarInfo" action="/empleado/{{ Auth::user()->id }}"
+                                style="display: flex; flex-direction:column;" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="container-input">
-                                    <input type="file" name="imagProfile" id="userP" class="inputfile inputfile-1" accept="image/*">
+                                    <input type="file" name="imagProfile" id="userP" class="inputfile inputfile-1"
+                                        accept="image/*">
                                     <label for="userP">
                                         <span class="iborrainputfile fas fa-upload"> Actualizar foto</span>
                                     </label>
-                                    
+
                                 </div>
-                                
+
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nombre:</label>
                                 <div style="text-align: center;">
                                     <input class="input" id="nombre" type="text" name="nombre"
@@ -74,32 +78,39 @@
                                         value="{{ Auth::user()->apellido_materno }}" disabled><i
                                         class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña actual:</label>
-                                <div style="text-align: center;position: relative" >
-                                    <input class="input" id="passwordActual" type="password" name="passwordActual"
-                                        disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
-                        <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black" id="vp" class="show-pass fas fa-eye"></i>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña
+                                    actual:</label>
+                                <div style="text-align: center;position: relative">
+                                    <input class="input" id="passwordActual" type="password"
+                                        name="passwordActual" disabled><i class="edit fas fa-edit"
+                                        style="font-size: 20px;"></i>
+                                    <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black"
+                                        id="vp" class="show-pass fas fa-eye"></i>
 
                                 </div>
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nueva
                                     contraseña:</label>
-                                <div style="text-align: center; position: relative" >
+                                <div style="text-align: center; position: relative">
                                     <input class="input" id="password" type="password" name="password"
                                         disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
-                        <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black" id="vp2" class="show-pass fas fa-eye"></i>
-                                    
+                                    <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black"
+                                        id="vp2" class="show-pass fas fa-eye"></i>
+
                                 </div>
                                 <button id="btnA">Guardar</button>
                             </form>
                         </div>
                         <div class="image-profile_container">
-                            <center><figure class="img1">
-                                <img class="imgP" id="imgProfile" src="{{ Auth::user()->foto_perfil }}" alt="">
-                            </figure>
+                            <center>
+                                <figure class="img1">
+                                    <img class="imgP" id="imgProfile" src="{{ Auth::user()->foto_perfil }}"
+                                        alt="">
+                                </figure>
                             </center>
-                            <label id="userName">{{ Auth::user()->nombre . ' ' . Auth::user()->apellido_paterno . ' ' . Auth::user()->apellido_materno }}</label>
+                            <label
+                                id="userName">{{ Auth::user()->nombre . ' ' . Auth::user()->apellido_paterno . ' ' . Auth::user()->apellido_materno }}</label>
                             <label>{{ Auth::user()->rol }}</label>
-                            <label class="btnF" id="btnShow" >Actualizar mis datos</label>
+                            <label class="btnF" id="btnShow">Actualizar mis datos</label>
                         </div>
 
                         <ul class="menu-list">
@@ -114,8 +125,14 @@
                                         href="/mensajes">Mensajes</a></li>
 
                             @endcan
+                            @if (Auth::user()->rol == 'Informático')
+                                <li class="menu-list__item fas fa-server"> <a id="home" class="text"
+                                        href="/log-out">Iniciar servidor </a></li>
+                                <li class="menu-list__item fas fa-hdd"> <a id="home" class="text"
+                                        href="/log-out">Activar almacenamiento </a></li>
+                            @endif
                             <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
-                                href="/log-out">Salir </a></li>
+                                    href="/log-out">Salir </a></li>
 
                         </ul>
                     </div>
@@ -125,10 +142,10 @@
     </header>
     @if (Auth::user()->rol == 'Emisor' || Auth::user()->rol == 'Revisor')
         @include('emisor-revisor.dashboard-emisor_revisor')
-    @elseif (Auth::user()->rol == "Difusor")
+    @elseif (Auth::user()->rol == 'Difusor')
         @include('difusor.dashboard-difusor')
         <script src="{{ asset('static/js/difusor.js') }}"></script>
-    @elseif (Auth::user()->rol == "Informático")
+    @elseif (Auth::user()->rol == 'Informático')
         @include('informatico.dashboard-informatico')
         <script src="{{ asset('static/js/informatico.js') }}"></script>
     @endif

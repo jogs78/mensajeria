@@ -13,6 +13,7 @@ use App\Models\Semestre;
 use App\Models\Carrera;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 
 class InformaticoController extends Controller
 {
