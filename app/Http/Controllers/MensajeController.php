@@ -31,7 +31,7 @@ class MensajeController extends Controller
         $fechaPublicacion = $request->fechaPub;
         $carrera = $request->carrera;
         $carreras = Carrera::all();
-    
+
         if (Auth::user()->rol == 'Emisor') {
             $mensajes = Mensaje::where('empleado_id', Auth::user()->id)->paginate(50);
             if ($request->general) {
@@ -66,7 +66,7 @@ class MensajeController extends Controller
             }
         } elseif (Auth::user()->rol == 'Difusor') {
             $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->orwhere('empleado_id', Auth::user()->id)->paginate(50);
-            
+
             if ($request->general) {
                 $mensajes = Mensaje::where('estado', 1)->orwhere('estado', 3)->orwhere('empleado_id', Auth::user()->id)->paginate(50);
             } elseif ($request->estado) {
@@ -173,42 +173,10 @@ class MensajeController extends Controller
         }
         $mensaje->save();
 
-        // if ($segmentacion == 0) {
-
-        //     if ($request->sem) {
-        //         if ($request->sem[0] == 'on') {
-        //             for ($i = 0; $i < sizeof($datos['car']); $i++) {
-        //                 $mensaje->carreras()->attach(($datos['car'])[$i]);
-        //             }
-        //             $semestres = Semestre::all();
-        //             for ($i = 0; $i < sizeof($semestres); $i++) {
-        //                 $mensaje->semestres()->attach($semestres[$i]->id);
-        //             }
-        //         }else {
-        //             for ($i = 0; $i < sizeof($datos['car']); $i++) {
-        //                 $mensaje->carreras()->attach(($datos['car'])[$i]);
-        //             }
-        //             for ($i = 0; $i < sizeof($datos['sem']); $i++) {
-        //                 $mensaje->semestres()->attach(($datos['sem'])[$i]);
-        //             }
-        //         }
-        //     } else {
-        //         for ($i = 0; $i < sizeof($datos['car']); $i++) {
-        //             $mensaje->carreras()->attach(($datos['car'])[$i]);
-        //         }
-        //         for ($i = 0; $i < sizeof($datos['sem']); $i++) {
-        //             $mensaje->semestres()->attach(($datos['sem'])[$i]);
-        //         }
-        //     }
-        // } elseif ($segmentacion == 1 or $segmentacion == 2 or $segmentacion == 3) {
-        //     for ($i = 0; $i < sizeof($datos['car']); $i++) {
-        //         $mensaje->carreras()->attach(($datos['car'])[$i]);
-        //     }
-        // }
         $semestres = Semestre::all();
         $carreras = Carrera::all();
         if ($segmentacion == 0) {
-
+            return 1;
             for ($i = 0; $i < sizeof($carreras); $i++) {
 
                 $mensaje->carreras()->attach($carreras[$i]->id);
@@ -219,17 +187,19 @@ class MensajeController extends Controller
                 $mensaje->semestres()->attach($semestres[$i]->id);
             }
         } elseif ($segmentacion == 5) {
+            // return 2;
 
             for ($i = 0; $i < sizeof($datos['car']); $i++) {
 
                 $mensaje->carreras()->attach(($datos['car'])[$i]);
             }
 
-            for ($i = 0; $i < sizeof($semestres); $i++) {
+            for ($i = 0; $i < sizeof($datos['sem']); $i++) {
 
-                $mensaje->semestres()->attach($semestres[$i]->id);
+                $mensaje->semestres()->attach($datos['sem'][$i]);
             }
         } elseif ($segmentacion == 2 || $segmentacion == 3) {
+            return 3;
 
             for ($i = 0; $i < sizeof($datos['car']); $i++) {
                 $mensaje->carreras()->attach(($datos['car'])[$i]);
@@ -286,6 +256,7 @@ class MensajeController extends Controller
         $datos = $request->all();
         $mensaje = Mensaje::with('carreras', 'semestres', 'empleado')->get()->find($id);
         if ($mensaje->empleado->id == Auth::user()->id || Auth::user()->rol == "Difusor") {
+
             if (Auth::user()->rol == "Emisor") {
                 $mensaje->titulo = $request->titulo;
                 $mensaje->descripcion = $request->descripcion;
@@ -367,7 +338,7 @@ class MensajeController extends Controller
 
                         $mensaje->carreras()->attach(($datos['car'])[$i]);
                     }
-//
+                    //
                     for ($i = 0; $i < sizeof($semestres); $i++) {
 
                         $mensaje->semestres()->attach($semestres[$i]->id);
@@ -385,13 +356,17 @@ class MensajeController extends Controller
                     }
                     $mensaje->semestres()->attach(9);
                 }
-            }elseif(Auth::user()->rol == 'Revisor'){
+            } elseif (Auth::user()->rol == 'Revisor') {
+                return "aqui REVI";
+
                 if ($request->estado == 'Aceptar')
-                $mensaje->estado = 1;
-            elseif ($request->estado == 'Rechazar')
-                $mensaje->estado = 2;
-            $mensaje->save();
-            }elseif(Auth::user()->rol == "Difusor"){
+                    $mensaje->estado = 1;
+                elseif ($request->estado == 'Rechazar')
+                    $mensaje->estado = 2;
+                $mensaje->save();
+            } elseif (Auth::user()->rol == "Difusor") {
+                return "aqui DIF";
+
                 if (event(new MensajeEvent($mensaje))) {
                     $mensaje->estado = $request->estado;
                     $mensaje->fecha_publicacion = Carbon::now();

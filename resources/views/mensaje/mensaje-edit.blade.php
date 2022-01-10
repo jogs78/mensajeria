@@ -46,7 +46,8 @@
             @method('PUT')
             <div class="container">
                 <label for="">Título</label>
-                <textarea class="messages-edit__form_input" cols="30" rows="5"  name="titulo">{{ $mensaje->titulo }}</textarea>
+                <textarea class="messages-edit__form_input" cols="30" rows="5"
+                    name="titulo">{{ $mensaje->titulo }}</textarea>
                 {!! $errors->first('titulo', '<small>:message</small><br>') !!}
             </div>
 
@@ -164,33 +165,46 @@
                         {!! $errors->first('sem', '<small>:message</small><br>') !!}
                     </div>
                     @if ($mensaje->otros == 0)
-                        <span><input  class="mensaje-edit__form_check" type="checkbox" name="servicio"
-                                id="servicio_social" value="0"> Servicio social</span>
+                        {{-- general --}}
+                        <span><input class="mensaje-edit__form_check" type="checkbox" name="servicio" id="servicio_social"
+                                value="0"> Servicio social</span>
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="residencia" id="residencia"
                                 value="1"> Residencia</span>
-                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
+                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="general" id="general"
+                                value="3">
                             General</span>
-                    @elseif($mensaje->otros==1)
+                    @elseif($mensaje->otros == 1)
+                        {{-- solo resi --}}
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="servicio" id="servicio_social"
                                 value="0"> Servicio social</span>
                         <span><input checked class="mensaje-edit__form_check" type="checkbox" name="residencia"
                                 id="residencia" value="1"> Residencia</span>
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
                             General</span>
-                    @elseif($mensaje->otros==2)
-                        <span><input class="mensaje-edit__form_check" type="checkbox" name="residencia"
-                                id="residencia" value="1"> Residencia</span>
+                    @elseif($mensaje->otros == 2)
+                        {{-- solo servi --}}
+                        <span><input class="mensaje-edit__form_check" type="checkbox" name="residencia" id="residencia"
+                                value="1"> Residencia</span>
                         <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio"
                                 id="servicio_social" value="0"> Servicio social</span>
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
                             General</span>
+                    @elseif($mensaje->otros == 3)
+                        {{-- si es 3 ambos servi y resi --}}
+                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio"
+                                id="servicio_social" value="0"> Servicio social</span>
+                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="residencia"
+                                id="residencia" value="1"> Residencia</span>
+                        <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
+                            General</span>
                     @else
-                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="servicio" id="servicio_social"
-                                value="0"> Servicio social</span>
-                        <span><input checked class="mensaje-edit__form_check" type="checkbox" name="residencia" id="residencia"
-                                value="1"> Residencia</span>
-                        <span><input  class="mensaje-edit__form_check" type="checkbox" name="general" id="general"
-                                value="3"> General</span>
+                        {{-- ninguno --}}
+                        <span><input  class="mensaje-edit__form_check" type="checkbox" name="servicio"
+                                id="servicio_social" value="0"> Servicio social</span>
+                        <span><input  class="mensaje-edit__form_check" type="checkbox" name="residencia"
+                                id="residencia" value="1"> Residencia</span>
+                        <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
+                            General</span>
                     @endif
                 </div>
 
