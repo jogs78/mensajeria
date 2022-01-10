@@ -18,9 +18,9 @@
                     @if ($mensaje->otros==0)
                         <li style="list-style: none"><b>- Todos los alumnos</b></li>
                     @else
-                        @if($mensaje->otros==1)
+                        @if($mensaje->otros==2)
                             <li style="list-style: none"><b>- Alumnos en residencia</b></li>
-                        @elseif($mensaje->otros==2)
+                        @elseif($mensaje->otros==1)
                             <li style="list-style: none"><b>- Alumnos en servicio social</b></li>           
                         @elseif($mensaje->otros==3)
                             <li style="list-style: none"><b>-Alumnos en servicio social y residencia</b></li>    

@@ -119,6 +119,8 @@ class AlumnoController extends Controller
                     $alumno->semestre_id = $informacion['semestre'];
                     $alumno->correo = $informacion['email'];
                     $alumno->contraseña = Hash::make($informacion['password']);
+                    $alumno->segmentacion = 0;
+
                     $alumno->confirmation_code = $codigo;
                     //guardamos el nombre y el codigo para usarlos en la confirmacion de correo.
                     $data = [
@@ -186,6 +188,7 @@ class AlumnoController extends Controller
         $alumno->apellido_paterno = $request->a_paterno;
         $alumno->apellido_materno = $request->a_materno;
         $alumno->semestre_id = $request->semestre;
+        
         // return $request;
         $alumno->save();
         return "¡Datos actualizado!";
@@ -206,6 +209,7 @@ class AlumnoController extends Controller
         $alumno = Alumno::find($id);
         $alumno->segmentacion = $request->estado;
         $alumno->save();
+        return $request->estado;
     }
 
     public function verMensaje(Request $request, $id)

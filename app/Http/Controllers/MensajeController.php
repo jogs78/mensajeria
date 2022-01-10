@@ -152,7 +152,7 @@ class MensajeController extends Controller
         //0 - Mensaje con semestre y carrera./ 1- Mensaje para residencia de x carrera 
         //2 - Mensaje para servicio x carrera/3- Mensaje para resi y serv x carrera
         $segmentacion = 5;
-        $mensaje->otros = 4;
+        $mensaje->otros = 0;
         //0 - Todos / 1 - Residencia / 2 - Servicio_social / 3 Servicio y Residencia
         if (isset($_POST["servicio"]) and isset($_POST["residencia"])) {
             //return 'servicio y residencia';
@@ -160,11 +160,11 @@ class MensajeController extends Controller
             $segmentacion = 3;
         } elseif (isset($_POST["servicio"])) {
             //return 'solo servicio';
-            $mensaje->otros = 2;
+            $mensaje->otros = 1;
             $segmentacion = 2;
         } elseif (isset($_POST["residencia"])) {
             //return 'solo residencia';
-            $mensaje->otros = 1;
+            $mensaje->otros = 2;
             $segmentacion = 1;
         } elseif (isset($_POST["general"])) {
             //return 'todos';
@@ -296,7 +296,7 @@ class MensajeController extends Controller
                     foreach ($mensaje->carreras as $idCar) {
                         $mensaje->carreras()->detach($idCar->id);
                     }
-                    $mensaje->otros = 2;
+                    $mensaje->otros = 1;
                     $segmentacion = 2;
                 } elseif (isset($_POST["residencia"])) {
                     //return 'solo residencia';
@@ -306,7 +306,7 @@ class MensajeController extends Controller
                     foreach ($mensaje->carreras as $idCar) {
                         $mensaje->carreras()->detach($idCar->id);
                     }
-                    $mensaje->otros = 1;
+                    $mensaje->otros = 2;
                     $segmentacion = 1;
                 } elseif (isset($_POST["general"])) {
                     //return 'todos';
@@ -365,7 +365,6 @@ class MensajeController extends Controller
                     $mensaje->estado = 2;
                 $mensaje->save();
             } elseif (Auth::user()->rol == "Difusor") {
-                return "aqui DIF";
 
                 if (event(new MensajeEvent($mensaje))) {
                     $mensaje->estado = $request->estado;

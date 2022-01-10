@@ -30,9 +30,9 @@ class InformaticoPolicy
     public function create(?Empleado $empleado){
         return $empleado -> rol == "Informático";
     }
-    public function edit(?Empleado $empleado){
-        return $empleado -> rol == "Informático";
-    }
+    // public function edit(?Empleado $empleado){
+    //     return $empleado -> rol == "Informático";
+    // }
     public function update(?Empleado $empleado, ?Empleado $newEmpleado, ?Alumno $newAlumno){
         return $empleado -> rol == "Informático";
     }

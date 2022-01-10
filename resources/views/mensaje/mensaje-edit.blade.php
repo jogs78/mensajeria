@@ -173,7 +173,7 @@
                         <span><input checked class="mensaje-edit__form_check" type="checkbox" name="general" id="general"
                                 value="3">
                             General</span>
-                    @elseif($mensaje->otros == 1)
+                    @elseif($mensaje->otros == 2)
                         {{-- solo resi --}}
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="servicio" id="servicio_social"
                                 value="0"> Servicio social</span>
@@ -181,7 +181,7 @@
                                 id="residencia" value="1"> Residencia</span>
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="general" id="general" value="3">
                             General</span>
-                    @elseif($mensaje->otros == 2)
+                    @elseif($mensaje->otros == 1)
                         {{-- solo servi --}}
                         <span><input class="mensaje-edit__form_check" type="checkbox" name="residencia" id="residencia"
                                 value="1"> Residencia</span>
