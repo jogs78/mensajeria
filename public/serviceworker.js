@@ -1,4 +1,4 @@
-const cacheName = "mensajeriaITTGv0";
+const cacheName = "mensajeriaITTGv1.0";
 const filesToCache = [
     '/',
     '/log-in',
