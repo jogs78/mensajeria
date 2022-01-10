@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-use Iluminate\Validation\Rules\Password;
+use Illuminate\Validation\Rules\Password;
 use App\Mail\TestMail;
 use App\Models\Empleado;
 use App\Models\Semestre;
@@ -68,7 +68,7 @@ class AlumnoController extends Controller
 
         $codigo = Str::random(25); //generamos un codigo de confirmacion aleatorio.
         $informacion = $request->all();
-        $request()->validate([
+        request()->validate([
             'numero_control' => 'required',
             'name' => 'required',
             'a_paterno' => 'required',

@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="div-item_container">
-                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Semestre*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
+                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Carrera*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
                     <select name="carrera" id="carrera" class="">
                         <option value="">Seleccione una opción</option>
                         @foreach ($carreras as $carrera)
@@ -79,12 +79,12 @@
                 </div>
 
                 <div class="div-item_container">
-                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Carrera*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
+                    <label for="" style="top: 0; color:rgb(0, 0, 0)" >Semestre*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
                     <select name="semestre" id="semestre" class="">
                         <option value="">Semestre</option>
                         @foreach ($semestres as $semestre)
                             <option value="{{ $semestre->id }}"
-                                {{ old('carrera') == $semestre->id ? 'selected' : '' }}>{{ $semestre->semestre }}</option>
+                                {{ old('semestre') == $semestre->id ? 'selected' : '' }}>{{ $semestre->semestre }}</option>
                         @endforeach
                     </select>
                     {!! $errors->first('semestre', '<small>:message</small>') !!}
@@ -115,12 +115,13 @@
 
                 <div class="div-item_container">
                     <label for="" style="position: absolute;top: -20px; color:rgb(0, 0, 0)" >Rol*: <i class="fas fa-question-circle" title="Campo requerido" style="font-size: .9rem"></i></label>
-                    <select name="rol" id="rol" class="">
+                    <select name="rol" id="rol" class="" >
                         <option value="">Elija una opción</option>
                         <option value="Informático">Informático</option>
                         <option value="Difusor">Difusor</option>
                         <option value="Revisor">Revisor</option>
                         <option value="Emisor">Emisor</option>
+                        
                     </select>
                     {!! $errors->first('rol', '<small>:message</small>') !!}
                 </div>
