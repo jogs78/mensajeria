@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
+    <script src="{{ asset('static/js/offline.js') }}"></script>
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
@@ -388,7 +389,7 @@
                                 estadoServicioResidencia(2)
                             } else {
                                 console.log('residencia y servicio no seleccionada')
-                                estadoServicioResidencia(0)
+                                estadoServicioResidencia(4)
                             }
                         }
 

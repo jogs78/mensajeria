@@ -36,9 +36,9 @@ class AlumnoController extends Controller
             if ($request->all) {
                 $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id=' . Auth::user()->carrera_id . ' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id=' . Auth::user()->semestre_id . ' AND mensajes.estado=3');
             } elseif ($request->residencia) {
-                $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre INNER JOIN alumnos WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id= ' . Auth::user()->carrera_id . ' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id=' . Auth::user()->semestre_id . ' AND mensajes.estado=3 AND (mensajes.otros=1 or mensajes.otros=3) AND (alumnos.segmentacion=2 or alumnos.segmentacion=3)');
+                $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre INNER JOIN alumnos WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id= ' . Auth::user()->carrera_id . ' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id=' . Auth::user()->semestre_id . ' AND mensajes.estado=3 AND (mensajes.otros=2 or mensajes.otros=3) AND (alumnos.segmentacion=2 or alumnos.segmentacion=3)');
             } elseif ($request->servicioSocial) {
-                $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre INNER JOIN alumnos WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id= ' . Auth::user()->carrera_id . ' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id=' . Auth::user()->semestre_id . ' AND mensajes.estado=3 AND (mensajes.otros=2 or mensajes.otros=3) AND (alumnos.segmentacion=3 or alumnos.segmentacion=1)');
+                $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre INNER JOIN alumnos WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id= ' . Auth::user()->carrera_id . ' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id=' . Auth::user()->semestre_id . ' AND mensajes.estado=3 AND (mensajes.otros=1 or mensajes.otros=3) AND (alumnos.segmentacion=3 or alumnos.segmentacion=1)');
             } else {
                 $mensajes = DB::select('SELECT mensajes.id,titulo,fecha_publicacion FROM mensajes INNER JOIN carrera_mensaje INNER JOIN mensaje_semestre WHERE carrera_mensaje.mensaje_id=mensajes.id AND carrera_mensaje.carrera_id=' . Auth::user()->carrera_id . ' AND mensaje_semestre.mensaje_id=mensajes.id AND mensaje_semestre.semestre_id=' . Auth::user()->semestre_id . ' AND mensajes.estado=3 AND (mensajes.otros = 0 or mensajes.otros=4)');
             }
@@ -119,7 +119,7 @@ class AlumnoController extends Controller
                     $alumno->semestre_id = $informacion['semestre'];
                     $alumno->correo = $informacion['email'];
                     $alumno->contraseña = Hash::make($informacion['password']);
-                    $alumno->segmentacion = 0;
+                    $alumno->segmentacion = 4;
 
                     $alumno->confirmation_code = $codigo;
                     //guardamos el nombre y el codigo para usarlos en la confirmacion de correo.

@@ -21,6 +21,7 @@
 
     <link rel="manifest" href="{{ route('laravelpwa.manifest') }}">
     <script src="{{ asset('static/glider/glider.min.js') }}"></script>
+    <script src="{{ asset('static/js/offline.js') }}"></script>
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-ui.js') }}"></script>

@@ -36,10 +36,9 @@ window.addEventListener("load", function() {
                     url: url,
                     method: 'PUT',
                     data: {
-                        estado: 3,
+                        estadoD: 3,
                         _token: $("input[name='_token']").val()
                     },
-                    dataType: 'html',
                 }).done(function(res) {
                     let d = difundir[j].getAttribute('action')
                     let l = d.split('/')
