@@ -70,8 +70,7 @@ const filesToCacheInmutable = [
     '/static/jquery/jquery-ui.js',
     '/static/jquery/jquery-ui.css',
     '/static/js/offline.js',
-    '/static/js/mdtoast.min.js',
-    '/static/js/mdtoast.min.css',
+
 ]
 self.addEventListener('install', event => {
     // se guarda el cache y cosas nuevas
