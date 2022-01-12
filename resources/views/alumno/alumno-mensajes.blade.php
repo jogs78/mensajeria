@@ -10,16 +10,14 @@
 
     <link rel="stylesheet" href="{{ asset('static/css/dashboard_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/mensaje_list_style.css') }}">
-
     <link rel="stylesheet" href="{{ asset('static/css/user_register_style.css') }}">
-
-
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <script src="{{ asset('static/js/offline.js') }}"></script>
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
+    
     @laravelPWA
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -350,10 +348,8 @@
 
     <script src="{{ asset('static/js/dashboard.js') }}"></script>
     <script src="{{ asset('/js/app.js') }}"></script>
-    <script>
-
-
-    </script>
+    <script src="{{ asset('static/js/offline.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript">
         var id = document.querySelector("meta[name='user-id']").getAttribute('content');
         let servicioResidencia = document.getElementsByClassName('servicioResidencia')
@@ -368,7 +364,7 @@
                     estadoServicioResidencia(1)
                 } else {
                     console.log('sin segmento')
-                        estadoServicioResidencia(0)
+                    estadoServicioResidencia(0)
                 }
             })
         } else if (servicioResidencia.length === 2) {
@@ -416,39 +412,28 @@
 
             if (!("Notification" in window)) {
                 console.log("Este navegador no es compatible con las notificaciones de escritorio");
-            } else if (Notification.permission === "granted") {
-                // Si es correcto, lanzamos una notificación
-
             } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
-                Notification.requestPermission(function(permission) {
-                    // Si el usuario nos lo concede, creamos la notificación
-                    if (permission === "granted") {
-
-                    }
+                Notification.requestPermission().then(result => {
+                    let mensajeTitle = "";
+                    Echo.private('App.Models.Alumno.' + id)
+                        .notification((notification) => {
+                            mensajeTitle = notification.title
+                            notifica(mensajeTitle)
+                        });
+                    Echo.channelprivate('App.Models.Alumno.' + id)
+                        .listen('MensajeEvent', (e) => {
+                            console.log(e);
+                        });
                 });
             }
         })
-        let mensajeTitle = "";
-        Echo.private('App.Models.Alumno.' + id)
-            .notification((notification) => {
-
-                mensajeTitle = notification.title
-                notifica(mensajeTitle)
-            });
-        Echo.channelprivate('App.Models.Alumno.' + id)
-            .listen('MensajeEvent', (e) => {
-                console.log(e);
-            });
 
         function notifica(mensajeTitle) {
-
             const options = {
                 body: mensajeTitle,
                 icon: './static/imagenes/ittg_escudo.png',
-
             };
             swRegistration.showNotification('Mensajería ITTG', options);
-
         }
     </script>
     <script>

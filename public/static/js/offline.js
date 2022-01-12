@@ -1,18 +1,24 @@
 function isOnline() {
     if (navigator.onLine) {
-
-        $.mdtoast('En linea :)', {
-            interaction: true,
-            interactionTimeout: 2000,
-            actionText: 'ok'
-        });
+        Swal.fire({
+            toast: true,
+            position: 'bottom-left',
+            icon: 'success',
+            title: "Estas en línea :)",
+            showConfirmButton: false,
+            timer: 3000
+        })
     } else {
 
-        $.mdtoast('Sin acceso a internet :(', {
-            interaction: true,
-            actionText: 'ok',
-            type: 'warning'
-        });
+        Swal.fire({
+            toast: true,
+            position: 'bottom-left',
+            icon: 'warning',
+            title: "Ha perdido la conexión :(",
+            showConfirmButton: false,
+            timer: 3000
+        })
+
     }
 }
 

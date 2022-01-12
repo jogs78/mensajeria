@@ -17,11 +17,12 @@
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('static/glider/glider.min.css') }}">
 
-
+    
+    
 
     <link rel="manifest" href="{{ route('laravelpwa.manifest') }}">
     <script src="{{ asset('static/glider/glider.min.js') }}"></script>
-    <script src="{{ asset('static/js/offline.js') }}"></script>
+    
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-ui.js') }}"></script>
@@ -158,6 +159,10 @@
     @yield('informatico.user-list')
     @yield('informatico.user-edit')
     @yield('difusor.ver-estadisticas')
+    <script src="{{ asset('static/js/offline.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   
+
     <script src="{{ asset('static/js/dashboard.js') }}"></script>
 </body>
 

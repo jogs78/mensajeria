@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('static/css/login_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
+
+
+
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -181,6 +184,8 @@
             event.preventDefault();
         });
     </script>
+    <script src="{{ asset('static/js/offline.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </body>
 
 </html>
