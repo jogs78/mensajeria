@@ -409,40 +409,28 @@
         }
         let notificacionBtn = document.getElementById('notificaciones')
         notificacionBtn.addEventListener('click', function() {
-            if (!window.Notification) {
-                console.log('este navegador no soporta');
-                return;
-            }
-            if (Notification.permission == 'granted') {
-
-
-            } else if (Notification.permission != 'denied' || Notification.permission == 'default') {
-
+            if (!("Notification" in window)) {
+                console.log("Este navegador no es compatible con las notificaciones de escritorio");
+            } else if (Notification.permission === "granted") {
+                // Si es correcto, lanzamos una notificación
+            } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
                 Notification.requestPermission(function(permission) {
-                    
-                    console.log(permission);
-                    if (permission == 'granted') {
-
-                        let mensajeTitle = "";
-                    Echo.private('App.Models.Alumno.' + id)
-                        .notification((notification) => {
-                            mensajeTitle = notification.title
-                            notifica(mensajeTitle)
-                        });
-                    Echo.channelprivate('App.Models.Alumno.' + id)
-                        .listen('MensajeEvent', (e) => {
-                            console.log(e);
-                        });
+                    // Si el usuario nos lo concede, creamos la notificación
+                    if (permission === "granted") {
                     }
                 });
-
             }
-
-
-
-            
         })
-
+        let mensajeTitle = "";
+        Echo.private('App.Models.Alumno.' + id)
+            .notification((notification) => {
+                mensajeTitle = notification.title
+                notifica(mensajeTitle)
+            });
+        Echo.channelprivate('App.Models.Alumno.' + id)
+            .listen('MensajeEvent', (e) => {
+                console.log(e);
+            });
         function notifica(mensajeTitle) {
             const options = {
                 body: mensajeTitle,
