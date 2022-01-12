@@ -19,8 +19,8 @@ class CreateMensajesTable extends Migration
             $table->text('descripcion');
             $table->integer('estado');
             $table->integer('otros')->nullable();
-            $table->string('imagen',600);
-            $table->text('documento');
+            $table->string('imagen',600)->nullable();
+            $table->text('documento')->nullable();
             //llave foranea
             $table->unsignedBigInteger('empleado_id');
 

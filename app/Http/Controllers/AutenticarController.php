@@ -117,6 +117,7 @@ class AutenticarController extends Controller
                     $alumno->apellido_materno = $personalInformation['a_materno'];
                     $alumno->correo = $personalInformation['correo'];
                     $alumno->contraseña = Hash::make($personalInformation['password']);
+                    $alumno->segmentacion = 4;
                     $alumno->carrera_id = $personalInformation['carrera'];
                     $alumno->semestre_id = $personalInformation['semestre'];
                     $alumno->foto_perfil = 'static/imagenes/ittg_escudo.png';

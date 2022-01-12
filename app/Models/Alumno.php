@@ -48,6 +48,7 @@ class Alumno extends Authenticatable
 
     public static function getMensaje(Mensaje $mensaje){
         $users = array();
+        $alumno = Alumno::all();
         for($i = 0; $i < sizeof($mensaje->carreras); $i++){
             for($j = 0; $j < sizeof($mensaje->semestres); $j++){
                 $con = Alumno::where('carrera_id', $mensaje->carreras[$i]->id)->where('semestre_id', $mensaje->semestres[$j]->id)->orderBy('nombre')->get();

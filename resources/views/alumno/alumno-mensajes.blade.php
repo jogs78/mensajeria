@@ -10,15 +10,14 @@
 
     <link rel="stylesheet" href="{{ asset('static/css/dashboard_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/mensaje_list_style.css') }}">
-
     <link rel="stylesheet" href="{{ asset('static/css/user_register_style.css') }}">
-    
-
     <link rel="stylesheet" href="{{ asset('static/css/alumno_mensajes_style.css') }}">
     <link rel="stylesheet" href="{{ asset('static/css/css/all.css') }}">
+    <script src="{{ asset('static/js/offline.js') }}"></script>
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
+    
     @laravelPWA
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,82 +30,95 @@
 
 <body>
     <style>
-        .loader_container{
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--main-bg-color);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 700ms ease-in-out;
-}
-.loader{
-    height: 250px;
-    display: flex;
-    align-items: center;
-}
-.line{
-    width: 6px;
-    height: 95px;
-    background-color: white;
-    margin: 0 7px;
-    border-radius: 4px;
-    animation: line_loader 800ms infinite normal forwards;
-}
-.line:nth-child(1){
-    background-color: rgb(255, 251, 0);
-    box-shadow: 0px 0.5px 5px rgb(255 251 0);
-}
-.line:nth-child(2){
-    animation-delay: 100ms;
-    background-color: rgb(17, 0, 250);
-    box-shadow: 0px 0.5px 5px rgb(17, 0, 250);
-}
-.line:nth-child(3){
-    animation-delay: 200ms;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0px 0.5px 5px rgb(255, 255, 255);
-}
-.line:nth-child(4){
-    animation-delay: 300ms;
-    background-color: rgb(255, 0, 255);
-    box-shadow: 0px 0.5px 5px rgb(255, 0, 255);
-}
-.line:nth-child(5){
-    animation-delay: 400ms;
-    background-color: rgb(250, 0, 62);
-    box-shadow: 0px 0.5px 5px rgb(250, 0, 62);
-}
-.line:nth-child(6){
-    animation-delay: 500ms;
-    background-color: rgb(247, 70, 0);
-    box-shadow: 0px 0.5px 5px rgb(247, 70, 0);
-}
-.line:nth-child(7){
-    animation-delay: 600ms;
-    background-color: rgb(0, 149, 248);
-    box-shadow: 0px 0.5px 5px rgb(0, 149, 248);
-}
-.line:nth-child(8){
-    animation-delay: 700ms;
-    background-color: rgb(0, 140, 255);
-    box-shadow: 0px 0.5px 5px rgb(0, 140, 255);
-}
+        .loader_container {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--main-bg-color);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 700ms ease-in-out;
+        }
+
+        .loader {
+            height: 250px;
+            display: flex;
+            align-items: center;
+        }
+
+        .line {
+            width: 6px;
+            height: 95px;
+            background-color: white;
+            margin: 0 7px;
+            border-radius: 4px;
+            animation: line_loader 800ms infinite normal forwards;
+        }
+
+        .line:nth-child(1) {
+            background-color: rgb(255, 251, 0);
+            box-shadow: 0px 0.5px 5px rgb(255 251 0);
+        }
+
+        .line:nth-child(2) {
+            animation-delay: 100ms;
+            background-color: rgb(17, 0, 250);
+            box-shadow: 0px 0.5px 5px rgb(17, 0, 250);
+        }
+
+        .line:nth-child(3) {
+            animation-delay: 200ms;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0px 0.5px 5px rgb(255, 255, 255);
+        }
+
+        .line:nth-child(4) {
+            animation-delay: 300ms;
+            background-color: rgb(255, 0, 255);
+            box-shadow: 0px 0.5px 5px rgb(255, 0, 255);
+        }
+
+        .line:nth-child(5) {
+            animation-delay: 400ms;
+            background-color: rgb(250, 0, 62);
+            box-shadow: 0px 0.5px 5px rgb(250, 0, 62);
+        }
+
+        .line:nth-child(6) {
+            animation-delay: 500ms;
+            background-color: rgb(247, 70, 0);
+            box-shadow: 0px 0.5px 5px rgb(247, 70, 0);
+        }
+
+        .line:nth-child(7) {
+            animation-delay: 600ms;
+            background-color: rgb(0, 149, 248);
+            box-shadow: 0px 0.5px 5px rgb(0, 149, 248);
+        }
+
+        .line:nth-child(8) {
+            animation-delay: 700ms;
+            background-color: rgb(0, 140, 255);
+            box-shadow: 0px 0.5px 5px rgb(0, 140, 255);
+        }
 
 
-@keyframes line_loader {
-    0%{
-        height: 0;
-    }
-    50%{
-        height: 95%;
-    }
-    100%{
-        height: 0%;
-    }
-}
+        @keyframes line_loader {
+            0% {
+                height: 0;
+            }
+
+            50% {
+                height: 95%;
+            }
+
+            100% {
+                height: 0%;
+            }
+        }
+
     </style>
     <div class="loader_container">
         <div class="loader">
@@ -121,14 +133,14 @@
         </div>
     </div>
     <script>
-        window.addEventListener('load', function(){
-    const loader_container = this.document.querySelector('.loader_container')
-    setTimeout(() => {
-        loader_container.style.opacity = 0
-    loader_container.style.visibility = 'hidden'
-    }, 500);
-    
-})
+        window.addEventListener('load', function() {
+            const loader_container = this.document.querySelector('.loader_container')
+            setTimeout(() => {
+                loader_container.style.opacity = 0
+                loader_container.style.visibility = 'hidden'
+            }, 500);
+
+        })
     </script>
     <header class="header">
         <div class="header_container">
@@ -177,20 +189,25 @@
                                         value="{{ Auth::user()->apellido_materno }}" disabled><i
                                         class="edit fas fa-edit" style="font-size: 20px;"></i>
                                 </div>
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Semestre actual:</label>
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Semestre
+                                    actual:</label>
                                 <select name="semestre" id="" style="width: 80%;
                                 margin: auto;">
-                                    <option value="{{Auth::user()->semestre_id}}">{{Auth::user()->semestre->semestre}}</option>
+                                    <option value="{{ Auth::user()->semestre_id }}">
+                                        {{ Auth::user()->semestre->semestre }}</option>
                                     @foreach ($semestres as $semestre)
-                                        <option value="{{$semestre->id}}">{{$semestre->semestre}}</option>
+                                        <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
                                     @endforeach
                                 </select>
-                                
-                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña actual:</label>
+
+                                <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Contraseña
+                                    actual:</label>
                                 <div style="text-align: center;position: relative">
-                                    <input class="input" id="passwordActual" type="password" name="passwordActual"
-                                        disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
-                        <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black" id="vp" class="show-pass fas fa-eye"></i>
+                                    <input class="input" id="passwordActual" type="password"
+                                        name="passwordActual" disabled><i class="edit fas fa-edit"
+                                        style="font-size: 20px;"></i>
+                                    <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black"
+                                        id="vp" class="show-pass fas fa-eye"></i>
 
                                 </div>
                                 <label style="color: white;font-weight: bold;padding: 0 5px;" for="">Nueva
@@ -198,7 +215,8 @@
                                 <div style="text-align: center; position: relative">
                                     <input class="input" id="password" type="password" name="password"
                                         disabled><i class="edit fas fa-edit" style="font-size: 20px;"></i>
-                        <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black" id="vp2" class="show-pass fas fa-eye"></i>
+                                    <i style="position: absolute;top:0;right: 48px;padding: 5px;font-size: 1.5rem;color:black"
+                                        id="vp2" class="show-pass fas fa-eye"></i>
 
                                 </div>
                                 <button id="btnA">Guardar</button>
@@ -227,64 +245,86 @@
                                     @endif
                                 </a></li>
 
-                            @if (Auth::user()->semestre_id>=7)
+                            @if (Auth::user()->semestre_id == 7 || Auth::user()->semestre_id == 8)
                                 <li class="menu-list__item fas fa-exclamation-circle " id="" style="cursor: pointer"
                                     title="Marca alguna de las casillas si deseas recibir mensajes relacionados con algunas las siguientes opciones">
                                     Desea recibir mensajes de:
                                     <div style="margin-left: 10%;">
                                         @if (Auth::user()->segmentacion == 1)
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="servicio"
-                                                id="servicio_social" value="0" checked> Servicio
-                                            social</span>
-                                            
-                                        </label>
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="residencia"
-                                                id="residencia" value="1" >
-                                            Residencia
-                                        </label>
-                                        
-                                        @elseif (Auth::user()->segmentacion == 2)
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="servicio"
-                                                id="servicio_social" value="0" > Servicio
-                                            social</span>
-                                            
-                                        </label>
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="residencia"
-                                                id="residencia" value="1" checked>
-                                            Residencia
-                                        </label>
-                                        @elseif (Auth::user()->segmentacion == 3)
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="servicio"
-                                                id="servicio_social" value="0" checked> Servicio
-                                            social</span>
-                                        </label>
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="residencia"
-                                                id="residencia" value="1" checked>
-                                            Residencia
-                                        </label>
-                                        @else 
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="servicio"
-                                                id="servicio_social" value="0" > Servicio
-                                            social</span>
-                                        </label>
-                                        <label style="cursor: pointer">
-                                            <input class="servicioResidencia" type="checkbox" name="residencia"
-                                                id="residencia" value="1" >
-                                            Residencia
-                                        </label>
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                    id="servicio_social" value="0" checked> Servicio
+                                                social</span>
+                                            </label>
+                                        @else
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                    id="servicio_social" value="1"> Servicio
+                                                social</span>
+                                            </label>
+
                                         @endif
-                                        
+
                                     </div>
                                 </li>
-                            @endif    
-                            
+                            @elseif (Auth::user()->semestre_id == 9)
+                                <li class="menu-list__item fas fa-exclamation-circle " id="" style="cursor: pointer"
+                                    title="Marca alguna de las casillas si deseas recibir mensajes relacionados con algunas las siguientes opciones">
+                                    Desea recibir mensajes de:
+                                    <div style="margin-left: 10%;">
+                                        @if (Auth::user()->segmentacion == 1)
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                    id="servicio_social" value="1" checked> Servicio
+                                                social</span>
+
+                                            </label>
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                    id="residencia" value="0">
+                                                Residencia
+                                            </label>
+
+                                        @elseif (Auth::user()->segmentacion == 2)
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                    id="servicio_social" value="0"> Servicio
+                                                social</span>
+
+                                            </label>
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                    id="residencia" value="1" checked>
+                                                Residencia
+                                            </label>
+                                        @elseif (Auth::user()->segmentacion == 3)
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                    id="servicio_social" value="0" checked> Servicio
+                                                social</span>
+                                            </label>
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                    id="residencia" value="1" checked>
+                                                Residencia
+                                            </label>
+                                        @else
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="servicio"
+                                                    id="servicio_social" value="0"> Servicio
+                                                social</span>
+                                            </label>
+                                            <label style="cursor: pointer">
+                                                <input class="servicioResidencia" type="checkbox" name="residencia"
+                                                    id="residencia" value="1">
+                                                Residencia
+                                            </label>
+                                        @endif
+
+                                    </div>
+                                </li>
+                            @endif
+
                             <li class="menu-list__item fas fa-bell " id="notificaciones" style="cursor: pointer">
                                 <span class="text">Activar notificaciones</span>
                             </li>
@@ -308,42 +348,53 @@
 
     <script src="{{ asset('static/js/dashboard.js') }}"></script>
     <script src="{{ asset('/js/app.js') }}"></script>
-    <script>
-
-
-    </script>
+    <script src="{{ asset('static/js/offline.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript">
         var id = document.querySelector("meta[name='user-id']").getAttribute('content');
         let servicioResidencia = document.getElementsByClassName('servicioResidencia')
 
         //estadoServicioResidencia recibe un parametro que corresponde a: 1 para servicio, 2 for residencia, 3 para ambos y 0 para ninguno
         //estadoServicioResidencia(1);
-        for (let i = 0; i < 2; i++) {
-            servicioResidencia[i].addEventListener('change', function() {
-                if (servicioResidencia[0].checked & servicioResidencia[1].checked) {
-                    console.log('Servicio social y residencia seleccionado')
-                    estadoServicioResidencia(3)
-                } else {
-                    //console.log('no seleccionado Servicio social y residencia')
-                    if (servicioResidencia[0].checked) {
-                        console.log('ha seleccionado solo servicio')
-                        estadoServicioResidencia(1)
-                    } else {
-                        //console.log('servicio social no seleccionado')
-                        if (servicioResidencia[1].checked) {
-                            console.log('ha seleccionado solo residencia')
-                            estadoServicioResidencia(2)
-                        } else {
-                            console.log('residencia y servicio no seleccionada')
-                            estadoServicioResidencia(0)
-                        }
-                    }
 
-                } 
+        if (servicioResidencia.length === 1) {
+            servicioResidencia[0].addEventListener('change', function() {
+                if (servicioResidencia[0].checked) {
+                    console.log('ha seleccionado solo servicio')
+                    estadoServicioResidencia(1)
+                } else {
+                    console.log('sin segmento')
+                    estadoServicioResidencia(0)
+                }
             })
+        } else if (servicioResidencia.length === 2) {
+            for (let i = 0; i < 2; i++) {
+                servicioResidencia[i].addEventListener('change', function() {
+                    if (servicioResidencia[0].checked & servicioResidencia[1].checked) {
+                        console.log('Servicio social y residencia seleccionado')
+                        estadoServicioResidencia(3)
+                    } else {
+                        //console.log('no seleccionado Servicio social y residencia')
+                        if (servicioResidencia[0].checked) {
+                            console.log('ha seleccionado solo servicio')
+                            estadoServicioResidencia(1)
+                        } else {
+                            //console.log('servicio social no seleccionado')
+                            if (servicioResidencia[1].checked) {
+                                console.log('ha seleccionado solo residencia')
+                                estadoServicioResidencia(2)
+                            } else {
+                                console.log('residencia y servicio no seleccionada')
+                                estadoServicioResidencia(4)
+                            }
+                        }
+
+                    }
+                })
+            }
         }
 
-        
+
 
         function estadoServicioResidencia(estado) {
             $.ajax({
@@ -353,7 +404,7 @@
                     estado: estado,
                 }
             }).done(function(res) {
-                //alert(res);
+                // alert(res);
             })
         }
         let notificacionBtn = document.getElementById('notificaciones')
@@ -361,39 +412,28 @@
 
             if (!("Notification" in window)) {
                 console.log("Este navegador no es compatible con las notificaciones de escritorio");
-            } else if (Notification.permission === "granted") {
-                // Si es correcto, lanzamos una notificación
-
             } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
-                Notification.requestPermission(function(permission) {
-                    // Si el usuario nos lo concede, creamos la notificación
-                    if (permission === "granted") {
-
-                    }
+                Notification.requestPermission().then(result => {
+                    let mensajeTitle = "";
+                    Echo.private('App.Models.Alumno.' + id)
+                        .notification((notification) => {
+                            mensajeTitle = notification.title
+                            notifica(mensajeTitle)
+                        });
+                    Echo.channelprivate('App.Models.Alumno.' + id)
+                        .listen('MensajeEvent', (e) => {
+                            console.log(e);
+                        });
                 });
             }
         })
-        let mensajeTitle = "";
-        Echo.private('App.Models.Alumno.' + id)
-            .notification((notification) => {
-
-                mensajeTitle = notification.title
-                notifica(mensajeTitle)
-            });
-        Echo.channelprivate('App.Models.Alumno.' + id)
-            .listen('MensajeEvent', (e) => {
-                console.log(e);
-            });
 
         function notifica(mensajeTitle) {
-
             const options = {
                 body: mensajeTitle,
                 icon: './static/imagenes/ittg_escudo.png',
-
             };
             swRegistration.showNotification('Mensajería ITTG', options);
-
         }
     </script>
     <script>
