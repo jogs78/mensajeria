@@ -17,7 +17,7 @@
     <script src="{{ asset('static/css/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('static/jquery/jquery.zoom.min.js') }}"></script>
-    
+
     @laravelPWA
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -409,12 +409,21 @@
         }
         let notificacionBtn = document.getElementById('notificaciones')
         notificacionBtn.addEventListener('click', function() {
+            if (!window.Notification) {
+                console.log('este navegador no soporta');
+                return;
+            }
+            if (Notification.permission == 'granted') {
 
-            if (!("Notification" in window)) {
-                console.log("Este navegador no es compatible con las notificaciones de escritorio");
-            } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
-                Notification.requestPermission().then(result => {
-                    let mensajeTitle = "";
+
+            } else if (Notification.permission != 'denied' || Notification.permission == 'default') {
+
+                Notification.requestPermission(function(permission) {
+                    
+                    console.log(permission);
+                    if (permission == 'granted') {
+
+                        let mensajeTitle = "";
                     Echo.private('App.Models.Alumno.' + id)
                         .notification((notification) => {
                             mensajeTitle = notification.title
@@ -424,8 +433,14 @@
                         .listen('MensajeEvent', (e) => {
                             console.log(e);
                         });
+                    }
                 });
+
             }
+
+
+
+            
         })
 
         function notifica(mensajeTitle) {
