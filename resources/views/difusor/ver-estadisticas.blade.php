@@ -40,6 +40,8 @@
         flex-wrap: wrap;
         width: 80vw;
         margin: auto;
+        height: 25vh;
+        overflow: auto;
     }
 
     .lbls-inf {

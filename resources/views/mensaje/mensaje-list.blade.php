@@ -32,11 +32,13 @@
     <section class="new-messages" id="new-messages">
         @if (session('message') == 'ok')
             <script>
-                Swal.fire(
+                setTimeout(() => {
+                    Swal.fire(
                     'Eliminado!',
                     'Mensaje eliminado con éxito',
                     'success'
                 )
+                }, 500);
             </script>
         @endif
         <a class="new-messages__link" href="/mensajes/create">Redactar mensaje</a>

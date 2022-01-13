@@ -16,6 +16,7 @@ function limpiarCache(cacheName, numeroItems) {
 }
 const filesToCache = [
     '/',
+    '/serviceworker.js',
     '/log-in',
     '/sign-up',
     '/manifest.json',
@@ -79,29 +80,42 @@ self.addEventListener('install', event => {
         return cache.addAll(filesToCache).then(
             console.log("Caching AppShell")
         )
+    }).then(() => {
+        return self.skipWaiting();
     }).catch(err => { console.log('fallo appshell: ', err) })
     const cacheInmutable = caches.open(cacheInmutableName).then(cache => {
         return cache.addAll(filesToCacheInmutable).then(
             console.log("Caching imutable cache")
         )
+    }).then(() => {
+        return self.skipWaiting();
     }).catch(err => { console.log('fallo imuntable: ', err) })
     event.waitUntil(Promise.all([cacheProm, cacheInmutable]));
+
 });
 
 self.addEventListener('activate', event => {
     //borar cache viejo
     console.log("SW: activated & ready")
+    const respuesta = caches.keys().then(keys => {
+        keys.forEach(key => {
+            if (key !== cacheStaticName && key.includes('mensajeriaITTGStatic')) {
+                return caches.delete(key)
+            }
+        });
+    });
+    event.waitUntil(respuesta);
+
 });
 
 self.addEventListener('fetch', event => {
-    console.log("la solicitud es de tipo: ", event.request.clone().method)
     if (event.request.clone().method != 'GET') {
-        console.log("Hola tu solicitud es: ", event.request.clone().method)
-        return fetch(event.request)
+        console.log("Hola tu solicitud es (return): ", event.request.clone().method)
+        return fetch(event.request.clone())
     } else {
         const respuesta = fetch(event.request).then(res => {
             console.log("respuesta del fetch", res)
-
+            if (!res) return caches.match(event.request)
             caches.open(cacheDynamicName)
                 .then(cache => {
                     cache.put(event.request, res);

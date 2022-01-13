@@ -56,7 +56,7 @@ class MensajePolicy
     }
     public function delete(Empleado $empleado, Mensaje $mensaje)
     {
-        if ($mensaje->empleado_id == $empleado->id & $mensaje->estado === 0) {
+        if ($mensaje->empleado_id === $empleado->id & $mensaje->estado === 0) {
             return true;
         }
     }

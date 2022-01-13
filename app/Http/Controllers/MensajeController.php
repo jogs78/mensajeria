@@ -296,9 +296,21 @@ class MensajeController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete', Mensaje::find($id));
-        if (Mensaje::destroy($id)) {
+        $mensaje = Mensaje::find($id);
+        
+        //$autorizacion = $this->authorize('delete',Auth::user(), $mensaje);
+       
+        if ($mensaje) {
+            
+            $img = str_replace('storage', 'public', $mensaje->imagen);
+            $doc = str_replace('storage', 'public', $mensaje->documento);
+            Storage::delete($img);
+            Storage::delete($doc);
+            Mensaje::destroy($id);
             return redirect()->back()->with('message', 'ok');
+        }else{
+            return redirect()->back()->with('message', 'ok');
+
         }
     }
     public function panelDifusor()
