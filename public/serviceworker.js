@@ -109,10 +109,9 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-    if (event.request.clone().method != 'GET') {
-        console.log("Hola tu solicitud es (return): ", event.request.clone().method)
-        return fetch(event.request.clone())
-    } else {
+
+
+    if (event.request.clone().method === 'GET') {
         const respuesta = fetch(event.request).then(res => {
             console.log("respuesta del fetch", res)
             if (!res) return caches.match(event.request)
@@ -127,7 +126,6 @@ self.addEventListener('fetch', event => {
         })
         event.respondWith(respuesta)
     }
-
 });
 
 

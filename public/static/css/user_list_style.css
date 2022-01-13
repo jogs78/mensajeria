@@ -89,7 +89,7 @@
 }
 
 .table {
-    width: 100vw;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -166,6 +166,7 @@
         display: block;
         width: 100%;
         border-top: 0 !important;
+        overflow: auto;
     }
     .table tr {
         margin-bottom: 15px;
