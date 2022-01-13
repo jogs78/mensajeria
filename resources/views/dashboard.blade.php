@@ -128,10 +128,26 @@
 
                             @endcan
                             @if (Auth::user()->rol == 'Informático')
+                            @if (session('message'))
+                            <script>
+                                setTimeout(() => {
+                                    Swal.fire({
+                toast: true,
+                position: 'top-left',
+                icon: 'info',
+                title: "Tarea realizada",
+                showConfirmButton: false,
+                timer: 3000
+            })
+                                }, 1000);
+                            </script>
+                            @endif
                                 <li class="menu-list__item fas fa-server"> <a id="home" class="text"
-                                        href="/log-out">Iniciar servidor </a></li>
+                                        href="/sockets/serve/activated">Iniciar servidor </a></li>
+                                <li class="menu-list__item fas fa-server"> <a id="home" class="text"
+                                            href="/sockets/serve/restart">Reiniciar servidor </a></li>
                                 <li class="menu-list__item fas fa-hdd"> <a id="home" class="text"
-                                        href="/log-out">Activar almacenamiento </a></li>
+                                        href="/Storage-link">Activar almacenamiento </a></li>
                             @endif
                             <li class="menu-list__item fas fa-sign-out-alt"> <a id="home" class="text"
                                     href="/log-out">Salir </a></li>

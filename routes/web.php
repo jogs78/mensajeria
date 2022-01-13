@@ -22,11 +22,15 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('Storage-link', function(){
     Artisan::call('storage:link');
-    return "Almacenamiento activado";
+    return redirect()->back()->with('message', "Almacenamiento activado");
 });
-Route::get('sockets/serve', function(){
-    \Illuminate\Support\Facades\Artisan::call('websockets:serve');
-    return 1;
+Route::get('sockets/serve/activated', function(){
+    Artisan::call('websockets:serve');
+    return redirect()->back()->with('message', "Servidor activado");
+});
+Route::get('sockets/serve/restart', function(){
+    Artisan::call('websockets:restart');
+    return redirect()->back()->with('message', "Servidor reiniciado");
 });
 Route::get('/log-in', function () {
     return view('login.login');
