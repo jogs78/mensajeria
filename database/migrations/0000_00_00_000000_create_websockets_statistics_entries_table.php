@@ -20,7 +20,6 @@ class CreateWebSocketsStatisticsEntriesTable extends Migration
             $table->integer('websocket_message_count');
             $table->integer('api_message_count');
             $table->nullableTimestamps();
-            
         });
     }
 

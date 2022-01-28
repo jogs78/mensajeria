@@ -28,7 +28,6 @@ class CreateEmpleadosTable extends Migration
             $table->boolean('confirmed')->nullable()->default(0);
             $table->string('confirmation_code')->nullable();
             $table->timestamps();//created_up updated_up
-            
         });
     }
 
