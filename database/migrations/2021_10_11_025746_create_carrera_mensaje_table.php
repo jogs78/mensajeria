@@ -25,6 +25,7 @@ class CreateCarreraMensajeTable extends Migration
                     ->references('id')->on('mensajes')->onDelete('cascade');
 
             $table->timestamps();
+            
         });
     }
 

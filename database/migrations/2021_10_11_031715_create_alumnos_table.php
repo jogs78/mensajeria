@@ -35,6 +35,7 @@ class CreateAlumnosTable extends Migration
             $table->string('confirmation_code')->nullable();
             $table->integer('segmentacion')->nullable();        
             $table->timestamps();//created_up updated_up
+            
         });
     }
 

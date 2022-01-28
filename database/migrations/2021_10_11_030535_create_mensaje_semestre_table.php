@@ -25,6 +25,7 @@ class CreateMensajeSemestreTable extends Migration
                     ->references('id')->on('semestres')->onDelete('cascade');
 
             $table->timestamps();
+            
         });
     }
 

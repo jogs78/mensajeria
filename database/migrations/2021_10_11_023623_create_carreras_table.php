@@ -26,6 +26,7 @@ class CreateCarrerasTable extends Migration
      *
      * @return void
      */
+    
     public function down()
     {
         Schema::dropIfExists('carreras');
