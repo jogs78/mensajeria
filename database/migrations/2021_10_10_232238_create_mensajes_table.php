@@ -11,6 +11,7 @@ class CreateMensajesTable extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('mensajes', function (Blueprint $table) {

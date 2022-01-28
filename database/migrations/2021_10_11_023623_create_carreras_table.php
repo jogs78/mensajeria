@@ -11,6 +11,7 @@ class CreateCarrerasTable extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('carreras', function (Blueprint $table) {

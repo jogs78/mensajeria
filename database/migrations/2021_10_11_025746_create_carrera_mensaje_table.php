@@ -11,6 +11,7 @@ class CreateCarreraMensajeTable extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('carrera_mensaje', function (Blueprint $table) {

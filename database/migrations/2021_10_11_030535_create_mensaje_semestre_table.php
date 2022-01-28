@@ -11,6 +11,7 @@ class CreateMensajeSemestreTable extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('mensaje_semestre', function (Blueprint $table) {
